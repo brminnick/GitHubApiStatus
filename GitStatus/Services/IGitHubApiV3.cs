@@ -4,7 +4,7 @@ using Refit;
 
 namespace GitStatus
 {
-    [Headers("User-Agent: " + nameof(GitTrends), "Accept-Encoding: gzip", "Accept: application/json")]
+    [Headers("User-Agent: " + nameof(GitStatus), "Accept-Encoding: gzip", "Accept: application/json")]
     interface IGitHubApiV3
     {
         [Get("/repos/xamarin/xamarin.forms")]
