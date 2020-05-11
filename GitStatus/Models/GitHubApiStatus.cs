@@ -31,7 +31,7 @@ namespace GitStatus
         public int RemainingRequests { get; }
         public DateTimeOffset ResetDateTime { get; }
 
-        public override string ToString() => $"{nameof(RateLimit)}: {RateLimit}\n{nameof(RemainingRequests)}: {RemainingRequests}\n{nameof(ResetDateTime)}: {ResetDateTime:dd MMMM @ HH:mm}\nMinutes Remaining: {ResetTimeRemaining.TotalMinutes}";
+        public override string ToString() => $"{nameof(RateLimit)}: {RateLimit}\n{nameof(RemainingRequests)}: {RemainingRequests}\n{nameof(ResetDateTime)}: {ResetDateTime.ToLocalTime():dd MMMM @ HH:mm}\nMinutes Remaining: {ResetTimeRemaining.TotalMinutes}";
 
         static int GetRateLimit(HttpResponseHeaders responseHeaders)
         {

@@ -8,9 +8,6 @@ namespace GitStatus
     interface IGitHubApiV3
     {
         [Get("/repos/xamarin/xamarin.forms")]
-        Task<HttpResponseMessage> GetGitHubApiResponse();
-
-        [Get("/repos/xamarin/xamarin.forms")]
         Task<HttpResponseMessage> GetGitHubApiResponse([Header("Authorization")] string authorization);
     }
 }

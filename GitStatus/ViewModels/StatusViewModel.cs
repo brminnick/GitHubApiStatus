@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AsyncAwaitBestPractices.MVVM;
+using Xamarin.Essentials;
 
 namespace GitStatus
 {
@@ -16,7 +17,7 @@ namespace GitStatus
         {
             _gitHubStatusService = gitHubStatusService;
 
-            GetStatusCommand = new AsyncCommand(ExecuteGetStatusCommand);
+            GetStatusCommand = new AsyncCommand(ExecuteGetStatusCommand, _ => !IsBusy);
         }
 
         public IAsyncCommand GetStatusCommand { get; }
@@ -30,7 +31,7 @@ namespace GitStatus
         public bool IsBusy
         {
             get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
+            set => SetProperty(ref _isBusy, value, () => MainThread.BeginInvokeOnMainThread(GetStatusCommand.RaiseCanExecuteChanged));
         }
 
         async Task ExecuteGetStatusCommand()
@@ -40,7 +41,7 @@ namespace GitStatus
             try
             {
                 var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-                var status = await _gitHubStatusService.GetGitHubApiStatus(cancellationTokenSource.Token).ConfigureAwait(false);
+                var status = await _gitHubStatusService.GetGitHubApiStatus(GitHubConstants.PersonalAccessToken, cancellationTokenSource.Token).ConfigureAwait(false);
 
                 StatusLabelText = status.ToString();
             }

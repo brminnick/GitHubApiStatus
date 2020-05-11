@@ -11,13 +11,9 @@ namespace GitStatus
 {
     class GitHubStatusService
     {
-        readonly static Lazy<IGitHubApiV3> _gitHubClientHolder = new Lazy<IGitHubApiV3>(() => RestService.For<IGitHubApiV3>(new HttpClient { BaseAddress = new Uri("https://api.github.com") }));
+        readonly static Lazy<IGitHubApiV3> _gitHubClientHolder = new Lazy<IGitHubApiV3>(() => RestService.For<IGitHubApiV3>(new HttpClient { BaseAddress = new Uri(GitHubConstants.GitHubApiUrl) }));
 
         static int _networkIndicatorCount;
-
-        public GitHubStatusService()
-        {
-        }
 
         static IGitHubApiV3 GitHubClient => _gitHubClientHolder.Value;
 
@@ -25,20 +21,7 @@ namespace GitStatus
         {
             try
             {
-                var response = await AttemptAndRetry(() => GitHubClient.GetGitHubApiResponse(authorizationToken), cancellationToken).ConfigureAwait(false);
-                return new GitHubApiStatus(response.Headers);
-            }
-            catch (ApiException e)
-            {
-                return new GitHubApiStatus(e);
-            }
-        }
-
-        public async Task<GitHubApiStatus> GetGitHubApiStatus(CancellationToken cancellationToken)
-        {
-            try
-            {
-                var response = await AttemptAndRetry(() => GitHubClient.GetGitHubApiResponse(), cancellationToken).ConfigureAwait(false);
+                var response = await AttemptAndRetry(() => GitHubClient.GetGitHubApiResponse("bearer " + authorizationToken), cancellationToken).ConfigureAwait(false);
                 return new GitHubApiStatus(response.Headers);
             }
             catch (ApiException e)
