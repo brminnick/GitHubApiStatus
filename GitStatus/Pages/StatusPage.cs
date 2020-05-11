@@ -5,7 +5,7 @@ namespace GitStatus
 {
     class StatusPage : BaseContentPage<StatusViewModel>
     {
-        public StatusPage(StatusViewModel statusViewModel) : base(statusViewModel, "GitHub Api Stats")
+        public StatusPage(StatusViewModel statusViewModel) : base(statusViewModel, "GitHub Api Status")
         {
             Content = new StackLayout
             {

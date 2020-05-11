@@ -25,13 +25,13 @@ namespace GitStatus
             ResetDateTime = GetRateLimitResetDateTime(responseHeaders);
         }
 
-        public TimeSpan ResetTimeRemaining => GetMinutesRemaining(ResetDateTime);
+        public TimeSpan ResetTimeRemaining => GetTimeRemaining(ResetDateTime);
 
         public int RateLimit { get; }
         public int RemainingRequests { get; }
         public DateTimeOffset ResetDateTime { get; }
 
-        public override string ToString() => $"{nameof(RateLimit)}: {RateLimit}\n{nameof(RemainingRequests)}: {RemainingRequests}\n{nameof(ResetDateTime)}: {ResetDateTime.ToLocalTime():dd MMMM @ HH:mm}\nMinutes Remaining: {ResetTimeRemaining.TotalMinutes}";
+        public override string ToString() => $"API Requests Remaining: {RemainingRequests}\nAPI Rate Limit: {RateLimit}\n\nMinutes Remaining: {Math.Round(ResetTimeRemaining.TotalMinutes, MidpointRounding.AwayFromZero)}\nReset Time: {ResetDateTime.ToLocalTime():dd MMMM @ HH:mm}";
 
         static int GetRateLimit(HttpResponseHeaders responseHeaders)
         {
@@ -58,7 +58,7 @@ namespace GitStatus
             return long.Parse(rateLimitResetHeader.Value.First());
         }
 
-        static TimeSpan GetMinutesRemaining(DateTimeOffset resetDateTime) => resetDateTime.Subtract(DateTimeOffset.UtcNow);
+        static TimeSpan GetTimeRemaining(DateTimeOffset resetDateTime) => resetDateTime.Subtract(DateTimeOffset.UtcNow);
 
     }
 }
