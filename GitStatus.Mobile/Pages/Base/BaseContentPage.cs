@@ -2,7 +2,7 @@
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     public abstract class BaseContentPage : ContentPage
     {

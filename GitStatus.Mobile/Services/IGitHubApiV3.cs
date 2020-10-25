@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Refit;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     [Headers("User-Agent: " + nameof(GitStatus), "Accept-Encoding: gzip", "Accept: application/json")]
     interface IGitHubApiV3

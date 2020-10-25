@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using GraphQL;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     public class GraphQLException : Exception
     {

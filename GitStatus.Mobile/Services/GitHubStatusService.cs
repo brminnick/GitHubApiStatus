@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using GraphQL;
@@ -9,7 +8,7 @@ using Refit;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     class GitHubStatusService
     {
@@ -21,25 +20,39 @@ namespace GitStatus
         static IGitHubApiV3 GitHubRestApiClient => _gitHubRestApiClientHolder.Value;
         static IGitHubGraphQLApi GitHubGraphQlApiClient => _gitHubGraphQLClientHolder.Value;
 
-        public async Task<GitHubApiStatus> GetGitHubApiStatus(string authorizationToken, CancellationToken cancellationToken)
+        public async Task<GitHubApiStatusModel> GetGitHubRestApiStatus(string authorizationToken, CancellationToken cancellationToken)
         {
             try
             {
                 var restApiResponse = await AttemptAndRetry(() => GitHubRestApiClient.GetGitHubApiResponse("bearer " + authorizationToken), cancellationToken).ConfigureAwait(false);
-                var graphQLApiResponse = await ExecuteGraphQLRequest(() => GitHubGraphQlApiClient.ViewerLoginQuery(new ViewerLoginQueryContent(), "bearer " + authorizationToken), cancellationToken).ConfigureAwait(false);
 
-                var restApiStatus = new GitHubApiStatus(restApiResponse);
-                var graphQLApiStatus = new GitHubApiStatus(graphQLApiResponse.Headers);
-
-                return restApiStatus.RemainingRequests < graphQLApiStatus.RemainingRequests ? restApiStatus : graphQLApiStatus;
+                return new GitHubApiStatusModel(restApiResponse);
             }
             catch (ApiException e)
             {
-                return new GitHubApiStatus(e);
+                return new GitHubApiStatusModel(e);
             }
             catch (GraphQLException e)
             {
-                return new GitHubApiStatus(e.ResponseHeaders);
+                return new GitHubApiStatusModel(e.ResponseHeaders);
+            }
+        }
+
+        public async Task<GitHubApiStatusModel> GetGitHubGraphQlApiStatus(string authorizationToken, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var graphQLApiResponse = await ExecuteGraphQLRequest(() => GitHubGraphQlApiClient.ViewerLoginQuery(new ViewerLoginQueryContent(), "bearer " + authorizationToken), cancellationToken).ConfigureAwait(false);
+
+                return new GitHubApiStatusModel(graphQLApiResponse.Headers);
+            }
+            catch (ApiException e)
+            {
+                return new GitHubApiStatusModel(e);
+            }
+            catch (GraphQLException e)
+            {
+                return new GitHubApiStatusModel(e.ResponseHeaders);
             }
         }
 

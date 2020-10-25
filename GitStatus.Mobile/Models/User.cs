@@ -2,7 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     public class User
     {

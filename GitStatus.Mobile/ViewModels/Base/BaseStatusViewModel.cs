@@ -1,26 +1,22 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AsyncAwaitBestPractices.MVVM;
 using Xamarin.Essentials;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
-    class StatusViewModel : BaseViewModel
+    abstract class BaseStatusViewModel : BaseViewModel
     {
-        readonly GitHubStatusService _gitHubStatusService;
-
         string _statusLabelText = string.Empty;
         bool _isBusy;
 
-        public StatusViewModel(GitHubStatusService gitHubStatusService)
+        public BaseStatusViewModel(GitHubStatusService gitHubStatusService)
         {
-            _gitHubStatusService = gitHubStatusService;
-
+            GitHubStatusService = gitHubStatusService;
             GetStatusCommand = new AsyncCommand(ExecuteGetStatusCommand, _ => !IsBusy);
         }
 
         public IAsyncCommand GetStatusCommand { get; }
+        protected GitHubStatusService GitHubStatusService { get; }
 
         public string StatusLabelText
         {
@@ -34,15 +30,15 @@ namespace GitStatus
             set => SetProperty(ref _isBusy, value, () => MainThread.BeginInvokeOnMainThread(GetStatusCommand.RaiseCanExecuteChanged));
         }
 
+        protected abstract Task<GitHubApiStatusModel> GetStatus();
+
         async Task ExecuteGetStatusCommand()
         {
             IsBusy = true;
 
             try
             {
-                var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-                var status = await _gitHubStatusService.GetGitHubApiStatus(GitHubConstants.PersonalAccessToken, cancellationTokenSource.Token).ConfigureAwait(false);
-
+                var status = await GetStatus().ConfigureAwait(false);
                 StatusLabelText = status.ToString();
             }
             finally

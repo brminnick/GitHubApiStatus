@@ -105,9 +105,9 @@
         <Folder Include="Resources\drawable\" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\GitStatus\GitStatus.csproj">
+        <ProjectReference Include="..\GitStatus.Mobile\GitStatus.Mobile.csproj">
             <Project>{0066ECBE-9DFE-4C64-9A1D-937F392156AB}</Project>
-            <Name>GitStatus</Name>
+            <Name>GitStatus.Mobile</Name>
         </ProjectReference>
     </ItemGroup>
     <ItemGroup>

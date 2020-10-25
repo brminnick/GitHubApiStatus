@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     class GitHubViewerResponse
     {

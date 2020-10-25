@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AsyncAwaitBestPractices;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
@@ -28,6 +28,6 @@ namespace GitStatus
         }
 
         void OnPropertyChanged([CallerMemberName] in string propertyName = "") =>
-            _propertyChangedEventManager.HandleEvent(this, new PropertyChangedEventArgs(propertyName), nameof(INotifyPropertyChanged.PropertyChanged));
+            _propertyChangedEventManager.RaiseEvent(this, new PropertyChangedEventArgs(propertyName), nameof(INotifyPropertyChanged.PropertyChanged));
     }
 }

@@ -2,7 +2,7 @@
 using GraphQL;
 using Refit;
 
-namespace GitStatus
+namespace GitStatus.Mobile
 {
     [Headers("User-Agent: " + nameof(GitStatus))]
     interface IGitHubGraphQLApi

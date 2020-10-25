@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using GitStatus.Mobile;
 
 namespace GitStatus.Droid
 {
