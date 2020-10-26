@@ -14,10 +14,12 @@ namespace GitStatus
             var services = new ServiceCollection();
 
             //ContentPage
-            services.AddTransient<StatusPage>();
+            services.AddTransient<RestApiStatusPage>();
+            services.AddTransient<GraphQLApiStatusPage>();
 
             //ViewModels
-            services.AddTransient<StatusViewModel>();
+            services.AddTransient<RestApiStatusViewModel>();
+            services.AddTransient<GraphQLApiStatusViewModel>();
 
             //Services
             services.AddSingleton<GitHubStatusService>();

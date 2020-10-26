@@ -105,13 +105,13 @@
         <Folder Include="Resources\drawable\" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\GitStatus\GitStatus.csproj">
-            <Project>{0066ECBE-9DFE-4C64-9A1D-937F392156AB}</Project>
-            <Name>GitStatus</Name>
-        </ProjectReference>
+      <ProguardConfiguration Include="proguard.cfg" />
     </ItemGroup>
     <ItemGroup>
-      <ProguardConfiguration Include="proguard.cfg" />
+      <ProjectReference Include="..\GitStatus\GitStatus.csproj">
+        <Project>{68FAA00B-AD9E-458D-9083-C7563592CD00}</Project>
+        <Name>GitStatus</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
