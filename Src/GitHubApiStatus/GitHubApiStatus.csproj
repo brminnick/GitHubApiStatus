@@ -17,14 +17,14 @@
         <Summary>
             GitHub API Rate-Limit Status
 
-            Understand the GitHub API Rate Limits for both GitHub API v3 (REST API) and GitHub API v4 (GraphQL API)
+            Calculate the GitHub API Rate Limits for both GitHub API v3 (REST API) and GitHub API v4 (GraphQL API)
         </Summary>
         <PackageTags>github, git, api, rate, rate limit</PackageTags>
         <Title>GitHub API Rate Limit Status</Title>
         <Description>
             GitHub API Rate-Limit Status
 
-            Understand the GitHub API Rate Limits for both GitHub API v3 (REST API) and GitHub API v4 (GraphQL API)
+            Calculate the GitHub API Rate Limits for both GitHub API v3 (REST API) and GitHub API v4 (GraphQL API)
         </Description>
         <PackageReleaseNotes>
             New In This Release:
