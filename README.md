@@ -4,10 +4,6 @@
 
 [![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) 
 
-A .NET library to help understand the GitHub API Rate Limit.
-
-Ever sent a request to the GitHub API, only to have it rejected? 
-
 GitHubApiStatus helps make it easy to understand GitHub's API Rate Limit!
 
 - [Jump to the Setup](#Setup)
