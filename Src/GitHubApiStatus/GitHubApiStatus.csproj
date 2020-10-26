@@ -61,4 +61,7 @@
             </SubType>
         </Compile>
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+    </ItemGroup>
 </Project>
