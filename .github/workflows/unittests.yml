@@ -12,17 +12,10 @@ jobs:
     UnitTests:
       runs-on: macos-latest
       steps:
-      - uses: actions/checkout@v1
-      - name: Restore NuGet 
-        run: |
-          cd Src
-          nuget restore         
+      - uses: actions/checkout@v1   
       - name: Run Unit Tests
         run: |   
           UnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
           echo $UnitTestProject
-
-          UnitTestDirectory=`dirname $UnitTestProject`
-          echo $UnitTestDirectory
           
-          dotnet test  -c "Release" $UnitTestDirectory
+          dotnet test  -c "Release" $UnitTestProject
