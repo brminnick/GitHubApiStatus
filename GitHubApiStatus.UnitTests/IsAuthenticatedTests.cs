@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
-    class IsUserAuthenticatedTests : BaseTest
+    class IsAuthenticatedTests : BaseTest
     {
         [Test]
         public void IsUserAuthenticated_ValidHttpResponseHeaders_True()
@@ -21,7 +21,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
             //Act
-            isUserAuthenticated_Actual = GitHubApiStatus.IsUserAuthenticated(validHttpResponseHeaders);
+            isUserAuthenticated_Actual = GitHubApiStatus.IsAuthenticated(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
@@ -41,7 +41,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
             //Act
-            isUserAuthenticated_Actual = GitHubApiStatus.IsUserAuthenticated(validHttpResponseHeaders);
+            isUserAuthenticated_Actual = GitHubApiStatus.IsAuthenticated(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
@@ -54,7 +54,7 @@ namespace GitHubApiStatus.UnitTests
             var invalidHttpResponseMessage = new HttpResponseMessage();
 
             //Act
-            var isUserAuthenticated = GitHubApiStatus.IsUserAuthenticated(invalidHttpResponseMessage.Headers);
+            var isUserAuthenticated = GitHubApiStatus.IsAuthenticated(invalidHttpResponseMessage.Headers);
 
             //Assert
             Assert.IsFalse(isUserAuthenticated);
@@ -70,7 +70,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.IsUserAuthenticated(nullHttpResponseHeaders));
+            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.IsAuthenticated(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }
