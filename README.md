@@ -8,13 +8,27 @@ A .NET library to help understand the GitHub API Rate Limit.
 
 Ever sent a request to the GitHub API, only to have it rejected? GitHubApiStatusService helps make it easy to understand GitHub's API Rate Limit!
 
-- Available on NuGet: https://www.nuget.org/packages/GitHubApiStatus
 - [Jump to the Setup](#Setup)
 - [Jump to the API](#API)
 - [Jump to Examples](#Examples)
 
 ### GitHub API Rate Limits
 
+#### REST API
+
+[![GitHub RST API Limits](https://user-images.githubusercontent.com/13558917/97235854-066e5680-17a1-11eb-98f9-01fae7c02ac0.png)](https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#rate-limiting)
+
+Learn More: https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#rate-limiting
+
+#### GraphQL API
+
+[![GitHub GraphQL API Limits](https://user-images.githubusercontent.com/13558917/97235806-ec347880-17a0-11eb-9637-fc1eb7f8dbc8.png)](https://docs.github.com/en/free-pro-team@latest/graphql/overview/resource-limitations#rate-limit)
+
+Learn More: https://docs.github.com/en/free-pro-team@latest/graphql/overview/resource-limitations#rate-limit
+
+### Rate Limit Headers
+
+![Rate Limit Headers](https://user-images.githubusercontent.com/13558917/97235863-0e2dfb00-17a1-11eb-98f8-23c1065eb043.png)
 
 ## Setup
 
@@ -51,4 +65,6 @@ Ever sent a request to the GitHub API, only to have it rejected? GitHubApiStatus
   - Get the Date Time when the GitHub API rate limit resets
   - Parses the `X-RateLimit-Reset` header and returns its `long` value in [Unix Epoch Seconds](https://www.epochconverter.com)
   
-  ## Examples
+## Examples
+
+
