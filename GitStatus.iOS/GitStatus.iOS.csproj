@@ -137,9 +137,9 @@
         <PackageReference Include="GraphQL.Client" Version="3.2.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\GitStatus.Mobile\GitStatus.Mobile.csproj">
-        <Project>{0066ECBE-9DFE-4C64-9A1D-937F392156AB}</Project>
-        <Name>GitStatus.Mobile</Name>
+      <ProjectReference Include="..\GitStatus\GitStatus.csproj">
+        <Project>{68FAA00B-AD9E-458D-9083-C7563592CD00}</Project>
+        <Name>GitStatus</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

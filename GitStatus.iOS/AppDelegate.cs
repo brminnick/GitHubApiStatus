@@ -1,6 +1,5 @@
 ﻿using Foundation;
 using UIKit;
-using GitStatus.Mobile;
 
 namespace GitStatus.iOS
 {
