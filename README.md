@@ -35,33 +35,61 @@ Learn More: https://docs.github.com/en/free-pro-team@latest/graphql/overview/res
 
 ## API
 
-- `public int GetRateLimit(HttpResponseHeaders httpResponseHeaders)`
-  - Get the total number of GitHub API Requests available
-  - Parses the `X-RateLimit-Limit` header and return its `int` value
-  
-- `public int GetRemainingRequestCount(HttpResponseHeaders httpResponseHeaders)`
-  - Get the number of GitHub API Requests remaining
-  - Parses the `X-RateLimit-Remaining` header and return its `int` value
-  
-- `public bool HasReachedMaximimApiCallLimit(HttpResponseHeaders httpResponseHeaders)`
-  - Determines whether the maximum number of requests 
-  - Parses the `X-RateLimit-Remaining` header and returns wether or not it is greater than 0
-  
-- `public TimeSpan GetRateLimitTimeRemaining(HttpResponseHeaders httpResponseHeaders)`
-  - Get the time remaining until GitHub API rate limit resets
-  - Parses the `X-RateLimit-Reset` header and returns the `TimeSpan` value from the current time
-  
-- `public bool IsAuthenticated(HttpResponseHeaders httpResponseHeaders)`
-  - Determine whether the request was made using an authenticated bearer token
-  - Determines whether or not the `Authorization` key exists in the `Vary` header 
+#### GetRateLimit
 
-- `public DateTimeOffset GetRateLimitResetDateTime(HttpResponseHeaders httpResponseHeaders)`
-  - Get the Date Time when the GitHub API rate limit resets
-  - Parses the `X-RateLimit-Reset` header and returns its `DateTimeOffset` value
+```csharp
+public int GetRateLimit(HttpResponseHeaders httpResponseHeaders)
+```
+- Get the total number of GitHub API Requests available
+- Parses the `X-RateLimit-Limit` header and return its `int` value
   
-- `public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpResponseHeaders)`
-  - Get the Date Time when the GitHub API rate limit resets
-  - Parses the `X-RateLimit-Reset` header and returns its `long` value in [Unix Epoch Seconds](https://www.epochconverter.com)
+#### GetRemainingRequestCount
+  
+```csharp
+public int GetRemainingRequestCount(HttpResponseHeaders httpResponseHeaders)
+```
+- Get the number of GitHub API Requests remaining
+- Parses the `X-RateLimit-Remaining` header and return its `int` value
+  
+#### HasReachedMaximimApiCallLimit
+  
+```csharp
+public bool HasReachedMaximimApiCallLimit(HttpResponseHeaders httpResponseHeaders)
+```
+- Determines whether the maximum number of requests 
+- Parses the `X-RateLimit-Remaining` header and returns wether or not it is greater than 0
+  
+#### GetRateLimitTimeRemaining
+  
+```csharp
+public TimeSpan GetRateLimitTimeRemaining(HttpResponseHeaders httpResponseHeaders)
+```
+- Get the time remaining until GitHub API rate limit resets
+- Parses the `X-RateLimit-Reset` header and returns the `TimeSpan` value from the current time
+  
+#### IsAuthenticated
+  
+```csharp
+public bool IsAuthenticated(HttpResponseHeaders httpResponseHeaders)
+```
+- Determine whether the request was made using an authenticated bearer token
+- Determines whether or not the `Authorization` key exists in the `Vary` header 
+
+#### GetRateLimitResetDateTime
+
+```csharp
+public DateTimeOffset GetRateLimitResetDateTime(HttpResponseHeaders httpResponseHeaders)
+```
+- Get the Date Time when the GitHub API rate limit resets
+- Parses the `X-RateLimit-Reset` header and returns its `DateTimeOffset` value
+  
+#### GetRateLimitResetDateTime_UnixEpochSeconds
+  
+```csharp
+public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpResponseHeaders)
+```
+- Get the Date Time when the GitHub API rate limit resets
+- Parses the `X-RateLimit-Reset` header and returns its `long` value in [Unix Epoch Seconds](https://www.epochconverter.com)
   
 ## Examples
 
