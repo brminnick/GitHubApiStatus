@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Run Unit Tests
 
 on:
   push:
@@ -10,12 +10,13 @@ on:
 
 jobs:
   
-    UnitTests_Android_iOS:
+    UnitTests
       runs-on: macos-latest
       steps:
       - uses: actions/checkout@v1
       - name: Restore NuGet 
         run: |
+          cd Src
           nuget restore         
       - name: Run Unit Tests
         run: |   
