@@ -1,12 +1,14 @@
+![Unit Tests](https://github.com/brminnick/GitHubApiStatus/workflows/Run%20Unit%20Tests/badge.svg)
+
 # GitHubApiStatus
 
 [![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) 
 
-![Unit Tests](https://github.com/brminnick/GitHubApiStatus/workflows/Run%20Unit%20Tests/badge.svg)
-
 A .NET library to help understand the GitHub API Rate Limit.
 
-Ever sent a request to the GitHub API, only to have it rejected? GitHubApiStatusService helps make it easy to understand GitHub's API Rate Limit!
+Ever sent a request to the GitHub API, only to have it rejected? 
+
+GitHubApiStatus helps make it easy to understand GitHub's API Rate Limit!
 
 - [Jump to the Setup](#Setup)
 - [Jump to the API](#API)
