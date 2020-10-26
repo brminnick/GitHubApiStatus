@@ -109,7 +109,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GitStatus\GitStatus.csproj">
-        <Project>{68FAA00B-AD9E-458D-9083-C7563592CD00}</Project>
+        <Project>{6B19FDF5-8384-4F8D-838C-EB0C3F3F1EB4}</Project>
         <Name>GitStatus</Name>
       </ProjectReference>
     </ItemGroup>
