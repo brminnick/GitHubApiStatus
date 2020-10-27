@@ -118,21 +118,25 @@ static async Task Main(string[] args)
 
     bool hasReachedMaximumApiLimit = GitHubApiStatusService.Instance.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
 
-    Debug.WriteLine($"What is the GitHub API Rate Limit? {rateLimit}");
+    Debug.WriteLine($"What is the GitHub REST API Rate Limit? {rateLimit}");
 
-    Debug.WriteLine($"Have I reached the Maximum API Limit? {hasReachedMaximumApiLimit}");
-    Debug.WriteLine($"How many API requests do I have remaining? {remainingRequestCount}");
+    Debug.WriteLine($"Have I reached the Maximum REST API Limit? {hasReachedMaximumApiLimit}");
+    Debug.WriteLine($"How many REST API requests do I have remaining? {remainingRequestCount}");
 
-    Debug.WriteLine($"How long until the GitHub API Rate Limit resets? {rateLimitTimeRemaining}");
+    Debug.WriteLine($"How long until the GitHub REST API Rate Limit resets? {rateLimitTimeRemaining}");
 
-    Debug.WriteLine($"Did GitHub API Request include a Bearer Token? {isAuthenticated}");
+    Debug.WriteLine($"Did the GitHub REST API Request include a Bearer Token? {isAuthenticated}");
 }
 ```
 
-> What is the GitHub API Rate Limit? 60
-> Have I reached the Maximum API Limit? False
-> How many API requests do I have remaining? 56
-> How long until the GitHub API Rate Limit resets? 00:29:12.4134330
-> Did GitHub API Request include a Bearer Token? False
+> What is the GitHub REST API Rate Limit? 60
+>
+> Have I reached the Maximum REST API Limit? False
+>
+> How many REST API requests do I have remaining? 56
+>
+> How long until the GitHub REST API Rate Limit resets? 00:29:12.4134330
+>
+> Did GitHub REST API Request include a Bearer Token? False
 
 
