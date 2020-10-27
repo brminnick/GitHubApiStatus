@@ -10,19 +10,19 @@ GitHubApiStatus helps make it easy to understand GitHub's API Rate Limit!
 - [Jump to the API](#API)
 - [Jump to Examples](#Examples)
 
-### GitHub API Rate Limits
+## GitHub API Rate Limits
 
-#### REST API
+### REST API
+
+(From the [GitHub REST API Docs](https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#rate-limiting))
 
 [![GitHub RST API Limits](https://user-images.githubusercontent.com/13558917/97235854-066e5680-17a1-11eb-98f9-01fae7c02ac0.png)](https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#rate-limiting)
 
-Learn More: https://docs.github.com/en/free-pro-team@latest/rest/overview/resources-in-the-rest-api#rate-limiting
+### GraphQL API
 
-#### GraphQL API
+(From the [GitHub GraphQL API Docs](https://docs.github.com/en/free-pro-team@latest/graphql/overview/resource-limitations#rate-limit))
 
 [![GitHub GraphQL API Limits](https://user-images.githubusercontent.com/13558917/97235806-ec347880-17a0-11eb-9637-fc1eb7f8dbc8.png)](https://docs.github.com/en/free-pro-team@latest/graphql/overview/resource-limitations#rate-limit)
-
-Learn More: https://docs.github.com/en/free-pro-team@latest/graphql/overview/resource-limitations#rate-limit
 
 ### Rate Limit Headers
 
