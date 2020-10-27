@@ -64,6 +64,15 @@ namespace GitHubApiStatus
 
         public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue)
         {
+            if (authenticationHeaderValue is null)
+                throw new ArgumentNullException(nameof(authenticationHeaderValue));
+
+            if (!authenticationHeaderValue.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
+
+            if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be null or empty");
+
             try
             {
                 await SemaphoreSlim.WaitAsync().ConfigureAwait(false);
