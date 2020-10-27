@@ -24,11 +24,11 @@
         <Folder Include="ViewModels\" />
         <Folder Include="Services\" />
         <Folder Include="Models\" />
-        <Folder Include="Constants\" />
         <Folder Include="Pages\Base\" />
         <Folder Include="ViewModels\Base\" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
     </ItemGroup>
+    <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>

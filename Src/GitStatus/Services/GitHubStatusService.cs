@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using GitStatus.Shared;
 using GraphQL;
 using Polly;
 using Refit;
