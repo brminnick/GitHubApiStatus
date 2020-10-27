@@ -19,6 +19,9 @@ namespace GitStatus.Console
 
         static async Task Main(string[] args)
         {
+            if (!string.IsNullOrWhiteSpace(GitHubConstants.PersonalAccessToken))
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
             HttpResponseMessage restApiResponse = await _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
             restApiResponse.EnsureSuccessStatusCode();
 
