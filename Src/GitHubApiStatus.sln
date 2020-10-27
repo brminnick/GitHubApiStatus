@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{A52818
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{1D178B33-C69B-47E7-AF90-B460B34BCC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.Console", "GitStatus.Console\GitStatus.Console.csproj", "{BE045971-4CE8-4C59-BAEB-0BF3A42A9C0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.ConsoleApp", "GitStatus.ConsoleApp\GitStatus.ConsoleApp.csproj", "{BE045971-4CE8-4C59-BAEB-0BF3A42A9C0A}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GitStatus.Shared", "GitStatus.Shared\GitStatus.Shared.shproj", "{EE691483-A8A2-4071-9C75-E70F0250E5D2}"
 EndProject
