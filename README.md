@@ -100,7 +100,7 @@ static readonly HttpClient _client = new HttpClient
 {
     DefaultRequestHeaders =
     {
-        { "User-Agent", nameof(GitStatus) }
+        { "User-Agent", "GitHubApiStatus" }
     }
 };
 
