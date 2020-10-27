@@ -4,7 +4,7 @@
         <OutputType>Exe</OutputType>
         <Nullable>enable</Nullable>
         <TargetFramework>net5.0</TargetFramework>
-        <AssemblyName>GitStatus.Console</AssemblyName>
+        <AssemblyName>GitStatus.ConsoleApp</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
