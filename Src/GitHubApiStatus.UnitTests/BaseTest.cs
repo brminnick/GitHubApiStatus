@@ -9,12 +9,14 @@ namespace GitHubApiStatus.UnitTests
 {
     abstract class BaseTest
     {
+        const string _authorizationHeaderKey = "Authorization";
+
         static readonly HttpClient _client = new HttpClient
         {
             DefaultRequestHeaders =
             {
                 { "User-Agent", nameof(GitHubApiStatus) },
-                { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
+                { _authorizationHeaderKey, "bearer " + GitHubConstants.PersonalAccessToken }
             }
         };
 
@@ -36,7 +38,7 @@ namespace GitHubApiStatus.UnitTests
             };
 
             if (isAuthenticated)
-                httpResponse.Headers.Vary.Add("Authorization");
+                httpResponse.Headers.Vary.Add(_authorizationHeaderKey);
 
             return httpResponse.Headers;
         }
