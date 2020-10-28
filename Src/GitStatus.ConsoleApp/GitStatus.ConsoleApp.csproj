@@ -3,6 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AssemblyName>GitStatus.ConsoleApp</AssemblyName>
     </PropertyGroup>

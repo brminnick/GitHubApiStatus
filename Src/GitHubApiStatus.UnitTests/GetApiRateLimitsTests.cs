@@ -94,62 +94,62 @@ namespace GitHubApiStatus.UnitTests
 
         }
 
-        [Test]
-        public async Task GetApiRateLimits_ValidGraphQLApiRequest()
-        {
-            //Arrange
-            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        //[Test]
+        //public async Task GetApiRateLimits_ValidGraphQLApiRequest()
+        //{
+        //    //Arrange
+        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-            RateLimitStatus graphQLApiStatus_Initial, graphQLApiStatus_Final;
+        //    RateLimitStatus graphQLApiStatus_Initial, graphQLApiStatus_Final;
 
-            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+        //    DateTimeOffset startTime = DateTimeOffset.UtcNow;
 
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+        //    var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
-            //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+        //    //Act
+        //    gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
 
-            graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
+        //    graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
 
 
-            //Assert
-            throw new NotImplementedException();
-        }
+        //    //Assert
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public async Task GetApiRateLimits_ValidSearchApiRequest()
-        {
-            //Arrange
-            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        //[Test]
+        //public async Task GetApiRateLimits_ValidSearchApiRequest()
+        //{
+        //    //Arrange
+        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-            //Act
+        //    //Act
 
-            //Assert
-            throw new NotImplementedException();
-        }
+        //    //Assert
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public async Task GetApiRateLimits_ValidCodeScanningUploadApiRequest()
-        {
-            //Arrange
-            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        //[Test]
+        //public async Task GetApiRateLimits_ValidCodeScanningUploadApiRequest()
+        //{
+        //    //Arrange
+        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-            //Act
+        //    //Act
 
-            //Assert
-            throw new NotImplementedException();
-        }
+        //    //Assert
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public async Task GetApiRateLimits_ValidAppManifestConfigurationRequest()
-        {
-            //Arrange
-            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        //[Test]
+        //public async Task GetApiRateLimits_ValidAppManifestConfigurationRequest()
+        //{
+        //    //Arrange
+        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-            //Act
+        //    //Act
 
-            //Assert
-            throw new NotImplementedException();
-        }
+        //    //Assert
+        //    throw new NotImplementedException();
+        //}
     }
 }

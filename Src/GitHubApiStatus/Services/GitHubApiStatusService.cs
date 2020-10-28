@@ -79,7 +79,7 @@ namespace GitHubApiStatus
 
                 Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
 
-                var response = await GetDataResult<GitHubApiRateLimitResponse>("https://api.github.com/rate_limit");
+                var response = await GetGitHubApiRateLimitResponse();
 
                 Client.DefaultRequestHeaders.Authorization = null;
 
@@ -161,24 +161,20 @@ namespace GitHubApiStatus
             return long.Parse(rateLimitResetHeader.Value.First());
         }
 
-#if NETSTANDARD
         // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<T> GetDataResult<T>(string url)
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse()
         {
-            using var stream = await Client.GetStreamAsync(url).ConfigureAwait(false);
+            using var stream = await Client.GetStreamAsync("https://api.github.com/rate_limit").ConfigureAwait(false);
+#if NETSTANDARD
             using var streamReader = new StreamReader(stream);
             using var jsonTextReader = new JsonTextReader(streamReader);
 
-            return Serializer.Deserialize<T>(jsonTextReader) ?? throw new NullReferenceException();
-        }
-
+            return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
 #else
-        static async Task<T> GetDataResult<T>(string url)
-        {
-            using var stream = await Client.GetStreamAsync(url).ConfigureAwait(false);
+            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream).ConfigureAwait(false) ?? throw new JsonException();
 
-            return await JsonSerializer.DeserializeAsync<T>(stream).ConfigureAwait(false) ?? throw new NullReferenceException();
-        }
+            return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
 #endif
+        }
     }
 }

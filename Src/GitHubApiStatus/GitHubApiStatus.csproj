@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
@@ -73,15 +73,16 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
         <DocumentationFile>bin\Release\netstandard1.0\GitHubApiStatus.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="Models\GitHubApiRateLimitsMutable.cs" />
         <Compile Include="Services\GitHubApiStatusService.cs">
             <SubType>
             </SubType>
         </Compile>
-        <Compile Include="Models\RateLimitData.cs">
+        <Compile Include="Models\RateLimitStatus.cs">
             <SubType>
             </SubType>
         </Compile>
-        <Compile Include="Models\ApiRateLimitResults.cs">
+        <Compile Include="Models\GitHubApiRateLimits.cs">
             <SubType>
             </SubType>
         </Compile>
@@ -92,8 +93,9 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
     </ItemGroup>
     <ItemGroup Condition=" $(TargetFramework.StartsWith('net5')) ">
     </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netcoreapp3')) ">
+    </ItemGroup>
     <ItemGroup>
-        <Folder Include="Models\" />
         <Folder Include="Services\" />
     </ItemGroup>
 </Project>
