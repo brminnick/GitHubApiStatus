@@ -14,7 +14,7 @@ namespace GitHubApiStatus.UnitTests
             DefaultRequestHeaders =
             {
                 { "User-Agent", nameof(GitHubApiStatus) },
-                { "Authorization", GitHubConstants.PersonalAccessToken }
+                { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
             }
         };
 
