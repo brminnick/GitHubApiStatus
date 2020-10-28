@@ -4,6 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitStatus.Shared;
+using GraphQL;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
 
 namespace GitHubApiStatus.UnitTests
 {
@@ -19,6 +22,8 @@ namespace GitHubApiStatus.UnitTests
                 { _authorizationHeaderKey, "bearer " + GitHubConstants.PersonalAccessToken }
             }
         };
+
+        static readonly GraphQLHttpClient _graphQLClient = CreateGitHubGraphQLClient();
 
         protected GitHubApiStatusService GitHubApiStatus { get; } = GitHubApiStatusService.Instance;
 
@@ -44,8 +49,49 @@ namespace GitHubApiStatus.UnitTests
         }
 
         protected static Task<HttpResponseMessage> SendValidRestApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
-        protected static Task<HttpResponseMessage> SendValidGraphQLApiRequest() => _client.PostAsync($"{GitHubConstants.GitHubGraphQLApiUrl}", new StringContent("\"query\" : \"query { repository(owner: \"brminnick\" name: \"GitHubApiStatus\"){ name, description, url }}\""));
+        protected static Task SendValidGraphQLApiRequest()
+        {
+            var graphQLRequest = new GraphQLRequest
+            {
+                Query = "query { user(login: \"brminnick\"){ name, company, createdAt}}"
+            };
+
+            return _graphQLClient.SendQueryAsync<GitHubUserGraphQLResponse>(graphQLRequest);
+        }
+
+        static GraphQLHttpClient CreateGitHubGraphQLClient()
+        {
+            var graphQLOptions = new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri(GitHubConstants.GitHubGraphQLApiUrl),
+            };
+
+            var client = new GraphQLHttpClient(graphQLOptions, new NewtonsoftJsonSerializer());
+            client.HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(new ProductHeaderValue(nameof(GitHubApiStatus))));
+            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
+            return client;
+        }
 
         static long GetTimeInUnixEpochSeconds(in DateTimeOffset dateTimeOffset) => dateTimeOffset.ToUnixTimeSeconds();
+
+        class GitHubUserGraphQLResponse
+        {
+            public GitHubUserGraphQLResponse(GitHubUser user) => User = user;
+
+            public GitHubUser User { get; }
+        }
+
+        class GitHubUser
+        {
+            public GitHubUser(string name, string company, DateTimeOffset createdAt) =>
+                (Name, Company, CreatedAt) = (name, company, createdAt);
+
+            public string Name { get; }
+
+            public string Company { get; }
+
+            public DateTimeOffset CreatedAt { get; }
+        }
     }
 }

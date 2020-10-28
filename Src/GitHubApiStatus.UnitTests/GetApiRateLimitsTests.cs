@@ -94,27 +94,49 @@ namespace GitHubApiStatus.UnitTests
 
         }
 
-        //[Test]
-        //public async Task GetApiRateLimits_ValidGraphQLApiRequest()
-        //{
-        //    //Arrange
-        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        [Test]
+        public async Task GetApiRateLimits_ValidGraphQLApiRequest()
+        {
+            //Arrange
+            RateLimitStatus graphQLApiStatus_Initial, graphQLApiStatus_Final;
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-        //    RateLimitStatus graphQLApiStatus_Initial, graphQLApiStatus_Final;
+            var startTime = DateTimeOffset.UtcNow;
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
-        //    DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            //Act
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
 
-        //    var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            await SendValidGraphQLApiRequest().ConfigureAwait(false);
 
-        //    //Act
-        //    gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            graphQLApiStatus_Final = gitHubApiRateLimits_Final.GraphQLApi;
 
-        //    graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
+            //Assert
+            Assert.IsNotNull(graphQLApiStatus_Initial);
+            Assert.AreEqual(5000, graphQLApiStatus_Initial.RateLimit);
+            Assert.GreaterOrEqual(graphQLApiStatus_Initial.RemainingRequestCount, 0);
+            Assert.LessOrEqual(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Initial.RateLimit);
+            Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
+            Assert.IsNotNull(graphQLApiStatus_Final);
+            Assert.AreEqual(5000, graphQLApiStatus_Final.RateLimit);
+            Assert.GreaterOrEqual(graphQLApiStatus_Final.RemainingRequestCount, 0);
+            Assert.LessOrEqual(graphQLApiStatus_Final.RemainingRequestCount, graphQLApiStatus_Final.RateLimit);
+            Assert.AreEqual(graphQLApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(graphQLApiStatus_Final.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-        //    //Assert
-        //    throw new NotImplementedException();
-        //}
+            Assert.AreEqual(graphQLApiStatus_Initial.RateLimit, graphQLApiStatus_Final.RateLimit);
+            Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime, graphQLApiStatus_Final.RateLimitReset_DateTime);
+            Assert.Greater(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, graphQLApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.Greater(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Final.RemainingRequestCount);
+
+        }
 
         //[Test]
         //public async Task GetApiRateLimits_ValidSearchApiRequest()
