@@ -54,12 +54,10 @@ namespace GitHubApiStatus.UnitTests
         public async Task GetApiRateLimits_ValidRestApiRequest()
         {
             //Arrange
+            RateLimitStatus restApiStatus_Initial, restApiStatus_Final;
             GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-            RateLimitStatus restApiStatus_Initial, restApiStatus_Final;
-
-            DateTimeOffset startTime = DateTimeOffset.UtcNow;
-
+            var startTime = DateTimeOffset.UtcNow;
             var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
             //Act
