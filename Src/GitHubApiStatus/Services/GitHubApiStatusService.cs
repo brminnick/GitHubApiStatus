@@ -89,7 +89,6 @@ namespace GitHubApiStatus
             {
                 SemaphoreSlim.Release();
             }
-
         }
 
         /// <summary>

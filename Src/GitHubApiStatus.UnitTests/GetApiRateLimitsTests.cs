@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using GitStatus.Shared;
 using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
-    class GetApiRateLimitsTests
+    class GetApiRateLimitsTests : BaseTest
     {
         [Test]
         public void GetApiRateLimits_NullAuthenticationHeaderValue()
@@ -24,17 +22,13 @@ namespace GitHubApiStatus.UnitTests
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 
-        [TestCase(null)]
-        [TestCase("")]
         [TestCase("Basic")]
         [TestCase("Oauth")]
         [TestCase("Digest")]
-        public void GetApiRateLimits_InvalidScheme(string? scheme)
+        public void GetApiRateLimits_InvalidScheme(string scheme)
         {
             //Arrange
-#pragma warning disable CS8604 // Possible null reference argument.
             var authenticationHeaderValue = new AuthenticationHeaderValue(scheme, GitHubConstants.PersonalAccessToken);
-#pragma warning restore CS8604 // Possible null reference argument.
 
             //Act
 
@@ -42,6 +36,122 @@ namespace GitHubApiStatus.UnitTests
             Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue));
         }
 
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void GetApiRateLimits_InvalidParameter(string parameter)
+        {
+            //Arrange
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", parameter);
 
+            //Act
+
+            //Assert
+            Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue));
+        }
+
+        [Test]
+        public async Task GetApiRateLimits_ValidRestApiRequest()
+        {
+            //Arrange
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+
+            RateLimitStatus restApiStatus_Initial, restApiStatus_Final;
+
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
+            //Act
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            restApiStatus_Initial = gitHubApiRateLimits_Initial.RestApi;
+
+            await SendValidRestApiRequest().ConfigureAwait(false);
+
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            restApiStatus_Final = gitHubApiRateLimits_Final.RestApi;
+
+            //Assert
+            Assert.IsNotNull(restApiStatus_Initial);
+            Assert.AreEqual(5000, restApiStatus_Initial.RateLimit);
+            Assert.GreaterOrEqual(restApiStatus_Initial.RemainingRequestCount, 0);
+            Assert.LessOrEqual(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Initial.RateLimit);
+            Assert.AreEqual(restApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), restApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+
+            Assert.IsNotNull(restApiStatus_Final);
+            Assert.AreEqual(5000, restApiStatus_Final.RateLimit);
+            Assert.GreaterOrEqual(restApiStatus_Final.RemainingRequestCount, 0);
+            Assert.LessOrEqual(restApiStatus_Final.RemainingRequestCount, restApiStatus_Final.RateLimit);
+            Assert.AreEqual(restApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(restApiStatus_Final.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(restApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+
+            Assert.AreEqual(restApiStatus_Initial.RateLimit, restApiStatus_Final.RateLimit);
+            Assert.AreEqual(restApiStatus_Initial.RateLimitReset_DateTime, restApiStatus_Final.RateLimitReset_DateTime);
+            Assert.Greater(restApiStatus_Initial.RateLimitReset_TimeRemaining, restApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.AreEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.Greater(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Final.RemainingRequestCount);
+
+        }
+
+        [Test]
+        public async Task GetApiRateLimits_ValidGraphQLApiRequest()
+        {
+            //Arrange
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+
+            RateLimitStatus graphQLApiStatus_Initial, graphQLApiStatus_Final;
+
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
+            //Act
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+
+            graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
+
+
+            //Assert
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public async Task GetApiRateLimits_ValidSearchApiRequest()
+        {
+            //Arrange
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+
+            //Act
+
+            //Assert
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public async Task GetApiRateLimits_ValidCodeScanningUploadApiRequest()
+        {
+            //Arrange
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+
+            //Act
+
+            //Assert
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public async Task GetApiRateLimits_ValidAppManifestConfigurationRequest()
+        {
+            //Arrange
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+
+            //Act
+
+            //Assert
+            throw new NotImplementedException();
+        }
     }
 }
