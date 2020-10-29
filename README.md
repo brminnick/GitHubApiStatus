@@ -106,7 +106,7 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
   
 ## Examples
 
-### Get Current API Status
+### Get Current GitHub API Status
 
 ```csharp
 static async Task Main(string[] args)
