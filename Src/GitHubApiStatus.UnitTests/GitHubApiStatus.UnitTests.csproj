@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp1.1;netcoreapp2.1;netcoreapp3.1;net5.0</TargetFrameworks>
     <Nullable>enable</Nullable>
+    <langversion>latest</langversion>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -17,4 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
   </ItemGroup>
+
+  <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" />
 </Project>

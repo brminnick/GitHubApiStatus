@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>GitStatus.ConsoleApp</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
+    </ItemGroup>
+    <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')" />
+</Project>

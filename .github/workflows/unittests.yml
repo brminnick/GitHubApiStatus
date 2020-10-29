@@ -6,16 +6,15 @@ on:
       - "main"
   pull_request:
     branches: 
-      - "main"
+      - "*"
 
 jobs:
     UnitTests:
       runs-on: macos-latest
       steps:
       - uses: actions/checkout@v1
-   
       - name: Run Unit Tests
-        run: |   
+        run: |
           UnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
           echo $UnitTestProject
 

@@ -1,6 +1,16 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+
+#if NETSTANDARD
+using Newtonsoft.Json;
+#else
+using System.Text.Json;
+#endif
 
 namespace GitHubApiStatus
 {
@@ -9,7 +19,20 @@ namespace GitHubApiStatus
     /// </summary>
     public class GitHubApiStatusService
     {
-        static readonly Lazy<GitHubApiStatusService> _instanceHolder = new Lazy<GitHubApiStatusService>(() => new GitHubApiStatusService());
+        readonly static Lazy<SemaphoreSlim> _semaphoreSlimHolder = new Lazy<SemaphoreSlim>(() => new SemaphoreSlim(1, 1));
+        readonly static Lazy<GitHubApiStatusService> _instanceHolder = new Lazy<GitHubApiStatusService>(() => new GitHubApiStatusService());
+
+#if NETSTANDARD
+        readonly static Lazy<JsonSerializer> _serializerHolder = new Lazy<JsonSerializer>(() => new JsonSerializer());
+#endif
+
+        readonly static Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => new HttpClient
+        {
+            DefaultRequestHeaders =
+            {
+                { "User-Agent", nameof(GitHubApiStatus) },
+            }
+        });
 
         /// <summary>
         /// GitHub Http Response Rate Limit Header Key
@@ -31,6 +54,47 @@ namespace GitHubApiStatus
         /// Static Instance of GitHubApiStatusService 
         /// </summary>
         public static GitHubApiStatusService Instance => _instanceHolder.Value;
+
+        static HttpClient Client => _clientHolder.Value;
+
+#if NETSTANDARD
+        static JsonSerializer Serializer => _serializerHolder.Value;
+#endif
+        static SemaphoreSlim SemaphoreSlim => _semaphoreSlimHolder.Value;
+
+        /// <summary>
+        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
+        /// </summary>
+        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
+        /// <returns>The API Status for each GitHub API</returns>
+        public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue)
+        {
+            if (authenticationHeaderValue is null)
+                throw new ArgumentNullException(nameof(authenticationHeaderValue));
+
+            if (!authenticationHeaderValue.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
+
+            if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be null or empty");
+
+            try
+            {
+                await SemaphoreSlim.WaitAsync().ConfigureAwait(false);
+
+                Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+
+                var response = await GetGitHubApiRateLimitResponse();
+
+                Client.DefaultRequestHeaders.Authorization = null;
+
+                return response.Results;
+            }
+            finally
+            {
+                SemaphoreSlim.Release();
+            }
+        }
 
         /// <summary>
         /// Get GitHub API Rate Limit
@@ -100,6 +164,22 @@ namespace GitHubApiStatus
         {
             var rateLimitResetHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
             return long.Parse(rateLimitResetHeader.Value.First());
+        }
+
+        // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse()
+        {
+            using var stream = await Client.GetStreamAsync("https://api.github.com/rate_limit").ConfigureAwait(false);
+#if NETSTANDARD
+            using var streamReader = new StreamReader(stream);
+            using var jsonTextReader = new JsonTextReader(streamReader);
+
+            return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
+#else
+            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream).ConfigureAwait(false) ?? throw new JsonException();
+
+            return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
+#endif
         }
     }
 }
