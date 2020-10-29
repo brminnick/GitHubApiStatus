@@ -49,6 +49,11 @@ namespace GitHubApiStatus.UnitTests
         }
 
         protected static Task<HttpResponseMessage> SendValidRestApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
+
+        protected static Task<HttpResponseMessage> SendValidSearchApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/search/code");
+
+        protected static Task<HttpResponseMessage> SendValidCodeScanningApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus/code-scanning/alerts");
+
         protected static Task SendValidGraphQLApiRequest()
         {
             var graphQLRequest = new GraphQLRequest

@@ -135,43 +135,49 @@ namespace GitHubApiStatus.UnitTests
             Assert.Greater(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, graphQLApiStatus_Final.RateLimitReset_TimeRemaining);
             Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Final.RemainingRequestCount);
-
         }
 
-        //[Test]
-        //public async Task GetApiRateLimits_ValidSearchApiRequest()
-        //{
-        //    //Arrange
-        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+        [Test]
+        public async Task GetApiRateLimits_ValidSearchApiRequest()
+        {
+            //Arrange
+            RateLimitStatus searchApiStatus_Initial, codeScanningApiStatus_Final;
+            GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
-        //    //Act
+            var startTime = DateTimeOffset.UtcNow;
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
-        //    //Assert
-        //    throw new NotImplementedException();
-        //}
+            //Act
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            searchApiStatus_Initial = gitHubApiRateLimits_Initial.SearchApi;
 
-        //[Test]
-        //public async Task GetApiRateLimits_ValidCodeScanningUploadApiRequest()
-        //{
-        //    //Arrange
-        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+            await SendValidSearchApiRequest().ConfigureAwait(false);
 
-        //    //Act
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            codeScanningApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
 
-        //    //Assert
-        //    throw new NotImplementedException();
-        //}
+            //Assert
+            Assert.IsNotNull(searchApiStatus_Initial);
+            Assert.AreEqual(30, searchApiStatus_Initial.RateLimit);
+            Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, 0);
+            Assert.LessOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Initial.RateLimit);
+            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-        //[Test]
-        //public async Task GetApiRateLimits_ValidAppManifestConfigurationRequest()
-        //{
-        //    //Arrange
-        //    GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
+            Assert.IsNotNull(codeScanningApiStatus_Final);
+            Assert.AreEqual(30, codeScanningApiStatus_Final.RateLimit);
+            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, 0);
+            Assert.LessOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, codeScanningApiStatus_Final.RateLimit);
+            Assert.AreEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-        //    //Act
-
-        //    //Assert
-        //    throw new NotImplementedException();
-        //}
+            Assert.AreEqual(searchApiStatus_Initial.RateLimit, codeScanningApiStatus_Final.RateLimit);
+            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_DateTime, codeScanningApiStatus_Final.RateLimitReset_DateTime);
+            Assert.Greater(searchApiStatus_Initial.RateLimitReset_TimeRemaining, codeScanningApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, codeScanningApiStatus_Final.RemainingRequestCount);
+        }
     }
 }
