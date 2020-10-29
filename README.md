@@ -106,6 +106,9 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
   
 ## Examples
 
+- [Jump to Get Current GitHub API Status](#Get-Current-GitHub-API-Status)
+- [Jump to Parse API Status from HttpResponseHeaders](#parse-api-ststus-from-httpresponseheaders)
+
 ### Get Current GitHub API Status
 
 ```csharp
@@ -182,34 +185,58 @@ static async Task<(TimeSpan RateLimitTimeRemaining, int RateLimit, int Remaining
 ```
 
 > What is the GitHub REST API Rate Limit? 5000
+>
 > How many REST API requests do I have remaining? 4983
+>
 > How long until the GitHub REST API Rate Limit resets? 00:40:13.8035515
+>
 > When does the GitHub REST API Rate Limit reset? 10/29/2020 3:28:58 AM +00:00
+>
 > 
 > What is the GitHub GraphQL API Rate Limit? 5000
+>
 > How many GraphQL API requests do I have remaining? 5000
+>
 > How long until the GitHub GraphQL API Rate Limit resets? 00:59:59.8034526
+>
 > When does the GitHub GraphQL API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
+>
 > 
 > What is the GitHub Search API Rate Limit? 30
+>
 > How many Search API requests do I have remaining? 30
+>
 > How long until the GitHub Search API Rate Limit resets? 00:00:59.8034988
+>
 > When does the GitHub Search API Rate Limit reset? 10/29/2020 2:49:44 AM +00:00
+>
 > 
 > What is the GitHub Source Import API Rate Limit? 100
+>
 > How many Source Import API requests do I have remaining? 100
+>
 > How long until the GitHub Source Import API Rate Limit resets? 00:00:59.8034154
+>
 > When does the GitHub Source Import API Rate Limit reset? 10/29/2020 2:49:44 AM +00:00
+>
 > 
 > What is the GitHub App Manifest Configuration API Rate Limit? 5000
+>
 > How many App Manifest Configuration API requests do I have remaining? 5000
+>
 > How long until the GitHub App Manifest Configuration API Rate Limit resets? 00:59:59.8033802
+>
 > When does the GitHub App Manifest Configuration API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
+>
 > 
 > What is the GitHub Code Scanning Upload API Rate Limit? 500
+>
 > How many Code Scanning Upload API requests do I have remaining? 500
+>
 > How long until the GitHub Code Scanning Upload API Rate Limit resets? 00:59:59.8033455
+>
 > When does the GitHub Code Scanning Upload API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
+>
 
 ### Parse API ststus from `HttpResponseHeaders`
 
