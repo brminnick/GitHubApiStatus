@@ -21,8 +21,12 @@ namespace GitHubApiStatus
             RateLimitReset_UnixEpochSeconds = reset;
 
             RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
-            RateLimitReset_TimeRemaining = RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);
         }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
 
         /// <summary>
         /// GitHub API Rate Limit
@@ -38,11 +42,6 @@ namespace GitHubApiStatus
         /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
         /// </summary>
         public long RateLimitReset_UnixEpochSeconds { get; }
-
-        /// <summary>
-        /// Time Remaining until Rate Limit Reset
-        /// </summary>
-        public TimeSpan RateLimitReset_TimeRemaining { get; }
 
         /// <summary>
         /// Rate Limit Reset Time Stamp
