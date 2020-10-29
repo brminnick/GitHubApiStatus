@@ -13,11 +13,11 @@ jobs:
       runs-on: macos-latest
       steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.100-rc.2'
       - name: Run Unit Tests
         run: |   
+          wget https://dot.net/v1/dotnet-install.sh
+          chmod +x dotnet-install.sh ./dotnet-install.sh --version SDK 5.0.100-rc.2
+
           UnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
           echo $UnitTestProject
 
