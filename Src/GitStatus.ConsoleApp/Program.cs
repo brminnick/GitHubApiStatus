@@ -25,63 +25,63 @@ namespace GitStatus.ConsoleApp
 
             var restApiRateLimitDataFromHeaders = await GetRestApiRateLimitDataFromHeaders();
 
-            Console.WriteLine($"What is the GitHub API Rate Limit? {restApiRateLimitDataFromHeaders.RateLimit}");
-            Console.WriteLine($"Have I reached the Maximum API Limit? {restApiRateLimitDataFromHeaders.HasReachedMaximumApiLimit}");
-            Console.WriteLine($"How many API requests do I have remaining? {restApiRateLimitDataFromHeaders.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub API Rate Limit resets? {restApiRateLimitDataFromHeaders.RateLimitTimeRemaining}");
-            Console.WriteLine($"Did GitHub API Request include a Bearer Token? {restApiRateLimitDataFromHeaders.IsAuthenticated}");
+            Console.WriteLine($"What is the GitHub REST API Rate Limit? {restApiRateLimitDataFromHeaders.RateLimit}"); // What is the GitHub REST API Rate Limit? 60
+            Console.WriteLine($"Have I reached the Maximum REST API Limit? {restApiRateLimitDataFromHeaders.HasReachedMaximumApiLimit}"); // Have I reached the Maximum REST API Limit? False
+            Console.WriteLine($"How many REST API requests do I have remaining? {restApiRateLimitDataFromHeaders.RemainingRequestCount}"); // How many REST API requests do I have remaining? 56
+            Console.WriteLine($"How long until the GitHub REST API Rate Limit resets? {restApiRateLimitDataFromHeaders.RateLimitTimeRemaining}"); // How long until the GitHub REST API Rate Limit resets? 00:29:12.4134330
+            Console.WriteLine($"Did the GitHub REST API Request include a Bearer Token? {restApiRateLimitDataFromHeaders.IsAuthenticated}"); // Did GitHub REST API Request include a Bearer Token? False
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             var apiRateLimits = await GetApiRateLimits();
 
             // REST API Results
-            Console.WriteLine($"What is the GitHub REST API Rate Limit? {apiRateLimits.RestApi.RateLimit}");
-            Console.WriteLine($"How many REST API requests do I have remaining? {apiRateLimits.RestApi.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub REST API Rate Limit resets? {apiRateLimits.RestApi.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub REST API Rate Limit reset? {apiRateLimits.RestApi.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub REST API Rate Limit? {apiRateLimits.RestApi.RateLimit}"); // What is the GitHub REST API Rate Limit? 5000
+            Console.WriteLine($"How many REST API requests do I have remaining? {apiRateLimits.RestApi.RemainingRequestCount}"); // How many REST API requests do I have remaining? 4983
+            Console.WriteLine($"How long until the GitHub REST API Rate Limit resets? {apiRateLimits.RestApi.RateLimitReset_TimeRemaining}"); // How long until the GitHub REST API Rate Limit resets? 00:40:13.8035515
+            Console.WriteLine($"When does the GitHub REST API Rate Limit reset? {apiRateLimits.RestApi.RateLimitReset_DateTime}"); // When does the GitHub REST API Rate Limit reset? 10/29/2020 3:28:58 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             // GraphQL API Results
-            Console.WriteLine($"What is the GitHub GraphQL API Rate Limit? {apiRateLimits.GraphQLApi.RateLimit}");
-            Console.WriteLine($"How many GraphQL API requests do I have remaining? {apiRateLimits.GraphQLApi.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub GraphQL API Rate Limit resets? {apiRateLimits.GraphQLApi.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub GraphQL API Rate Limit reset? {apiRateLimits.GraphQLApi.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub GraphQL API Rate Limit? {apiRateLimits.GraphQLApi.RateLimit}"); // What is the GitHub GraphQL API Rate Limit? 5000
+            Console.WriteLine($"How many GraphQL API requests do I have remaining? {apiRateLimits.GraphQLApi.RemainingRequestCount}"); // How many GraphQL API requests do I have remaining? 5000
+            Console.WriteLine($"How long until the GitHub GraphQL API Rate Limit resets? {apiRateLimits.GraphQLApi.RateLimitReset_TimeRemaining}"); // How long until the GitHub GraphQL API Rate Limit resets? 00:59:59.8034526
+            Console.WriteLine($"When does the GitHub GraphQL API Rate Limit reset? {apiRateLimits.GraphQLApi.RateLimitReset_DateTime}"); // When does the GitHub GraphQL API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             // Search API Results
-            Console.WriteLine($"What is the GitHub Search API Rate Limit? {apiRateLimits.SearchApi.RateLimit}");
-            Console.WriteLine($"How many Search API requests do I have remaining? {apiRateLimits.SearchApi.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub Search API Rate Limit resets? {apiRateLimits.SearchApi.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub Search API Rate Limit reset? {apiRateLimits.SearchApi.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub Search API Rate Limit? {apiRateLimits.SearchApi.RateLimit}"); // What is the GitHub Search API Rate Limit? 30
+            Console.WriteLine($"How many Search API requests do I have remaining? {apiRateLimits.SearchApi.RemainingRequestCount}"); // How many Search API requests do I have remaining? 30
+            Console.WriteLine($"How long until the GitHub Search API Rate Limit resets? {apiRateLimits.SearchApi.RateLimitReset_TimeRemaining}"); // How long until the GitHub Search API Rate Limit resets? 00:00:59.8034988
+            Console.WriteLine($"When does the GitHub Search API Rate Limit reset? {apiRateLimits.SearchApi.RateLimitReset_DateTime}"); // When does the GitHub Search API Rate Limit reset? 10/29/2020 2:49:44 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             // Source Import API Results
-            Console.WriteLine($"What is the GitHub Source Import API Rate Limit? {apiRateLimits.SourceImport.RateLimit}");
-            Console.WriteLine($"How many Source Import API requests do I have remaining? {apiRateLimits.SourceImport.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub Source Import API Rate Limit resets? {apiRateLimits.SourceImport.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub Source Import API Rate Limit reset? {apiRateLimits.SourceImport.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub Source Import API Rate Limit? {apiRateLimits.SourceImport.RateLimit}"); // What is the GitHub Source Import API Rate Limit? 100
+            Console.WriteLine($"How many Source Import API requests do I have remaining? {apiRateLimits.SourceImport.RemainingRequestCount}"); // How many Source Import API requests do I have remaining? 100
+            Console.WriteLine($"How long until the GitHub Source Import API Rate Limit resets? {apiRateLimits.SourceImport.RateLimitReset_TimeRemaining}"); // How long until the GitHub Source Import API Rate Limit resets? 00:00:59.8034154
+            Console.WriteLine($"When does the GitHub Source Import API Rate Limit reset? {apiRateLimits.SourceImport.RateLimitReset_DateTime}"); // When does the GitHub Source Import API Rate Limit reset? 10/29/2020 2:49:44 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             // App Manifest Configuration API Results
-            Console.WriteLine($"What is the GitHub App Manifest Configuration API Rate Limit? {apiRateLimits.AppManifestConfiguration.RateLimit}");
-            Console.WriteLine($"How many App Manifest Configuration API requests do I have remaining? {apiRateLimits.AppManifestConfiguration.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub App Manifest Configuration API Rate Limit resets? {apiRateLimits.AppManifestConfiguration.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub App Manifest Configuration API Rate Limit reset? {apiRateLimits.AppManifestConfiguration.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub App Manifest Configuration API Rate Limit? {apiRateLimits.AppManifestConfiguration.RateLimit}"); // What is the GitHub App Manifest Configuration API Rate Limit? 5000
+            Console.WriteLine($"How many App Manifest Configuration API requests do I have remaining? {apiRateLimits.AppManifestConfiguration.RemainingRequestCount}"); // How many App Manifest Configuration API requests do I have remaining? 5000
+            Console.WriteLine($"How long until the GitHub App Manifest Configuration API Rate Limit resets? {apiRateLimits.AppManifestConfiguration.RateLimitReset_TimeRemaining}"); // How long until the GitHub App Manifest Configuration API Rate Limit resets? 00:59:59.8033802
+            Console.WriteLine($"When does the GitHub App Manifest Configuration API Rate Limit reset? {apiRateLimits.AppManifestConfiguration.RateLimitReset_DateTime}"); // When does the GitHub App Manifest Configuration API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
 
             // Code Scanning Upload API Results
-            Console.WriteLine($"What is the GitHub Code Scanning Upload API Rate Limit? {apiRateLimits.CodeScanningUpload.RateLimit}");
-            Console.WriteLine($"How many Code Scanning Upload API requests do I have remaining? {apiRateLimits.CodeScanningUpload.RemainingRequestCount}");
-            Console.WriteLine($"How long until the GitHub Code Scanning Upload API Rate Limit resets? {apiRateLimits.CodeScanningUpload.RateLimitReset_TimeRemaining}");
-            Console.WriteLine($"When does the GitHub Code Scanning Upload API Rate Limit reset? {apiRateLimits.CodeScanningUpload.RateLimitReset_DateTime}");
+            Console.WriteLine($"What is the GitHub Code Scanning Upload API Rate Limit? {apiRateLimits.CodeScanningUpload.RateLimit}"); // What is the GitHub Code Scanning Upload API Rate Limit? 500
+            Console.WriteLine($"How many Code Scanning Upload API requests do I have remaining? {apiRateLimits.CodeScanningUpload.RemainingRequestCount}"); // How many Code Scanning Upload API requests do I have remaining? 500
+            Console.WriteLine($"How long until the GitHub Code Scanning Upload API Rate Limit resets? {apiRateLimits.CodeScanningUpload.RateLimitReset_TimeRemaining}"); // How long until the GitHub Code Scanning Upload API Rate Limit resets? 00:59:59.8033455
+            Console.WriteLine($"When does the GitHub Code Scanning Upload API Rate Limit reset? {apiRateLimits.CodeScanningUpload.RateLimitReset_DateTime}"); // When does the GitHub Code Scanning Upload API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
 
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         static async Task<(TimeSpan RateLimitTimeRemaining, int RateLimit, int RemainingRequestCount, bool IsAuthenticated, bool HasReachedMaximumApiLimit)> GetRestApiRateLimitDataFromHeaders()
