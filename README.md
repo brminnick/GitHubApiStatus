@@ -107,7 +107,7 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
 ## Examples
 
 - [Jump to Get Current GitHub API Status](#Get-Current-GitHub-API-Status)
-- [Jump to Parse API Status from HttpResponseHeaders](#parse-api-ststus-from-httpresponseheaders)
+- [Jump to Parse API Status from HttpResponseHeaders](#parse-api-status-from-httpresponseheaders)
 
 ### Get Current GitHub API Status
 
@@ -219,7 +219,7 @@ static async Task Main(string[] args)
 > When does the GitHub Code Scanning Upload API Rate Limit reset? 10/29/2020 3:48:44 AM +00:00
 >
 
-### Parse API ststus from `HttpResponseHeaders`
+### Parse API status from `HttpResponseHeaders`
 
 ```csharp
 const string _gitHubRestApiUrl = "https://api.github.com";
