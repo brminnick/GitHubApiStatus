@@ -62,6 +62,11 @@ namespace GitHubApiStatus
 #endif
         static SemaphoreSlim SemaphoreSlim => _semaphoreSlimHolder.Value;
 
+        /// <summary>
+        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
+        /// </summary>
+        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
+        /// <returns>The API Status for each GitHub API</returns>
         public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue)
         {
             if (authenticationHeaderValue is null)
