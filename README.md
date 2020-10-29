@@ -112,7 +112,7 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
 static async Task Main(string[] args)
 {
     //Generate Personal Access Token https://github.com/settings/tokens
-    var apiRateLimits = await GitHubApiStatusService.Instance.GetApiRateLimits(new AuthenticationHeaderValue("bearer", "Your GitHub Personal Access Token, e.g. 123456789012345));
+    var apiRateLimits = await GitHubApiStatusService.Instance.GetApiRateLimits(new AuthenticationHeaderValue("bearer", "Your GitHub Personal Access Token, e.g. 123456789012345"));
 
     // REST API Results
     Console.WriteLine($"What is the GitHub REST API Rate Limit? {apiRateLimits.RestApi.RateLimit}");
