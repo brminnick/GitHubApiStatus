@@ -14,10 +14,7 @@ jobs:
       steps:
       - uses: actions/checkout@v1
       - name: Run Unit Tests
-        run: |   
-          wget https://dot.net/v1/dotnet-install.sh
-          chmod +x dotnet-install.sh ./dotnet-install.sh --version SDK 5.0.100-rc.2
-
+        run: |
           UnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
           echo $UnitTestProject
 
