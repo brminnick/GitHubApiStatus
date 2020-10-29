@@ -35,7 +35,7 @@ GitHubApiStatus helps make it easy to understand GitHub's API Rate Limit!
 
 ## API
 
-### GetApiRateLimits
+#### GetApiRateLimits
 
 ```csharp
 public Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue)
