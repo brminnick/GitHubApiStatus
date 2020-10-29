@@ -1,20 +1,26 @@
-﻿using System;
-using System.Threading;
+﻿using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using GitHubApiStatus;
 using GitStatus.Shared;
 
 namespace GitStatus
 {
     class GraphQLApiStatusViewModel : BaseStatusViewModel
     {
-        public GraphQLApiStatusViewModel(GitHubStatusService gitHubStatusService) : base(gitHubStatusService)
-        {
-        }
+        readonly GitHubApiStatusService _gitHubApiStatusService;
 
-        protected override Task<GitHubApiStatusModel> GetStatus()
+        public GraphQLApiStatusViewModel(GitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
+
+        protected override async Task ExecuteGetStatusCommand()
         {
-            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-            return GitHubStatusService.GetGitHubGraphQlApiStatus(GitHubConstants.PersonalAccessToken, cancellationTokenSource.Token);
+            var authHeader = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
+            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits(authHeader).ConfigureAwait(false);
+
+            StatusLabelText = @$"Rate Limit: {apiRateLimitStatuses.GraphQLApi.RateLimit}
+Remaining Request Count: {apiRateLimitStatuses.GraphQLApi.RemainingRequestCount}
+Rate Limit Reset: {apiRateLimitStatuses.GraphQLApi.RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {apiRateLimitStatuses.GraphQLApi.RateLimitReset_TimeRemaining}";
         }
     }
 }

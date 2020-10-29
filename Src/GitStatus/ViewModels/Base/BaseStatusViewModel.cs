@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AsyncAwaitBestPractices.MVVM;
+using GitHubApiStatus;
 using Xamarin.Essentials;
 
 namespace GitStatus
@@ -9,14 +10,15 @@ namespace GitStatus
         string _statusLabelText = string.Empty;
         bool _isBusy;
 
-        public BaseStatusViewModel(GitHubStatusService gitHubStatusService)
+        protected BaseStatusViewModel()
         {
-            GitHubStatusService = gitHubStatusService;
             GetStatusCommand = new AsyncCommand(ExecuteGetStatusCommand, _ => !IsBusy);
         }
 
         public IAsyncCommand GetStatusCommand { get; }
-        protected GitHubStatusService GitHubStatusService { get; }
+
+        public RateLimitStatus? RestApiStatus { get; private set; }
+        public RateLimitStatus? GraphQLApiStatus { get; private set; }
 
         public string StatusLabelText
         {
@@ -30,21 +32,6 @@ namespace GitStatus
             set => SetProperty(ref _isBusy, value, () => MainThread.BeginInvokeOnMainThread(GetStatusCommand.RaiseCanExecuteChanged));
         }
 
-        protected abstract Task<GitHubApiStatusModel> GetStatus();
-
-        async Task ExecuteGetStatusCommand()
-        {
-            IsBusy = true;
-
-            try
-            {
-                var status = await GetStatus().ConfigureAwait(false);
-                StatusLabelText = status.ToString();
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
+        protected abstract Task ExecuteGetStatusCommand();
     }
 }

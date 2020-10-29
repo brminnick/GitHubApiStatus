@@ -1,4 +1,5 @@
 ﻿using System;
+using GitHubApiStatus;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GitStatus
@@ -22,7 +23,7 @@ namespace GitStatus
             services.AddTransient<GraphQLApiStatusViewModel>();
 
             //Services
-            services.AddSingleton<GitHubStatusService>();
+            services.AddSingleton<GitHubApiStatusService>();
 
             return services.BuildServiceProvider();
         }
