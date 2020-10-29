@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.*' # SDK Version to use.
+          dotnet-version: '5.x.x' # SDK Version to use.
       - name: Run Unit Tests
         run: |   
           UnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
