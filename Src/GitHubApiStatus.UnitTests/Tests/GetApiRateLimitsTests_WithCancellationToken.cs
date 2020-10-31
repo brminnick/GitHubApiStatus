@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
-    class GetApiRateLimitsTests : BaseTest
+    class GetApiRateLimitsTests_WithCancellationToken : BaseTest
     {
         [Test]
         public void GetApiRateLimits_NullAuthenticationHeaderValue()
