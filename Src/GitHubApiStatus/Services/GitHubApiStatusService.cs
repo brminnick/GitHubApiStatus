@@ -67,7 +67,15 @@ namespace GitHubApiStatus
         /// </summary>
         /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
         /// <returns>The API Status for each GitHub API</returns>
-        public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue)
+        public Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue) => GetApiRateLimits(authenticationHeaderValue, CancellationToken.None);
+
+        /// <summary>
+        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
+        /// </summary>
+        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue, CancellationToken cancellationToken)
         {
             if (authenticationHeaderValue is null)
                 throw new ArgumentNullException(nameof(authenticationHeaderValue));
@@ -84,7 +92,7 @@ namespace GitHubApiStatus
 
                 Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
 
-                var response = await GetGitHubApiRateLimitResponse();
+                var response = await GetGitHubApiRateLimitResponse(cancellationToken);
 
                 Client.DefaultRequestHeaders.Authorization = null;
 
@@ -167,9 +175,11 @@ namespace GitHubApiStatus
         }
 
         // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse()
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(CancellationToken cancellationToken)
         {
-            using var stream = await Client.GetStreamAsync("https://api.github.com/rate_limit").ConfigureAwait(false);
+            using var response = await Client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+            using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+
 #if NETSTANDARD
             using var streamReader = new StreamReader(stream);
             using var jsonTextReader = new JsonTextReader(streamReader);
