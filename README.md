@@ -4,7 +4,7 @@
 
 [![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) 
 
-GitHubApiStatus helps make it easy to understand GitHub's API Rate Limit!
+GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
 - [Jump to the Setup](#Setup)
 - [Jump to the API](#API)
