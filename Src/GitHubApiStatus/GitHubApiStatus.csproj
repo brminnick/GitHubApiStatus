@@ -87,6 +87,9 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
             </SubType>
         </Compile>
     </ItemGroup>
+    <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    </ItemGroup>
     <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
