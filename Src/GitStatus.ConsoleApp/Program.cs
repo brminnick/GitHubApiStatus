@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace GitStatus.ConsoleApp
 {
     class Program
     {
-        static readonly HttpClient _client = new HttpClient
+        static readonly HttpClient _client = new()
         {
             DefaultRequestHeaders =
             {

@@ -6,7 +6,7 @@ namespace GitStatus
 {
     public class ContainerService
     {
-        readonly static Lazy<ServiceProvider> _serviceProviderHolder = new Lazy<ServiceProvider>(CreateContainer);
+        readonly static Lazy<ServiceProvider> _serviceProviderHolder = new(CreateContainer);
 
         public static ServiceProvider Container => _serviceProviderHolder.Value;
 
