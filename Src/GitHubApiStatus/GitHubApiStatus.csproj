@@ -64,7 +64,7 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/brminnick/GitHubApiStatus</PackageProjectUrl>
         <DebugType>portable</DebugType>
-        <Configurations>Debug;Release</Configurations>
+        <Configurations>Release;Debug</Configurations>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -86,6 +86,9 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
             <SubType>
             </SubType>
         </Compile>
+        <Compile Include="Models\IGitHubApiRateLimits.cs" />
+        <Compile Include="Models\IRateLimitStatus.cs" />
+        <Compile Include="Models\IGitHubApiRateLimitResponse.cs" />
     </ItemGroup>
     <ItemGroup Condition=" '$(Configuration)'=='Release' ">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />

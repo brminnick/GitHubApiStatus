@@ -3,7 +3,7 @@
     /// <summary>
     /// Rate Limit data for each GitHub API
     /// </summary>
-    public class GitHubApiRateLimits
+    public class GitHubApiRateLimits : IGitHubApiRateLimits
     {
         /// <summary>
         /// Create GitHubApiRateLimits
@@ -58,12 +58,21 @@
         /// App Manifest Configuration API Rate Limit Status
         /// </summary>
         public RateLimitStatus AppManifestConfiguration { get; }
+
+        IRateLimitStatus IGitHubApiRateLimits.RestApi => RestApi;
+        IRateLimitStatus IGitHubApiRateLimits.SearchApi => SearchApi;
+        IRateLimitStatus IGitHubApiRateLimits.GraphQLApi => GraphQLApi;
+        IRateLimitStatus IGitHubApiRateLimits.SourceImport => SourceImport;
+        IRateLimitStatus IGitHubApiRateLimits.CodeScanningUpload => CodeScanningUpload;
+        IRateLimitStatus IGitHubApiRateLimits.AppManifestConfiguration => AppManifestConfiguration;
     }
 
-    class GitHubApiRateLimitResponse
+    class GitHubApiRateLimitResponse : IGitHubApiRateLimitResponse
     {
         public GitHubApiRateLimitResponse(GitHubApiRateLimits resources) => Results = resources;
 
         public GitHubApiRateLimits Results { get; }
+
+        IGitHubApiRateLimits IGitHubApiRateLimitResponse.Results => Results;
     }
 }

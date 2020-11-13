@@ -5,7 +5,7 @@ namespace GitHubApiStatus
     /// <summary>
     /// GitHub API Rate Limit Status
     /// </summary>
-    public class RateLimitStatus
+    public class RateLimitStatus : IRateLimitStatus
     {
 
         /// <summary>

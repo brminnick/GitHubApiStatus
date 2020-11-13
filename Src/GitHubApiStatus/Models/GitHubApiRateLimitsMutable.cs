@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace GitHubApiStatus
 {
-    class GitHubApiRateLimitsMutable
+    class GitHubApiRateLimitsMutable : IGitHubApiRateLimits
     {
         [JsonPropertyName("core")]
         public RateLimitStatusMutable? RestApi { get; set; }
@@ -24,6 +24,13 @@ namespace GitHubApiStatus
         [JsonPropertyName("integration_manifest")]
         public RateLimitStatusMutable? AppManifestConfiguration { get; set; }
 
+        IRateLimitStatus IGitHubApiRateLimits.RestApi => RestApi ?? throw new NullReferenceException();
+        IRateLimitStatus IGitHubApiRateLimits.SearchApi => SearchApi ?? throw new NullReferenceException();
+        IRateLimitStatus IGitHubApiRateLimits.GraphQLApi => GraphQLApi ?? throw new NullReferenceException();
+        IRateLimitStatus IGitHubApiRateLimits.SourceImport => SourceImport ?? throw new NullReferenceException();
+        IRateLimitStatus IGitHubApiRateLimits.CodeScanningUpload => CodeScanningUpload ?? throw new NullReferenceException();
+        IRateLimitStatus IGitHubApiRateLimits.AppManifestConfiguration => AppManifestConfiguration ?? throw new NullReferenceException();
+
         public GitHubApiRateLimits ToGitHubApiRateLimits()
         {
             return new GitHubApiRateLimits(RestApi?.ToRateLimitStatus() ?? throw new NullReferenceException(),
@@ -35,8 +42,17 @@ namespace GitHubApiStatus
         }
     }
 
-    class RateLimitStatusMutable
+    class RateLimitStatusMutable : IRateLimitStatus
     {
+        public RateLimitStatusMutable()
+        {
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(RateLimitReset_UnixEpochSeconds);
+        }
+
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);
+
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
         [JsonPropertyName("limit")]
         public int RateLimit { get; set; }
 
@@ -46,14 +62,16 @@ namespace GitHubApiStatus
         [JsonPropertyName("reset")]
         public long RateLimitReset_UnixEpochSeconds { get; set; }
 
-        public RateLimitStatus ToRateLimitStatus() => new RateLimitStatus(RateLimit, RemainingRequestCount, RateLimitReset_UnixEpochSeconds);
+        public RateLimitStatus ToRateLimitStatus() => new(RateLimit, RemainingRequestCount, RateLimitReset_UnixEpochSeconds);
 
     }
 
-    class GitHubApiRateLimitResponseMutable
+    class GitHubApiRateLimitResponseMutable : IGitHubApiRateLimitResponse
     {
         [JsonPropertyName("resources")]
         public GitHubApiRateLimitsMutable? Results { get; set; }
+
+        IGitHubApiRateLimits IGitHubApiRateLimitResponse.Results => Results ?? throw new NullReferenceException();
 
         public GitHubApiRateLimitResponse ToGitHubApiRateLimitResponse() => new GitHubApiRateLimitResponse(Results?.ToGitHubApiRateLimits() ?? throw new NullReferenceException());
     }
