@@ -39,15 +39,11 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
 - App Manifest Configuration API
         </Description>
         <PackageReleaseNotes>
-Calculate the GitHub API Rate Limits for the following GitHub APIs
-- REST API
-- Seach API
-- GraphQL API
-- Source Import API
-- Code Scanning Upload API
-- App Manifest Configuration API
+New In This Release:
+- Interfaces! Added IGitHubApiStatusService, IGitHubApiRateLimitResponse, IGitHubApiRateLimits and IRateLimitStatus
+- Breaking Changes: Removed GitHubApiStatusService.Instance
         </PackageReleaseNotes>
-        <Version>1.0.1</Version>
+        <Version>2.0.0-pre1</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
