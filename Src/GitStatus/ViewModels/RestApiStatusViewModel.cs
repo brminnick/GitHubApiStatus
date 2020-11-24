@@ -13,9 +13,7 @@ namespace GitStatus
 
         protected override async Task ExecuteGetStatusCommand()
         {
-            var authHeader = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
-
-            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits(authHeader).ConfigureAwait(false);
+            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
 
             StatusLabelText = @$"Rate Limit: {apiRateLimitStatuses.RestApi.RateLimit}
 Remaining Request Count: {apiRateLimitStatuses.RestApi.RemainingRequestCount}
