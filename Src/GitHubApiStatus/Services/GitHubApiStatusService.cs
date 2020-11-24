@@ -37,7 +37,11 @@ namespace GitHubApiStatus
 #if NETSTANDARD
         readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
-
+        /// <summary>
+        /// Initializes GitHubApiStatusService
+        /// </summary>
+        /// <param name="authenticationHeaderValue">GitHub Authentication Bearer Token</param>
+        /// <param name="productHeaderValue">User-Agent Name</param>
         public GitHubApiStatusService(AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue? productHeaderValue = null)
         {
             if (authenticationHeaderValue is null)
@@ -56,6 +60,10 @@ namespace GitHubApiStatus
             Client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
         }
 
+        /// <summary>
+        /// Initializes GitHubApiStatusService
+        /// </summary>
+        /// <param name="httpClient">GitHub API requires the following Headers: Authorization and User-Agent</param>
         public GitHubApiStatusService(HttpClient httpClient)
         {
             if (httpClient is null)

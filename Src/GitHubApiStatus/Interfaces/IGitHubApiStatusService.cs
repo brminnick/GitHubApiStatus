@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace GitHubApiStatus
 {
+    /// <summary>
+    /// Interface for GitHubApiStatusService
+    /// </summary>
     public interface IGitHubApiStatusService
     {
         /// <summary>

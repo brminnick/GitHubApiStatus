@@ -1,6 +1,9 @@
 ﻿using System;
 namespace GitHubApiStatus
 {
+    /// <summary>
+    /// Interface for GitHub API Raite Limit Status
+    /// </summary>
     public interface IRateLimitStatus
     {
         /// <summary>

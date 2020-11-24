@@ -1,5 +1,8 @@
 ﻿namespace GitHubApiStatus
 {
+    /// <summary>
+    /// Interface for GitHub API Rate Limits
+    /// </summary>
     public interface IGitHubApiRateLimits
     {
         /// <summary>
