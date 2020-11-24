@@ -1,19 +1,20 @@
-﻿using System.Net.Http.Headers;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using GitHubApiStatus;
-using GitStatus.Shared;
 
 namespace GitStatus
 {
     class RestApiStatusViewModel : BaseStatusViewModel
     {
-        readonly GitHubApiStatusService _gitHubApiStatusService;
+        readonly IGitHubApiStatusService _gitHubApiStatusService;
 
-        public RestApiStatusViewModel(GitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
+        public RestApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
 
         protected override async Task ExecuteGetStatusCommand()
         {
-            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
 
             StatusLabelText = @$"Rate Limit: {apiRateLimitStatuses.RestApi.RateLimit}
 Remaining Request Count: {apiRateLimitStatuses.RestApi.RemainingRequestCount}

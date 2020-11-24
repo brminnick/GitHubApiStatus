@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
@@ -9,8 +8,6 @@ namespace GitStatus
     {
         public App()
         {
-            Device.SetFlags(new[] { "Markup_Experimental" });
-
             var restApiStatusPage = ContainerService.Container.GetService<RestApiStatusPage>();
             var graphQLApiStatusPage = ContainerService.Container.GetService<GraphQLApiStatusPage>();
 

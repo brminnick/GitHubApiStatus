@@ -33,7 +33,7 @@ namespace GitStatus
                     { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
                 }
             });
-            services.AddSingleton<GitHubApiStatusService>();
+            services.AddSingleton<IGitHubApiStatusService, GitHubApiStatusService>();
 
             return services.BuildServiceProvider();
         }
