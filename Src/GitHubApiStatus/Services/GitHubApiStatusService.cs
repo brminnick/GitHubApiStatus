@@ -61,14 +61,14 @@ namespace GitHubApiStatus
             if (httpClient is null)
                 throw new ArgumentNullException(nameof(httpClient), $"{nameof(httpClient)} cannot be null");
 
-            if (!httpClient.DefaultRequestHeaders.Authorization.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
+            if (!httpClient.DefaultRequestHeaders.Authorization?.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase) ?? true)
                 throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
 
-            if (string.IsNullOrWhiteSpace(httpClient.DefaultRequestHeaders.Authorization.Parameter))
+            if (string.IsNullOrWhiteSpace(httpClient.DefaultRequestHeaders.Authorization?.Parameter))
                 throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
 
             if (!httpClient.DefaultRequestHeaders.UserAgent.Any())
-                httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(nameof(GitHubApiStatus)));
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(new ProductHeaderValue(nameof(GitHubApiStatus))));
 
             Client = httpClient;
         }

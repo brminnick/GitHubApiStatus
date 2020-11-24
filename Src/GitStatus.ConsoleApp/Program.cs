@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitHubApiStatus;
 using GitStatus.Shared;
@@ -9,19 +8,19 @@ namespace GitStatus.ConsoleApp
 {
     class Program
     {
-        static readonly HttpClient _client = new()
+        static HttpClient _client = new()
         {
             DefaultRequestHeaders =
             {
                 { "User-Agent", nameof(GitStatus) },
+                { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
             }
         };
 
+        static GitHubApiStatusService _gitHubApiStatusService = new(_client);
+
         static async Task Main(string[] args)
         {
-            if (!string.IsNullOrWhiteSpace(GitHubConstants.PersonalAccessToken))
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
-
             var restApiRateLimitDataFromHeaders = await GetRestApiRateLimitDataFromHeaders();
 
             Console.WriteLine($"What is the GitHub REST API Rate Limit? {restApiRateLimitDataFromHeaders.RateLimit}"); // What is the GitHub REST API Rate Limit? 60
@@ -88,14 +87,14 @@ namespace GitStatus.ConsoleApp
             HttpResponseMessage restApiResponse = await _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
             restApiResponse.EnsureSuccessStatusCode();
 
-            TimeSpan rateLimitTimeRemaining = GitHubApiStatusService.Instance.GetRateLimitTimeRemaining(restApiResponse.Headers);
+            TimeSpan rateLimitTimeRemaining = _gitHubApiStatusService.GetRateLimitTimeRemaining(restApiResponse.Headers);
 
-            int rateLimit = GitHubApiStatusService.Instance.GetRateLimit(restApiResponse.Headers);
-            int remainingRequestCount = GitHubApiStatusService.Instance.GetRemainingRequestCount(restApiResponse.Headers);
+            int rateLimit = _gitHubApiStatusService.GetRateLimit(restApiResponse.Headers);
+            int remainingRequestCount = _gitHubApiStatusService.GetRemainingRequestCount(restApiResponse.Headers);
 
-            bool isAuthenticated = GitHubApiStatusService.Instance.IsAuthenticated(restApiResponse.Headers);
+            bool isAuthenticated = _gitHubApiStatusService.IsAuthenticated(restApiResponse.Headers);
 
-            bool hasReachedMaximumApiLimit = GitHubApiStatusService.Instance.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
+            bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
 
             return (rateLimitTimeRemaining, rateLimit, remainingRequestCount, isAuthenticated, hasReachedMaximumApiLimit);
         }
@@ -105,7 +104,7 @@ namespace GitStatus.ConsoleApp
             if (string.IsNullOrWhiteSpace(GitHubConstants.PersonalAccessToken))
                 throw new ArgumentException("GitHubConstants.PersonalAccessToken Cannot be Empty");
 
-            return GitHubApiStatusService.Instance.GetApiRateLimits(new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken));
+            return _gitHubApiStatusService.GetApiRateLimits();
         }
     }
 }

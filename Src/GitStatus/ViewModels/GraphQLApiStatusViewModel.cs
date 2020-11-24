@@ -1,7 +1,5 @@
-﻿using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GitHubApiStatus;
-using GitStatus.Shared;
 
 namespace GitStatus
 {
@@ -13,9 +11,7 @@ namespace GitStatus
 
         protected override async Task ExecuteGetStatusCommand()
         {
-            var authHeader = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
-
-            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits(authHeader).ConfigureAwait(false);
+            var apiRateLimitStatuses = await _gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
 
             StatusLabelText = @$"Rate Limit: {apiRateLimitStatuses.GraphQLApi.RateLimit}
 Remaining Request Count: {apiRateLimitStatuses.GraphQLApi.RemainingRequestCount}

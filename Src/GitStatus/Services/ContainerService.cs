@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net.Http;
 using GitHubApiStatus;
+using GitStatus.Shared;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GitStatus
@@ -23,6 +25,14 @@ namespace GitStatus
             services.AddTransient<GraphQLApiStatusViewModel>();
 
             //Services
+            services.AddSingleton(new HttpClient
+            {
+                DefaultRequestHeaders =
+                {
+                    { "User-Agent", nameof(GitStatus) },
+                    { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
+                }
+            });
             services.AddSingleton<GitHubApiStatusService>();
 
             return services.BuildServiceProvider();

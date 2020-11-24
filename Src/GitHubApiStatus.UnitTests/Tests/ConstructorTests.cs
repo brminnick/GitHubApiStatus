@@ -61,7 +61,7 @@ namespace GitHubApiStatus.UnitTests
             {
                 DefaultRequestHeaders =
                 {
-                    { "Authorizaiton", $"{scheme} abc123" },
+                    { "Authorization", $"{scheme} abc123" },
                 }
             };
 
@@ -90,7 +90,7 @@ namespace GitHubApiStatus.UnitTests
             {
                 DefaultRequestHeaders =
                 {
-                    { "Authorizaiton", "abc123" },
+                    { "Authorization", "abc123" },
                 }
             };
 
@@ -129,7 +129,7 @@ namespace GitHubApiStatus.UnitTests
             {
                 DefaultRequestHeaders =
                 {
-                    { "Authorizaiton", "BEARER " + GitHubConstants.PersonalAccessToken },
+                    { "Authorization", "BEARER " + GitHubConstants.PersonalAccessToken },
                     { "User-Agent", nameof(GitHubApiStatus) }
                 }
             };
@@ -173,7 +173,7 @@ namespace GitHubApiStatus.UnitTests
             {
                 DefaultRequestHeaders =
                 {
-                    { "Authorizaiton", "bearer" + parameter },
+                    { "Authorization", "bearer" + parameter },
                 }
             };
 
