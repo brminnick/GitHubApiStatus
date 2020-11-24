@@ -19,7 +19,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
 
             //Act
-            remainingRequestCount_Actual = GitHubApiStatus.GetRemainingRequestCount(validHttpResponseHeaders);
+            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
@@ -34,7 +34,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatus.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
+            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.GetRemainingRequestCount(nullHttpResponseHeaders));
+            Assert.Throws<ArgumentNullException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

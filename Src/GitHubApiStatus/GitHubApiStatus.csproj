@@ -86,9 +86,10 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
             <SubType>
             </SubType>
         </Compile>
-        <Compile Include="Models\IGitHubApiRateLimits.cs" />
-        <Compile Include="Models\IRateLimitStatus.cs" />
-        <Compile Include="Models\IGitHubApiRateLimitResponse.cs" />
+        <Compile Include="Interfaces\IGitHubApiRateLimitResponse.cs" />
+        <Compile Include="Interfaces\IGitHubApiRateLimits.cs" />
+        <Compile Include="Interfaces\IRateLimitStatus.cs" />
+        <Compile Include="Interfaces\IGitHubApiStatusService.cs" />
     </ItemGroup>
     <ItemGroup Condition=" '$(Configuration)'=='Release' ">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
@@ -103,5 +104,6 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Services\" />
+        <Folder Include="Interfaces\" />
     </ItemGroup>
 </Project>

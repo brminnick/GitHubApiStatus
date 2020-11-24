@@ -17,7 +17,7 @@ namespace GitHubApiStatus
     /// <summary>
     /// GitHub API Status Service
     /// </summary>
-    public class GitHubApiStatusService
+    public class GitHubApiStatusService : IGitHubApiStatusService
     {
         /// <summary>
         /// GitHub Http Response Rate Limit Header Key
@@ -34,73 +34,66 @@ namespace GitHubApiStatus
         /// </summary>
         public const string RateLimitRemainingHeader = "X-RateLimit-Remaining";
 
-        readonly static Lazy<SemaphoreSlim> _semaphoreSlimHolder = new(() => new SemaphoreSlim(1, 1));
-        readonly static Lazy<GitHubApiStatusService> _instanceHolder = new(() => new GitHubApiStatusService());
-
 #if NETSTANDARD
         readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
 
-        readonly static Lazy<HttpClient> _clientHolder = new(() => new HttpClient
-        {
-            DefaultRequestHeaders =
-            {
-                { "User-Agent", nameof(GitHubApiStatus) },
-            }
-        });
-
-        /// <summary>
-        /// Static Instance of GitHubApiStatusService 
-        /// </summary>
-        public static GitHubApiStatusService Instance => _instanceHolder.Value;
-
-        static HttpClient Client => _clientHolder.Value;
-
-#if NETSTANDARD
-        static JsonSerializer Serializer => _serializerHolder.Value;
-#endif
-        static SemaphoreSlim SemaphoreSlim => _semaphoreSlimHolder.Value;
-
-        /// <summary>
-        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
-        /// </summary>
-        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
-        /// <returns>The API Status for each GitHub API</returns>
-        public Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue) => GetApiRateLimits(authenticationHeaderValue, CancellationToken.None);
-
-        /// <summary>
-        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
-        /// </summary>
-        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
-        /// <param name="cancellationToken">Cancellation Token</param>
-        /// <returns></returns>
-        public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue, CancellationToken cancellationToken)
+        public GitHubApiStatusService(AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue? productHeaderValue = null)
         {
             if (authenticationHeaderValue is null)
-                throw new ArgumentNullException(nameof(authenticationHeaderValue));
+                throw new ArgumentNullException(nameof(authenticationHeaderValue), $"{nameof(authenticationHeaderValue)} cannot be null");
 
             if (!authenticationHeaderValue.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
 
             if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
-                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be null or empty");
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
 
-            try
-            {
-                await SemaphoreSlim.WaitAsync(cancellationToken).ConfigureAwait(false);
+            productHeaderValue ??= new ProductHeaderValue(nameof(GitHubApiStatus));
 
-                Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            Client = new HttpClient();
+            Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            Client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+        }
 
-                var response = await GetGitHubApiRateLimitResponse(cancellationToken);
+        public GitHubApiStatusService(HttpClient httpClient)
+        {
+            if (httpClient is null)
+                throw new ArgumentNullException(nameof(httpClient), $"{nameof(httpClient)} cannot be null");
 
-                Client.DefaultRequestHeaders.Authorization = null;
+            if (!httpClient.DefaultRequestHeaders.Authorization.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
 
-                return response.Results;
-            }
-            finally
-            {
-                SemaphoreSlim.Release();
-            }
+            if (string.IsNullOrWhiteSpace(httpClient.DefaultRequestHeaders.Authorization.Parameter))
+                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
+
+            if (!httpClient.DefaultRequestHeaders.UserAgent.Any())
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(nameof(GitHubApiStatus)));
+
+            Client = httpClient;
+        }
+
+        HttpClient Client { get; }
+
+#if NETSTANDARD
+        static JsonSerializer Serializer => _serializerHolder.Value;
+#endif
+
+        /// <summary>
+        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
+        /// </summary>
+        /// <returns>The API Status for each GitHub API</returns>
+        public Task<GitHubApiRateLimits> GetApiRateLimits() => GetApiRateLimits(CancellationToken.None);
+
+        /// <summary>
+        /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        public async Task<GitHubApiRateLimits> GetApiRateLimits(CancellationToken cancellationToken)
+        {
+            var response = await GetGitHubApiRateLimitResponse(Client, cancellationToken).ConfigureAwait(false);
+            return response.Results;
         }
 
         /// <summary>
@@ -174,9 +167,9 @@ namespace GitHubApiStatus
         }
 
         // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(CancellationToken cancellationToken)
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(HttpClient client, CancellationToken cancellationToken)
         {
-            using var response = await Client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+            using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
 
 #if NET5_0
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);

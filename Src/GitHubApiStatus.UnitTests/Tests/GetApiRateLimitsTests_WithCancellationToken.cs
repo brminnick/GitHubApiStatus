@@ -10,51 +10,6 @@ namespace GitHubApiStatus.UnitTests
     class GetApiRateLimitsTests_WithCancellationToken : BaseTest
     {
         [Test]
-        public void GetApiRateLimits_NullAuthenticationHeaderValue()
-        {
-            //Arrange
-            AuthenticationHeaderValue? authenticationHeaderValue = null;
-            var cancellationTokenSource = new CancellationTokenSource();
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.ThrowsAsync<ArgumentNullException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-
-        [TestCase("Basic")]
-        [TestCase("Oauth")]
-        [TestCase("Digest")]
-        public void GetApiRateLimits_InvalidScheme(string scheme)
-        {
-            //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue(scheme, GitHubConstants.PersonalAccessToken);
-            var cancellationTokenSource = new CancellationTokenSource();
-
-            //Act
-
-            //Assert
-            Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token));
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void GetApiRateLimits_InvalidParameter(string parameter)
-        {
-            //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", parameter);
-            var cancellationTokenSource = new CancellationTokenSource();
-
-            //Act
-
-            //Assert
-            Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token));
-        }
-
-        [Test]
         public async Task GetApiRateLimits_ValidRestApiRequest()
         {
             //Arrange
@@ -63,15 +18,14 @@ namespace GitHubApiStatus.UnitTests
 
             var startTime = DateTimeOffset.UtcNow;
             var cancellationTokenSource = new CancellationTokenSource();
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             restApiStatus_Initial = gitHubApiRateLimits_Initial.RestApi;
 
             await SendValidRestApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             restApiStatus_Final = gitHubApiRateLimits_Final.RestApi;
 
             //Assert
@@ -108,15 +62,14 @@ namespace GitHubApiStatus.UnitTests
 
             var startTime = DateTimeOffset.UtcNow;
             var cancellationTokenSource = new CancellationTokenSource();
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
 
             await SendValidGraphQLApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             graphQLApiStatus_Final = gitHubApiRateLimits_Final.GraphQLApi;
 
             //Assert
@@ -152,15 +105,14 @@ namespace GitHubApiStatus.UnitTests
 
             var startTime = DateTimeOffset.UtcNow;
             var cancellationTokenSource = new CancellationTokenSource();
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             searchApiStatus_Initial = gitHubApiRateLimits_Initial.SearchApi;
 
             await SendValidSearchApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
             codeScanningApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
 
             //Assert
@@ -197,7 +149,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.ThrowsAsync<TaskCanceledException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue, cancellationTokenSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
         }
     }
 }

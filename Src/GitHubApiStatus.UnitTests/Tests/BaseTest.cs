@@ -12,7 +12,7 @@ namespace GitHubApiStatus.UnitTests
     {
         const string _authorizationHeaderKey = "Authorization";
 
-        static readonly HttpClient _client = new HttpClient
+        static readonly HttpClient _client = new()
         {
             DefaultRequestHeaders =
             {
@@ -21,7 +21,7 @@ namespace GitHubApiStatus.UnitTests
             }
         };
 
-        protected GitHubApiStatusService GitHubApiStatus { get; } = GitHubApiStatusService.Instance;
+        protected GitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
 
         protected static HttpResponseHeaders CreateHttpResponseHeaders(in int rateLimit, in DateTimeOffset rateLimitResetTime, in int remainingRequestCount, in HttpStatusCode httpStatusCode = HttpStatusCode.OK, in bool isAuthenticated = true)
         {
