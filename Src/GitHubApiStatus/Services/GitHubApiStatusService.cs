@@ -61,6 +61,9 @@ namespace GitHubApiStatus
         /// <param name="client">GitHub API requires the following Headers: Authorization and User-Agent</param>
         public GitHubApiStatusService(GitHubApiClient client)
         {
+            if (client is null)
+                throw new GitHubApiStatusException($"{nameof(client)} cannot be null");
+
             ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
             ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
 

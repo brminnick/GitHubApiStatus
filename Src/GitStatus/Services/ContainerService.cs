@@ -26,7 +26,7 @@ namespace GitStatus
             services.AddTransient<GraphQLApiStatusViewModel>();
 
             //Services
-            services.AddSingleton(new GitHubApiClient(new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus))));
+            services.AddSingleton(new GitHubApiClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus))));
             services.AddSingleton<IGitHubApiStatusService, GitHubApiStatusService>();
 
             return services.BuildServiceProvider();

@@ -9,7 +9,7 @@ namespace GitStatus.ConsoleApp
 {
     class Program
     {
-        static readonly GitHubApiClient _client = new(new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)));
+        static readonly GitHubApiClient _client = new(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)));
         static readonly GitHubApiStatusService _gitHubApiStatusService = new(_client);
 
         static async Task Main(string[] args)

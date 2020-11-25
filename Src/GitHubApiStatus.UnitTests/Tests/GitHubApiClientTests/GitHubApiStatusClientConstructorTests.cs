@@ -12,7 +12,7 @@ namespace GitHubApiStatus.UnitTests
         public void ValidConstructor()
         {
             //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var authenticationHeaderValue = new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken);
             var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
 
             var client = new GitHubApiClient(authenticationHeaderValue, productHeaderValue);
@@ -59,7 +59,7 @@ namespace GitHubApiStatus.UnitTests
         {
             //Arrange
             var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
-            var authenticationHeaderValue = new AuthenticationHeaderValue("BEARER", GitHubConstants.PersonalAccessToken);
+            var authenticationHeaderValue = new AuthenticationHeaderValue(GitHubConstants.AuthScheme.ToUpper(), GitHubConstants.PersonalAccessToken);
 
             var client = new GitHubApiClient(authenticationHeaderValue, productHeaderValue);
 
@@ -78,7 +78,7 @@ namespace GitHubApiStatus.UnitTests
         {
             //Arrange
             var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", parameter);
+            var authenticationHeaderValue = new AuthenticationHeaderValue(GitHubConstants.AuthScheme, parameter);
 
             //Act
 
@@ -90,7 +90,7 @@ namespace GitHubApiStatus.UnitTests
         public void NullProductHeaderValue()
         {
             //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var authenticationHeaderValue = new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken);
 
             //Act
 

@@ -2,7 +2,7 @@
 
 namespace GitHubApiStatus.UnitTests
 {
-    public class GraphQLResponse<T>
+    class GraphQLResponse<T>
     {
         public GraphQLResponse(T data, GraphQLError[] errors)
         {

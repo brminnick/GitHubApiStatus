@@ -144,7 +144,7 @@ namespace GitHubApiStatus.UnitTests
         {
             //Arrange
             var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(1));
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var authenticationHeaderValue = new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken);
 
             //Act
 
