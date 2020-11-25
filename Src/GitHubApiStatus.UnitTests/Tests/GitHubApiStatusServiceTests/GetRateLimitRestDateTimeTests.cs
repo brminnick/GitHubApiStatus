@@ -51,7 +51,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(nullHttpResponseHeaders));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

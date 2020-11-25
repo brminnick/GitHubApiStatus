@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitHubApiStatus;
 using GitStatus.Shared;
@@ -8,16 +9,8 @@ namespace GitStatus.ConsoleApp
 {
     class Program
     {
-        static HttpClient _client = new()
-        {
-            DefaultRequestHeaders =
-            {
-                { "User-Agent", nameof(GitStatus) },
-                { "Authorization", "bearer " + GitHubConstants.PersonalAccessToken }
-            }
-        };
-
-        static GitHubApiStatusService _gitHubApiStatusService = new(_client);
+        static readonly GitHubApiClient _client = new(new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)));
+        static readonly GitHubApiStatusService _gitHubApiStatusService = new(_client);
 
         static async Task Main(string[] args)
         {

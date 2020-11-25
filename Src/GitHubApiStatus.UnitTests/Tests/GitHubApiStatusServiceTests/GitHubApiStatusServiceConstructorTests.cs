@@ -7,21 +7,52 @@ using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
-    class ConstructorTests : BaseTest
+    class GitHubApiStatusServiceConstructorTests : BaseTest
     {
         [Test]
-        public void NullAuthenticationHeaderValue()
+        public void DefaultConstructorTest()
         {
             //Arrange
+            const int rateLimit = 5000;
+
+            var rateLimitResettime = DateTimeOffset.UtcNow;
+
+            var githubApiStatusService = new GitHubApiStatusService();
+            var httpResponseHeaders = CreateHttpResponseHeaders(rateLimit, rateLimitResettime, rateLimit - 5);
 
             //Act
 
             //Assert
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+
+            Assert.ThrowsAsync<GitHubApiStatusException>(() => githubApiStatusService.GetApiRateLimits());
+        }
+
+        [Test]
+        public void NullAuthenticationHeaderValue()
+        {
+            //Arrange
+            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiClient));
+
+            //Act
+
+            //Assert
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>(() => new GitHubApiStatusService((AuthenticationHeaderValue)null));
+            Assert.Throws<ArgumentNullException>(() => new GitHubApiStatusService(null, productHeaderValue));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+        }
+
+        [Test]
+        public void NullProductHeaderValue()
+        {
+            //Arrange
+            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+
+            //Act
+
+            //Assert
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(() => new GitHubApiStatusService(authenticationHeaderValue, null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Test]
@@ -43,12 +74,13 @@ namespace GitHubApiStatus.UnitTests
         public void InvalidSchemeAuthenticationHeaderValue(string scheme)
         {
             //Arrange
+            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
             var authenticationHeaderValue = new AuthenticationHeaderValue(scheme, GitHubConstants.PersonalAccessToken);
 
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => new GitHubApiStatusService(authenticationHeaderValue));
+            Assert.Throws<ArgumentException>(() => new GitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
         }
 
         [TestCase("Basic")]
@@ -104,8 +136,9 @@ namespace GitHubApiStatus.UnitTests
         public async Task BEARERSchemeAuthenticationHeaderValue()
         {
             //Arrange
+            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
             var authenticationHeaderValue = new AuthenticationHeaderValue("BEARER", GitHubConstants.PersonalAccessToken);
-            var gitHubApiStatusService = new GitHubApiStatusService(authenticationHeaderValue);
+            var gitHubApiStatusService = new GitHubApiStatusService(authenticationHeaderValue, productHeaderValue);
 
             //Act
             var apiRateLimits = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
@@ -155,12 +188,13 @@ namespace GitHubApiStatus.UnitTests
         public void InvalidParameterAuthenticationHeaderValue(string parameter)
         {
             //Arrange
+            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
             var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", parameter);
 
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => new GitHubApiStatusService(authenticationHeaderValue));
+            Assert.Throws<ArgumentException>(() => new GitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
         }
 
         [TestCase(null)]
@@ -181,29 +215,6 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
             Assert.Throws<ArgumentException>(() => new GitHubApiStatusService(client));
-        }
-
-        [Test]
-        public async Task NullProductHeaderValue()
-        {
-            //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
-            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
-
-            var gitHubApiStatusService = new GitHubApiStatusService(authenticationHeaderValue, null);
-
-            //Act
-            var apiRateLimits = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
-
-            //Assert
-            Assert.IsNotNull(gitHubApiStatusService);
-            Assert.IsNotNull(apiRateLimits);
-            Assert.IsNotNull(apiRateLimits.AppManifestConfiguration);
-            Assert.IsNotNull(apiRateLimits.CodeScanningUpload);
-            Assert.IsNotNull(apiRateLimits.GraphQLApi);
-            Assert.IsNotNull(apiRateLimits.RestApi);
-            Assert.IsNotNull(apiRateLimits.SearchApi);
-            Assert.IsNotNull(apiRateLimits.SourceImport);
         }
 
         [Test]

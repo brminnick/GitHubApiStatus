@@ -86,6 +86,8 @@ New In This Release:
         <Compile Include="Interfaces\IGitHubApiRateLimits.cs" />
         <Compile Include="Interfaces\IRateLimitStatus.cs" />
         <Compile Include="Interfaces\IGitHubApiStatusService.cs" />
+        <Compile Include="GitHubApiStatusException.cs" />
+        <Compile Include="Models\GitHubApiStatusClient.cs" />
     </ItemGroup>
     <ItemGroup Condition=" '$(Configuration)'=='Release' ">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />

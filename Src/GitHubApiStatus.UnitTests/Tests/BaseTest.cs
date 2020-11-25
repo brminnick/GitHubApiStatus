@@ -12,14 +12,7 @@ namespace GitHubApiStatus.UnitTests
     {
         const string _authorizationHeaderKey = "Authorization";
 
-        static readonly HttpClient _client = new()
-        {
-            DefaultRequestHeaders =
-            {
-                { "User-Agent", nameof(GitHubApiStatus) },
-                { _authorizationHeaderKey, "bearer " + GitHubConstants.PersonalAccessToken }
-            }
-        };
+        static readonly GitHubApiClient _client = new GitHubApiClient(new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
 
         protected GitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
 
