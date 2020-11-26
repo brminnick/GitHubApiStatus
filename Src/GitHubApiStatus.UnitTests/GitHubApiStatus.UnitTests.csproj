@@ -19,5 +19,9 @@
     <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\GitHubApiStatusServiceTests\" />
+    <Folder Include="Tests\GitHubApiClientTests\" />
+  </ItemGroup>
   <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" />
 </Project>
