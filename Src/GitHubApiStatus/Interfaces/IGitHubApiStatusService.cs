@@ -50,7 +50,7 @@ namespace GitHubApiStatus
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
         /// <returns>Whether the Http Response Was From an Authenticated Http Request</returns>
-        bool IsAuthenticated(in HttpResponseHeaders httpResponseHeaders);
+        bool IsResponseFromAuthenticatedRequest(in HttpResponseHeaders httpResponseHeaders);
 
         /// <summary>
         /// Get the DateTimeOffset When the GitHub API Rate Limit Will Reset

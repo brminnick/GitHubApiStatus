@@ -1,9 +1,16 @@
 ﻿using System;
 namespace GitHubApiStatus
 {
-    public class GitHubApiStatusException : Exception
+    /// <summary>
+    /// Exception thrown by GitHubApiStatus
+    /// </summary>
+    public sealed class GitHubApiStatusException : Exception
     {
-        public GitHubApiStatusException(string message) : base(message)
+        /// <summary>
+        /// Initialize GitHubApiStatusException
+        /// </summary>
+        /// <param name="message"></param>
+        internal GitHubApiStatusException(string message) : base(message)
         {
         }
     }

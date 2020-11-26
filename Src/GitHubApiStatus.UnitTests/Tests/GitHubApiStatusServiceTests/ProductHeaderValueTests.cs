@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
-    class AddProductHeaderValueTests
+    class AddProductHeaderValueTests : BaseTest
     {
         [Test]
         public void NullProductHeaderValueTest()
@@ -20,6 +20,7 @@ namespace GitHubApiStatus.UnitTests
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.AddProductHeaderValue(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.IsFalse(gitHubApiStatusService.IsProductHeaderValueValid);
         }
 
         [Test]
@@ -32,6 +33,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
             Assert.Throws<ArgumentException>(() => gitHubApiStatusService.AddProductHeaderValue(new ProductHeaderValue(null)));
+            Assert.IsFalse(gitHubApiStatusService.IsProductHeaderValueValid);
         }
 
         [Test]
@@ -47,6 +49,8 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
             Assert.IsNotNull(gitHubApiStatusService);
+            Assert.IsTrue(gitHubApiStatusService.IsProductHeaderValueValid);
+
             Assert.IsNotNull(apiRateLimits);
             Assert.IsNotNull(apiRateLimits.AppManifestConfiguration);
             Assert.IsNotNull(apiRateLimits.CodeScanningUpload);

@@ -16,11 +16,11 @@ namespace GitStatus.ConsoleApp
         {
             var restApiRateLimitDataFromHeaders = await GetRestApiRateLimitDataFromHeaders();
 
-            Console.WriteLine($"What is the GitHub REST API Rate Limit? {restApiRateLimitDataFromHeaders.RateLimit}"); // What is the GitHub REST API Rate Limit? 60
+            Console.WriteLine($"What is the GitHub REST API Rate Limit? {restApiRateLimitDataFromHeaders.RateLimit}"); // What is the GitHub REST API Rate Limit? 5000
             Console.WriteLine($"Have I reached the Maximum REST API Limit? {restApiRateLimitDataFromHeaders.HasReachedMaximumApiLimit}"); // Have I reached the Maximum REST API Limit? False
-            Console.WriteLine($"How many REST API requests do I have remaining? {restApiRateLimitDataFromHeaders.RemainingRequestCount}"); // How many REST API requests do I have remaining? 56
+            Console.WriteLine($"How many REST API requests do I have remaining? {restApiRateLimitDataFromHeaders.RemainingRequestCount}"); // How many REST API requests do I have remaining? 4956
             Console.WriteLine($"How long until the GitHub REST API Rate Limit resets? {restApiRateLimitDataFromHeaders.RateLimitTimeRemaining}"); // How long until the GitHub REST API Rate Limit resets? 00:29:12.4134330
-            Console.WriteLine($"Did the GitHub REST API Request include a Bearer Token? {restApiRateLimitDataFromHeaders.IsAuthenticated}"); // Did GitHub REST API Request include a Bearer Token? False
+            Console.WriteLine($"Did the GitHub REST API Request include a Bearer Token? {restApiRateLimitDataFromHeaders.IsResponseFromAuthenticatedRequest}"); // Did GitHub REST API Request include a Bearer Token? True
 
             Console.WriteLine();
 
@@ -75,7 +75,7 @@ namespace GitStatus.ConsoleApp
             Console.WriteLine();
         }
 
-        static async Task<(TimeSpan RateLimitTimeRemaining, int RateLimit, int RemainingRequestCount, bool IsAuthenticated, bool HasReachedMaximumApiLimit)> GetRestApiRateLimitDataFromHeaders()
+        static async Task<(TimeSpan RateLimitTimeRemaining, int RateLimit, int RemainingRequestCount, bool IsResponseFromAuthenticatedRequest, bool HasReachedMaximumApiLimit)> GetRestApiRateLimitDataFromHeaders()
         {
             HttpResponseMessage restApiResponse = await _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
             restApiResponse.EnsureSuccessStatusCode();
@@ -85,11 +85,11 @@ namespace GitStatus.ConsoleApp
             int rateLimit = _gitHubApiStatusService.GetRateLimit(restApiResponse.Headers);
             int remainingRequestCount = _gitHubApiStatusService.GetRemainingRequestCount(restApiResponse.Headers);
 
-            bool isAuthenticated = _gitHubApiStatusService.IsAuthenticated(restApiResponse.Headers);
+            bool isResponseFromAuthenticatedRequest = _gitHubApiStatusService.IsResponseFromAuthenticatedRequest(restApiResponse.Headers);
 
             bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
 
-            return (rateLimitTimeRemaining, rateLimit, remainingRequestCount, isAuthenticated, hasReachedMaximumApiLimit);
+            return (rateLimitTimeRemaining, rateLimit, remainingRequestCount, isResponseFromAuthenticatedRequest, hasReachedMaximumApiLimit);
         }
 
         static Task<GitHubApiRateLimits> GetApiRateLimits()

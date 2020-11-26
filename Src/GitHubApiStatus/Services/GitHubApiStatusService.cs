@@ -18,6 +18,8 @@ namespace GitHubApiStatus
     /// </summary>
     public class GitHubApiStatusService : IGitHubApiStatusService
     {
+
+        readonly GitHubApiClient _client;
         /// <summary>
         /// GitHub Http Response Rate Limit Header Key
         /// </summary>
@@ -42,7 +44,7 @@ namespace GitHubApiStatus
         /// </summary>
         public GitHubApiStatusService()
         {
-            Client = new GitHubApiClient();
+            _client = new GitHubApiClient();
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace GitHubApiStatus
         /// <param name="productHeaderValue">User-Agent Name</param>
         public GitHubApiStatusService(AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue)
         {
-            Client = new GitHubApiClient(authenticationHeaderValue, productHeaderValue);
+            _client = new GitHubApiClient(authenticationHeaderValue, productHeaderValue);
         }
 
         /// <summary>
@@ -67,31 +69,71 @@ namespace GitHubApiStatus
             ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
             ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
 
-            Client = client;
+            _client = client;
         }
 
-        GitHubApiClient Client { get; }
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.UserAgent is Valid
+        /// </summary>
+        public bool IsProductHeaderValueValid
+        {
+            get
+            {
+                try
+                {
+                    ValidateProductHeaderValue(_client.DefaultRequestHeaders.UserAgent);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.Authorization is Valid
+        /// </summary>
+        public bool IsAuthenticationHeaderValueSet
+        {
+            get
+            {
+                try
+                {
+                    ValidateAuthenticationHeaderValue(_client.DefaultRequestHeaders.Authorization);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
 
 #if NETSTANDARD
         static JsonSerializer Serializer => _serializerHolder.Value;
 #endif
 
         /// <summary>
-        /// Adds ProductHeaderValue to 
+        /// Add ProductHeaderValue to HttpClient.DefaultRequestHeaders.UserAgent
         /// </summary>
         /// <param name="productHeaderValue"></param>
         public void AddProductHeaderValue(ProductHeaderValue productHeaderValue)
         {
             ValidateProductHeaderValue(productHeaderValue);
 
-            Client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+            _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
         }
 
+        /// <summary>
+        /// Set HttpClient.DefaultRequestHeaders.Authorization
+        /// </summary>
+        /// <param name="authenticationHeaderValue"></param>
         public void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue)
         {
             ValidateAuthenticationHeaderValue(authenticationHeaderValue);
 
-            Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            _client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
         }
 
         /// <summary>
@@ -107,7 +149,7 @@ namespace GitHubApiStatus
         /// <returns></returns>
         public async Task<GitHubApiRateLimits> GetApiRateLimits(CancellationToken cancellationToken)
         {
-            var response = await GetGitHubApiRateLimitResponse(Client, cancellationToken).ConfigureAwait(false);
+            var response = await GetGitHubApiRateLimitResponse(_client, cancellationToken).ConfigureAwait(false);
             return response.Results;
         }
 
@@ -157,10 +199,10 @@ namespace GitHubApiStatus
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
         /// <returns>Whether the Http Response Was From an Authenticated Http Request</returns>
-        public bool IsAuthenticated(in HttpResponseHeaders httpResponseHeaders)
+        public bool IsResponseFromAuthenticatedRequest(in HttpResponseHeaders httpResponseHeaders)
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
-            return httpResponseHeaders?.Vary.Any(x => x is "Authorization") ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
+            return httpResponseHeaders.Vary.Any(x => x is "Authorization");
         }
 
         /// <summary>
@@ -187,7 +229,7 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitResetHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
+            var rateLimitResetHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase));
             return long.Parse(rateLimitResetHeader.Value.First());
         }
 
