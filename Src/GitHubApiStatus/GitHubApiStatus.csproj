@@ -15,7 +15,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Summary>
-GitHub API Rate-Limit Status
+GitHub API Rate Limit Status
 
 Calculate the GitHub API Rate Limits for the following GitHub APIs
 - REST API
@@ -28,7 +28,7 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
         <PackageTags>github, git, api, rate, rate limit</PackageTags>
         <Title>GitHub API Rate Limit Status</Title>
         <Description>
-GitHub API Rate-Limit Status
+GitHub API Rate Limit Status
 
 Calculate the GitHub API Rate Limits for the following GitHub APIs
 - REST API
