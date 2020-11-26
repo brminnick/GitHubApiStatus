@@ -43,7 +43,7 @@ New In This Release:
 - Interfaces! Added IGitHubApiStatusService, IGitHubApiRateLimitResponse, IGitHubApiRateLimits and IRateLimitStatus
 - Breaking Changes: Removed GitHubApiStatusService.Instance
         </PackageReleaseNotes>
-        <Version>2.0.0-pre1</Version>
+        <Version>2.0.0-pre2</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>

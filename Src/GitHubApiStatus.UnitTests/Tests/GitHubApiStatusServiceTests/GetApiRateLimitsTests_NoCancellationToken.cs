@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using GitStatus.Shared;
 using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
