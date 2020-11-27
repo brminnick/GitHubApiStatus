@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitHubApiStatus;
-using GitHubApiStatus.HttpExtensions;
+using GitHubApiStatus.Extensions;
 using GitStatus.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

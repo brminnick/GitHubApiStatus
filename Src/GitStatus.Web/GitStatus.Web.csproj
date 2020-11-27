@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GitHubApiStatus.HttpExtensions\GitHubApiStatus.HttpExtensions.csproj">
+    <ProjectReference Include="..\GitHubApiStatus.HttpExtensions\GitHubApiStatus.Extensions.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
