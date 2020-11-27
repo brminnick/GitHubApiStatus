@@ -1,0 +1,22 @@
+﻿@page "/counter"
+@using GitHubApiStatus
+@inject IGitHubApiStatusService GitHubApiStatusService
+
+<h1>GitHub REST Api Status</h1>
+
+<p>@_restApiStatus</p>
+
+<button class="btn btn-primary" @onclick="GetRestApiStatus">Get Status</button>
+
+@code {
+    string _restApiStatus = string.Empty;
+
+    async Task GetRestApiStatus()
+    {
+        var apiRateLimitStatuses = await GitHubApiStatusService.GetApiRateLimits(System.Threading.CancellationToken.None).ConfigureAwait(false);
+        _restApiStatus = $@"Rate Limit: {apiRateLimitStatuses.RestApi.RateLimit}
+Remaining Request Count: {apiRateLimitStatuses.RestApi.RemainingRequestCount}
+Rate Limit Reset: {apiRateLimitStatuses.RestApi.RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {apiRateLimitStatuses.RestApi.RateLimitReset_TimeRemaining}";
+    }
+}

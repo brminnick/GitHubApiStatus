@@ -22,7 +22,7 @@ namespace GitHubApiStatus
             DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
         }
 
-        internal GitHubApiClient()
+        protected internal GitHubApiClient()
         {
 
         }

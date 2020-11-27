@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>GitHubApiStatus.HttpExtensions.snk</AssemblyOriginatorKeyFile>
+        <AssemblyName>GitHubApiStatus.HttpExtensions</AssemblyName>
+        <RootNamespace>GitHubApiStatus.HttpExtensions</RootNamespace>
+        <PackageId>GitHubApiStatus.HttpExtensions</PackageId>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Summary>
+Extentions for GitHub API Rate Limit Status
+- Implements IHttpClientFactory
+        </Summary>
+        <PackageTags>github, git, api, rate, rate limit</PackageTags>
+        <Title>Extensions for GitHub API Rate Limit Status</Title>
+        <Description>
+Extentions for GitHub API Rate Limit Status
+- Implements IHttpClientFactory
+        </Description>
+        <PackageReleaseNotes>
+New In This Release:
+- Add Support for IHttpClientFactory
+        </PackageReleaseNotes>
+        <Version>2.0.0-pre3</Version>
+        <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
+        <Product>$(AssemblyName) ($(TargetFramework))</Product>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+        <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
+        <Authors>Brandon Minnick</Authors>
+        <Owners>Brandon Minnick</Owners>
+        <NeutralLanguage>en</NeutralLanguage>
+        <Copyright>©Copyright 2020 Brandon Minnick. All rights reserved.</Copyright>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <DefineConstants>$(DefineConstants);</DefineConstants>
+        <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/brminnick/GitHubApiStatus</PackageProjectUrl>
+        <DebugType>portable</DebugType>
+        <Configurations>Release;Debug</Configurations>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Include="GitHubApiStatusServiceExtensions.cs" />
+      <Compile Include="GitHubApiClient.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
+    </ItemGroup>
+</Project>
