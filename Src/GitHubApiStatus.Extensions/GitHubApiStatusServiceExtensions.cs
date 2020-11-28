@@ -4,11 +4,29 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GitHubApiStatus.Extensions
 {
+    /// <summary>
+    /// Extension Methods for GitHubApiStatusService
+    /// </summary>
     public static class GitHubApiStatusServiceExtensions
     {
+        /// <summary>
+        /// Adds IGitHubApiStatusService to IServiceCollection
+        /// </summary>
+        /// <param name="services">Microsoft.Extensions.DependencyInjection.IServiceCollection</param>
+        /// <param name="authenticationHeaderValue">GitHub API Personal Access Token</param>
+        /// <param name="productHeaderValue">User-Agent</param>
+        /// <returns>IHttpClientBuilder</returns>
         public static IHttpClientBuilder AddGitHubApiStatusService(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) =>
             services.AddGitHubApiStatusService<GitHubApiStatusService>(authenticationHeaderValue, productHeaderValue);
 
+        /// <summary>
+        /// Adds IGitHubApiStatusService to IServiceCollection using custom implementation of IGitHubApiStatusService
+        /// </summary>
+        /// <typeparam name="TGitHubApiStatusService">Implementation of IGitHubApiStatusService</typeparam>
+        /// <param name="services">Microsoft.Extensions.DependencyInjection.IServiceCollection</param>
+        /// <param name="authenticationHeaderValue">GitHub API Personal Access Token</param>
+        /// <param name="productHeaderValue">User-Agent</param>
+        /// <returns></returns>
         public static IHttpClientBuilder AddGitHubApiStatusService<TGitHubApiStatusService>(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) where TGitHubApiStatusService : class, IGitHubApiStatusService
         {
             if (productHeaderValue is null)

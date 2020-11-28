@@ -48,6 +48,10 @@ namespace GitHubApiStatus
         /// </summary>
         public DateTimeOffset RateLimitReset_DateTime { get; }
 
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
         public override string ToString()
         {
             return $@"Rate Limit: {RateLimit}
