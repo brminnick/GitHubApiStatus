@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 #if NETSTANDARD
 using System.IO;
@@ -18,8 +19,8 @@ namespace GitHubApiStatus
     /// </summary>
     public class GitHubApiStatusService : IGitHubApiStatusService
     {
+        readonly HttpClient _client;
 
-        readonly GitHubApiClient _client;
         /// <summary>
         /// GitHub Http Response Rate Limit Header Key
         /// </summary>
@@ -44,7 +45,7 @@ namespace GitHubApiStatus
         /// </summary>
         public GitHubApiStatusService()
         {
-            _client = new GitHubApiClient();
+            _client = new HttpClient();
         }
 
         /// <summary>
@@ -54,14 +55,21 @@ namespace GitHubApiStatus
         /// <param name="productHeaderValue">User-Agent Name</param>
         public GitHubApiStatusService(AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue)
         {
-            _client = new GitHubApiClient(authenticationHeaderValue, productHeaderValue);
+            ValidateAuthenticationHeaderValue(authenticationHeaderValue);
+            ValidateProductHeaderValue(productHeaderValue);
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+
+            _client = client;
         }
 
         /// <summary>
         /// Initializes GitHubApiStatusService
         /// </summary>
         /// <param name="client">GitHub API requires the following Headers: Authorization and User-Agent</param>
-        public GitHubApiStatusService(GitHubApiClient client)
+        public GitHubApiStatusService(HttpClient client)
         {
             if (client is null)
                 throw new GitHubApiStatusException($"{nameof(client)} cannot be null");
@@ -234,7 +242,7 @@ namespace GitHubApiStatus
         }
 
         // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(GitHubApiClient client, CancellationToken cancellationToken)
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(HttpClient client, CancellationToken cancellationToken)
         {
             ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
             ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);

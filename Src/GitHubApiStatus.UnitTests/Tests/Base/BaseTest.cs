@@ -12,7 +12,7 @@ namespace GitHubApiStatus.UnitTests
     {
         const string _authorizationHeaderKey = "Authorization";
 
-        static readonly GitHubApiClient _client = new GitHubApiClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
+        static readonly HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
 
         protected GitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
 
@@ -35,6 +35,15 @@ namespace GitHubApiStatus.UnitTests
                 httpResponse.Headers.Vary.Add(_authorizationHeaderKey);
 
             return httpResponse.Headers;
+        }
+
+        protected static HttpClient CreateGitHubHttpClient(in AuthenticationHeaderValue authenticationHeaderValue, in ProductHeaderValue productHeaderValue)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+
+            return client;
         }
 
         protected static Task<HttpResponseMessage> SendValidRestApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");

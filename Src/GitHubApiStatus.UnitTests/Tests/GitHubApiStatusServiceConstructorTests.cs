@@ -23,7 +23,7 @@ namespace GitHubApiStatus.UnitTests
         public void NullAuthenticationHeaderValue()
         {
             //Arrange
-            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiClient));
+            var productHeaderValue = new ProductHeaderValue(nameof(GitHubApiStatus));
 
             //Act
 
@@ -101,7 +101,7 @@ namespace GitHubApiStatus.UnitTests
         public async Task BEARERSchemeHttpClient()
         {
             //Arrange
-            var httpClient = new GitHubApiClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme.ToUpper(), GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
+            var httpClient = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme.ToUpper(), GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
             var gitHubApiStatusService = new GitHubApiStatusService(httpClient);
 
             //Act

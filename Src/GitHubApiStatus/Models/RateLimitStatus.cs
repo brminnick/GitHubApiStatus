@@ -47,5 +47,13 @@ namespace GitHubApiStatus
         /// Rate Limit Reset Time Stamp
         /// </summary>
         public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
     }
 }
