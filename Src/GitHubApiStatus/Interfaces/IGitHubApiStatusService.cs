@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +10,28 @@ namespace GitHubApiStatus
     /// </summary>
     public interface IGitHubApiStatusService
     {
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.UserAgent is Valid
+        /// </summary>
+        bool IsProductHeaderValueValid { get; }
+
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.Authorization is Valid
+        /// </summary>
+        bool IsAuthenticationHeaderValueSet { get; }
+
+        /// <summary>
+        /// Add ProductHeaderValue to HttpClient.DefaultRequestHeaders.UserAgent
+        /// </summary>
+        /// <param name="productHeaderValue"></param>
+        void AddProductHeaderValue(ProductHeaderValue productHeaderValue);
+
+        /// <summary>
+        /// Set HttpClient.DefaultRequestHeaders.Authorization
+        /// </summary>
+        /// <param name="authenticationHeaderValue"></param>
+        void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue);
+
         /// <summary>
         /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
         /// </summary>

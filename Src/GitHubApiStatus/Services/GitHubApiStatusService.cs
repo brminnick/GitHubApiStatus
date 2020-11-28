@@ -241,33 +241,6 @@ namespace GitHubApiStatus
             return long.Parse(rateLimitResetHeader.Value.First());
         }
 
-        // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(HttpClient client, CancellationToken cancellationToken)
-        {
-            ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
-            ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
-
-            using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
-
-#if NET5_0
-            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
-#else
-            using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
-
-
-#if NETSTANDARD
-            using var streamReader = new StreamReader(stream);
-            using var jsonTextReader = new JsonTextReader(streamReader);
-
-            return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
-#else
-            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
-
-            return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
-#endif
-        }
-
         internal static void ValidateHttpResponseHeaders(in HttpResponseHeaders? httpResponseHeaders)
         {
             if (httpResponseHeaders is null)
@@ -307,6 +280,33 @@ namespace GitHubApiStatus
 
             if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
                 throw new GitHubApiStatusException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
+        }
+
+        // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(HttpClient client, CancellationToken cancellationToken)
+        {
+            ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
+            ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
+
+            using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+
+#if NET5_0
+            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#else
+            using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+
+
+#if NETSTANDARD
+            using var streamReader = new StreamReader(stream);
+            using var jsonTextReader = new JsonTextReader(streamReader);
+
+            return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
+#else
+            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
+
+            return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
+#endif
         }
     }
 }

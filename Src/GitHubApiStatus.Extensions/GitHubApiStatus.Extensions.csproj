@@ -28,7 +28,7 @@ Extentions for GitHub API Rate Limit Status
 New In This Release:
 - Add Support for Microsoft.Extensions.DependencyInjection
         </PackageReleaseNotes>
-        <Version>2.0.0-pre4</Version>
+        <Version>2.0.0-pre5</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
