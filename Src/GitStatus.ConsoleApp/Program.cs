@@ -9,7 +9,7 @@ namespace GitStatus.ConsoleApp
 {
     class Program
     {
-        static readonly GitHubApiClient _client = new(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)));
+        static readonly HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)));
         static readonly GitHubApiStatusService _gitHubApiStatusService = new(_client);
 
         static async Task Main(string[] args)
@@ -98,6 +98,15 @@ namespace GitStatus.ConsoleApp
                 throw new ArgumentException("GitHubConstants.PersonalAccessToken Cannot be Empty");
 
             return _gitHubApiStatusService.GetApiRateLimits();
+        }
+
+        static HttpClient CreateGitHubHttpClient(in AuthenticationHeaderValue authenticationHeaderValue, in ProductHeaderValue productHeaderValue)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+
+            return client;
         }
     }
 }
