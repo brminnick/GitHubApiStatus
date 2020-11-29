@@ -24,20 +24,23 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GitStatus.Shared", "GitStat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{6DE141A9-EDFE-464D-BB27-2CFB182118AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiStatus.Extensions", "GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj", "{AE935942-772A-4A9D-A1E1-2BC99D41F4C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApiStatus.Extensions", "GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj", "{AE935942-772A-4A9D-A1E1-2BC99D41F4C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.Web", "GitStatus.Web\GitStatus.Web.csproj", "{A5FF2946-AE9A-4FE4-8650-75719BA23D5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitStatus.Web", "GitStatus.Web\GitStatus.Web.csproj", "{A5FF2946-AE9A-4FE4-8650-75719BA23D5B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AF841AED-C887-4B39-868A-02242D30780B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiStatus.Extensions.UnitTests", "GitHubApiStatus.Extensions.UnitTests\GitHubApiStatus.Extensions.UnitTests.csproj", "{70DBA7CC-2319-4B3F-8F83-97B3368AC890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApiStatus.Extensions.UnitTests", "GitHubApiStatus.Extensions.UnitTests\GitHubApiStatus.Extensions.UnitTests.csproj", "{70DBA7CC-2319-4B3F-8F83-97B3368AC890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.API", "GitStatus.API\GitStatus.API.csproj", "{96EB4C30-7336-4DAE-9A8B-A57EA0C2AC09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitStatus.API", "GitStatus.API\GitStatus.API.csproj", "{96EB4C30-7336-4DAE-9A8B-A57EA0C2AC09}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		GitStatus.Shared\GitStatus.Shared.projitems*{6b19fdf5-8384-4f8d-838c-eb0c3f3f1eb4}*SharedItemsImports = 5
+		GitStatus.Shared\GitStatus.Shared.projitems*{70dba7cc-2319-4b3f-8f83-97b3368ac890}*SharedItemsImports = 5
+		GitStatus.Shared\GitStatus.Shared.projitems*{96eb4c30-7336-4dae-9a8b-a57ea0c2ac09}*SharedItemsImports = 5
 		GitStatus.Shared\GitStatus.Shared.projitems*{9a30833a-01c9-44ed-b8e2-032a4846574f}*SharedItemsImports = 5
+		GitStatus.Shared\GitStatus.Shared.projitems*{a5ff2946-ae9a-4fe4-8650-75719ba23d5b}*SharedItemsImports = 5
 		GitStatus.Shared\GitStatus.Shared.projitems*{be045971-4ce8-4c59-baeb-0bf3a42a9c0a}*SharedItemsImports = 5
 		GitStatus.Shared\GitStatus.Shared.projitems*{ee691483-a8a2-4071-9c75-e70f0250e5d2}*SharedItemsImports = 13
 	EndGlobalSection
@@ -177,6 +180,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CB1D6D22-982F-4FB1-A1AE-A871525D603B} = {A52818B8-0C2C-49C5-9389-D8790237ADCE}
 		{6B19FDF5-8384-4F8D-838C-EB0C3F3F1EB4} = {A52818B8-0C2C-49C5-9389-D8790237ADCE}
+		{9A30833A-01C9-44ED-B8E2-032A4846574F} = {AF841AED-C887-4B39-868A-02242D30780B}
 		{0334A18B-777C-4402-9702-05EDFD401B4B} = {A52818B8-0C2C-49C5-9389-D8790237ADCE}
 		{A52818B8-0C2C-49C5-9389-D8790237ADCE} = {E2BF43DD-5550-414E-9F01-7F7E5492CCB1}
 		{1D178B33-C69B-47E7-AF90-B460B34BCC37} = {E2BF43DD-5550-414E-9F01-7F7E5492CCB1}
@@ -184,7 +188,6 @@ Global
 		{EE691483-A8A2-4071-9C75-E70F0250E5D2} = {E2BF43DD-5550-414E-9F01-7F7E5492CCB1}
 		{6DE141A9-EDFE-464D-BB27-2CFB182118AD} = {E2BF43DD-5550-414E-9F01-7F7E5492CCB1}
 		{A5FF2946-AE9A-4FE4-8650-75719BA23D5B} = {6DE141A9-EDFE-464D-BB27-2CFB182118AD}
-		{9A30833A-01C9-44ED-B8E2-032A4846574F} = {AF841AED-C887-4B39-868A-02242D30780B}
 		{70DBA7CC-2319-4B3F-8F83-97B3368AC890} = {AF841AED-C887-4B39-868A-02242D30780B}
 		{96EB4C30-7336-4DAE-9A8B-A57EA0C2AC09} = {6DE141A9-EDFE-464D-BB27-2CFB182118AD}
 	EndGlobalSection

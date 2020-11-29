@@ -289,6 +289,7 @@ namespace GitHubApiStatus
             ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
 
             using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
 
 #if NET5_0
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
