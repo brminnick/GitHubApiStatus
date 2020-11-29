@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AF841AED
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiStatus.Extensions.UnitTests", "GitHubApiStatus.Extensions.UnitTests\GitHubApiStatus.Extensions.UnitTests.csproj", "{70DBA7CC-2319-4B3F-8F83-97B3368AC890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.API", "GitStatus.Web\GitStatus.API\GitStatus.API.csproj", "{96EB4C30-7336-4DAE-9A8B-A57EA0C2AC09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.API", "GitStatus.API\GitStatus.API.csproj", "{96EB4C30-7336-4DAE-9A8B-A57EA0C2AC09}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
