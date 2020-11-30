@@ -11,7 +11,7 @@ GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
 - [Jump to the Setup](#Setup)
 - [Jump to the GitHubApiStatus API](#GitHubApiStatus-API)
-- [Jump to the GitHubApiStatus.Extensions API](#GitHubApiStatus.Extensions-API)
+- [Jump to the GitHubApiStatus.Extensions API](#GitHubApiStatusExtensions-API)
 - [Jump to Examples](#Examples)
 
 ## GitHub API Rate Limits
