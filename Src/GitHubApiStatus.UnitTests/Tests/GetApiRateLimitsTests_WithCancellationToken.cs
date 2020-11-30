@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
@@ -150,6 +151,22 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
             Assert.ThrowsAsync<TaskCanceledException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
+        }
+
+        [Test]
+        public void GetApiRateLimits_InvalidBearerToken()
+        {
+            //Arrange
+            var cancellationTokenSource = new CancellationTokenSource();
+            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, "abc 123"));
+
+            //Act
+
+            //Assert
+            var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
+            Assert.IsTrue(httpRequestException.Message.Contains("Unauthorized"));
+
+            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken));
         }
     }
 }

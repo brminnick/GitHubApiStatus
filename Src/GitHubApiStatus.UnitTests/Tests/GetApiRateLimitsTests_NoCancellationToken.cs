@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
+using GitStatus.Shared;
 using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
@@ -131,6 +135,21 @@ namespace GitHubApiStatus.UnitTests
             Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, searchApiStatus_Final.RateLimitReset_TimeRemaining);
             Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
+        }
+
+        [Test]
+        public void GetApiRateLimits_InvalidBearerToken()
+        {
+            //Arrange
+            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, "abc 123"));
+
+            //Act
+
+            //Assert
+            var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => GitHubApiStatusService.GetApiRateLimits());
+            Assert.IsTrue(httpRequestException.Message.Contains("Unauthorized"));
+
+            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken));
         }
     }
 }
