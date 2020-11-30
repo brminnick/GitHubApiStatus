@@ -4,16 +4,16 @@
 
 <h1>GitHub REST Api Status</h1>
 
-<p>@_restApiStatus</p>
+<p>@_graphQLApiStatus</p>
 
-<button class="btn btn-primary" @onclick="GetRestApiStatus">Get Status</button>
+<button class="btn btn-primary" @onclick="GetGraphQLApiStatus">Get Status</button>
 
 @code {
-    string _restApiStatus = string.Empty;
+    string _graphQLApiStatus = string.Empty;
 
-    async Task GetRestApiStatus()
+    async Task GetGraphQLApiStatus()
     {
         var apiRateLimitStatuses = await GitHubApiStatusService.GetApiRateLimits(System.Threading.CancellationToken.None).ConfigureAwait(false);
-        _restApiStatus = apiRateLimitStatuses.GraphQLApi.ToString();
+        _graphQLApiStatus = apiRateLimitStatuses.GraphQLApi.ToString();
     }
 }
