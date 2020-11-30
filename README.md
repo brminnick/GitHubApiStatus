@@ -130,10 +130,10 @@ public static IHttpClientBuilder AddGitHubApiStatusService(this IServiceCollecti
 ```
 - Adds GitHubApiStatus.GitHubApiStatusService to `Microsoft.Extensions.DependencyInjection.IServiceCollection`
 
-#### AddGitHubApiStatusService<T>
+#### AddGitHubApiStatusService<TGitHubApiStatusService>
 
 ```csharp
-public static IHttpClientBuilder AddGitHubApiStatusService<T>(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) where T : IGitHubApiStatusService
+public static IHttpClientBuilder AddGitHubApiStatusService<TGitHubApiStatusService>(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) where T : IGitHubApiStatusService
 ```
 - Adds a custom implementation of IGitHubApiStatusService to `Microsoft.Extensions.DependencyInjection.IServiceCollection`
   
