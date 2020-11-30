@@ -36,10 +36,14 @@ GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
 ### GitHubApiStatus
 
+[![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/)
+
 - Available on NuGet: https://www.nuget.org/packages/GitHubApiStatus/ 
 - Add to any project supporting .NET Standard 1.3
 
 ### GitHubApiStatus.Extensions
+
+[![NuGet](https://buildstats.info/nuget/GitHubApiStatus.Extensions?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/)
 
 - Available on NuGet: https://www.nuget.org/packages/GitHubApiStatus/ 
 - Add to any project supporting .NET Standard 2.0
@@ -125,6 +129,8 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
 public static IHttpClientBuilder AddGitHubApiStatusService(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue)
 ```
 - Adds GitHubApiStatus.GitHubApiStatusService to `Microsoft.Extensions.DependencyInjection.IServiceCollection`
+
+#### AddGitHubApiStatusService<T>
 
 ```csharp
 public static IHttpClientBuilder AddGitHubApiStatusService<T>(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) where T : IGitHubApiStatusService
