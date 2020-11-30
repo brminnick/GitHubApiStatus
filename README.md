@@ -3,7 +3,9 @@
 
 # GitHubApiStatus
 
-[![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) [![NuGet](https://buildstats.info/nuget/GitHubApiStatus.Extensions?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/) 
+| GitHubApiStatus | GitHubApiStatus.Extensions |
+| --------------- | -------------------------- |
+| [![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) | [![NuGet](https://buildstats.info/nuget/GitHubApiStatus.Extensions?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/) |
 
 GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
@@ -237,7 +239,7 @@ static async Task Main(string[] args)
 ### Dependency Injection
 
 - [Jump to Blazor Example](#blazor-example)
-- [Jump to ASP.NET Core Example](#asp.net-core-example)
+- [Jump to ASP.NET Core Example](#aspnet-core-example)
 - [Jump to Azure Functions Example](#azure-functions-example)
 
 #### Blazor Example
@@ -302,7 +304,9 @@ public class Startup
     /// ...
 
 }
+```
 
+```csharp
 class MyPageModel : PageModel
 {
     readonly ILogger<IndexModel> _logger;
@@ -336,7 +340,9 @@ namespace MyApp.Functions
         }
     }
 }
+```
 
+```csharp
 class GitHubApiStatusFunction
 {
     readonly IGitHubApiStatusService _gitHubApiStatusService;
