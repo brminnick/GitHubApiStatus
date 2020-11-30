@@ -148,8 +148,6 @@ namespace GitHubApiStatus.UnitTests
             //Assert
             var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => GitHubApiStatusService.GetApiRateLimits());
             Assert.IsTrue(httpRequestException.Message.Contains("Unauthorized"));
-
-            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken));
         }
     }
 }

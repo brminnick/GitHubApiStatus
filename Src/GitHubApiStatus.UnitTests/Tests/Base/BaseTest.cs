@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GitStatus.Shared;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests
 {
@@ -12,9 +13,19 @@ namespace GitHubApiStatus.UnitTests
     {
         const string _authorizationHeaderKey = "Authorization";
 
-        static readonly HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
+        readonly static HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
 
         protected GitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
+
+        [SetUp]
+        protected virtual Task BeforeEachTest() => Task.CompletedTask;
+
+        [TearDown]
+        protected virtual Task AfterEachTest()
+        {
+            GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken));
+            return Task.CompletedTask;
+        }
 
         protected static HttpResponseHeaders CreateHttpResponseHeaders(in int rateLimit, in DateTimeOffset rateLimitResetTime, in int remainingRequestCount, in HttpStatusCode httpStatusCode = HttpStatusCode.OK, in bool isAuthenticated = true)
         {
