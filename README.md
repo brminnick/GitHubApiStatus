@@ -328,7 +328,7 @@ class MyPageModel : PageModel
 }
 ```
 
-### Azure Functions Example
+#### Azure Functions Example
 
 - Requires [Microsoft.Azure.Functions.Extensions NuGet Package](https://www.nuget.org/packages/Microsoft.Azure.Functions.Extensions/)
 - Learn More about [Azure Functions Dependency Injection](https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection?WT.mc_id=mobile-11370-bramin)
@@ -358,11 +358,12 @@ class GitHubApiStatusFunction
     [FunctionName("GitHubApiStatus")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
     {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+        log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var apiStatus = await _gitHubApiStatusService.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
+        var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+        var apiStatus = await _gitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
 
-            return new OkObjectResult(apiStatus);
+        return new OkObjectResult(apiStatus);
     }
 }
 ```
