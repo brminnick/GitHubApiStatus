@@ -15,7 +15,7 @@ namespace GitHubApiStatus.UnitTests
 
         readonly static HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
 
-        protected GitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
+        protected IGitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
 
         [SetUp]
         protected virtual Task BeforeEachTest() => Task.CompletedTask;
@@ -36,9 +36,9 @@ namespace GitHubApiStatus.UnitTests
             {
                 Headers =
                 {
-                    { GitHubApiStatusService.RateLimitHeader, rateLimit.ToString() },
-                    { GitHubApiStatusService.RateLimitResetHeader,  GetTimeInUnixEpochSeconds(rateLimitResetTime).ToString() },
-                    { GitHubApiStatusService.RateLimitRemainingHeader, remainingRequestCount.ToString() }
+                    { GitHubApiStatus.GitHubApiStatusService.RateLimitHeader, rateLimit.ToString() },
+                    { GitHubApiStatus.GitHubApiStatusService.RateLimitResetHeader,  GetTimeInUnixEpochSeconds(rateLimitResetTime).ToString() },
+                    { GitHubApiStatus.GitHubApiStatusService.RateLimitRemainingHeader, remainingRequestCount.ToString() }
                 }
             };
 

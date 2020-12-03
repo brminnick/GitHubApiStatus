@@ -54,6 +54,14 @@ namespace GitHubApiStatus
         int GetRemainingRequestCount(in HttpResponseHeaders httpResponseHeaders);
 
         /// <summary>
+        /// Determines Whether GitHub's Abuse Rate Limit Has Been Reached
+        /// </summary>
+        /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
+        /// <param name="delta">Time Remaining in Retry-After Header</param>
+        /// <returns></returns>
+        bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta);
+
+        /// <summary>
         /// Determines Whether GitHub's Maximum API Limit Has Been Reached
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
