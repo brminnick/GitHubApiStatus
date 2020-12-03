@@ -43,9 +43,10 @@ New In This Release:
 - Added Interfaces: Added IGitHubApiStatusService, IGitHubApiRateLimitResponse, IGitHubApiRateLimits and IRateLimitStatus
 - Added GitHubApiStatusService.AddProductHeaderValue()
 - Added GitHubApiStatusService.SetAuthenticationHeaderValue()
+- Added GitHubApiStatusService.IsAbuseRateLimit()
 - Breaking Changes: Removed GitHubApiStatusService.Instance
         </PackageReleaseNotes>
-        <Version>2.0.0-pre7</Version>
+        <Version>2.0.0-pre8</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
