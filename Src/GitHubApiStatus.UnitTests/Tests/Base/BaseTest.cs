@@ -27,7 +27,7 @@ namespace GitHubApiStatus.UnitTests
             return Task.CompletedTask;
         }
 
-        protected static HttpResponseHeaders CreateHttpResponseHeaders(in int rateLimit, in DateTimeOffset rateLimitResetTime, in int remainingRequestCount, in HttpStatusCode httpStatusCode = HttpStatusCode.OK, in bool isAuthenticated = true)
+        protected static HttpResponseHeaders CreateHttpResponseHeaders(in int rateLimit, in DateTimeOffset rateLimitResetTime, in int remainingRequestCount, in HttpStatusCode httpStatusCode = HttpStatusCode.OK, in bool isAuthenticated = true, in bool isAbuseRateLimit = false)
         {
             if (remainingRequestCount > rateLimit)
                 throw new ArgumentOutOfRangeException(nameof(remainingRequestCount), $"{nameof(remainingRequestCount)} must be less than or equal to {nameof(rateLimit)}");
@@ -41,6 +41,9 @@ namespace GitHubApiStatus.UnitTests
                     { GitHubApiStatusService.RateLimitRemainingHeader, remainingRequestCount.ToString() }
                 }
             };
+
+            if (isAbuseRateLimit)
+                httpResponse.Headers.RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromMinutes(1));
 
             if (isAuthenticated)
                 httpResponse.Headers.Vary.Add(_authorizationHeaderKey);

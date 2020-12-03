@@ -16,11 +16,9 @@ namespace GitStatus.API
         public GitHubApiStatus(IGitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
 
         [FunctionName(nameof(GitHubApiStatus))]
-        public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-            ILogger log)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("Retrieving Api Rate Limits");
 
             var apiStatus = await _gitHubApiStatusService.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
 

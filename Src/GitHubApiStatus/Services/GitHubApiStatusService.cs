@@ -170,10 +170,24 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitRemainingHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
+            var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase));
             var rateLimit = int.Parse(rateLimitRemainingHeader.Value.First());
 
             return rateLimit;
+        }
+
+        /// <summary>
+        /// Determines Whether GitHub's Abuse Rate Limit Has Been Reached
+        /// </summary>
+        /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
+        /// <param name="delta">Time Remaining in Retry-After Header</param>
+        /// <returns></returns>
+        public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta)
+        {
+            ValidateHttpResponseHeaders(httpResponseHeaders);
+
+            delta = httpResponseHeaders.RetryAfter?.Delta;
+            return delta is not null;
         }
 
         /// <summary>
@@ -196,7 +210,7 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitRemainingHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
+            var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase));
             var remainingApiRequests = int.Parse(rateLimitRemainingHeader.Value.First());
 
             return remainingApiRequests;
