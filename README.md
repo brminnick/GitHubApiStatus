@@ -121,6 +121,27 @@ public long GetRateLimitResetDateTime_UnixEpochSeconds(HttpResponseHeaders httpR
 - Get the Date Time when the GitHub API rate limit resets
 - Parses the `X-RateLimit-Reset` header and returns its `long` value in [Unix Epoch Seconds](https://www.epochconverter.com)
 
+### DoesContainGitHubRateLimitHeader
+
+```csharp
+public static bool DoesContainGitHubRateLimitHeader(this HttpResponseHeaders headers)
+```
+- Returns whether HttpResponseHeaders Contain X-RateLimit-Limit
+
+### DoesContainGitHubRateLimitResetHeader
+
+```csharp
+public static bool DoesContainGitHubRateLimitResetHeader(this HttpResponseHeaders headers)
+```
+- Returns whether HttpResponseHeaders Contain X-RateLimit-Reset
+
+### DoesContainGitHubRateLimitRemainingHeader
+
+```csharp
+public static bool DoesContainGitHubRateLimitRemainingHeader(this HttpResponseHeaders headers)
+```
+- Returns whether HttpResponseHeaders Contain X-RateLimit-Remaining
+
 ## GitHubApiStatus.Extensions API
 
 #### AddGitHubApiStatusService
