@@ -37,7 +37,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.GetRateLimitTimeRemaining(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitTimeRemaining(invalidHttpResponseMessage.Headers));
         }
 
         [Test]

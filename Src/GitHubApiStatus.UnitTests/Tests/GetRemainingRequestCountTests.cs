@@ -34,7 +34,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
         }
 
         [Test]

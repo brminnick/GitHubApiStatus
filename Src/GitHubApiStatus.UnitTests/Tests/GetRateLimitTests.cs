@@ -32,7 +32,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.GetRateLimit(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimit(invalidHttpResponseMessage.Headers));
         }
 
         [Test]

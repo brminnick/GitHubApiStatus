@@ -13,5 +13,14 @@ namespace GitHubApiStatus
         internal GitHubApiStatusException(string message) : base(message)
         {
         }
+
+        /// <summary>
+        /// Initialize GitHubApiStatusException
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+        internal GitHubApiStatusException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(invalidHttpResponseMessage.Headers));
         }
 
         [Test]

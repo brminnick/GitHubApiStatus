@@ -170,10 +170,17 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase));
-            var rateLimit = int.Parse(rateLimitRemainingHeader.Value.First());
+            try
+            {
+                var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase));
+                var rateLimit = int.Parse(rateLimitRemainingHeader.Value.First());
 
-            return rateLimit;
+                return rateLimit;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Header Not Found, {RateLimitHeader}", ex);
+            }
         }
 
         /// <summary>
@@ -210,10 +217,17 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase));
-            var remainingApiRequests = int.Parse(rateLimitRemainingHeader.Value.First());
+            try
+            {
+                var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase));
+                var remainingApiRequests = int.Parse(rateLimitRemainingHeader.Value.First());
 
-            return remainingApiRequests;
+                return remainingApiRequests;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Remaining Header not found, {RateLimitRemainingHeader}", ex);
+            }
         }
 
         /// <summary>
@@ -251,8 +265,15 @@ namespace GitHubApiStatus
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            var rateLimitResetHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase));
-            return long.Parse(rateLimitResetHeader.Value.First());
+            try
+            {
+                var rateLimitResetHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase));
+                return long.Parse(rateLimitResetHeader.Value.First());
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Reset Header Not Found, {RateLimitResetHeader}", ex);
+            }
         }
 
         internal static void ValidateHttpResponseHeaders(in HttpResponseHeaders? httpResponseHeaders)

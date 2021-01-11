@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -151,7 +152,11 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
             var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => gitHubApiStatusService.GetApiRateLimits());
-            Assert.IsTrue(httpRequestException.Message.Contains("Unauthorized"));
+#if NET5_0
+            Assert.AreEqual(HttpStatusCode.Unauthorized, httpRequestException?.StatusCode);
+#else
+            Assert.IsTrue(httpRequestException?.Message.Contains("Unauthorized"));
+#endif
         }
     }
 }

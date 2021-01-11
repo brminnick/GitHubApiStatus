@@ -39,5 +39,11 @@ namespace GitHubApiStatus.Extensions
         {
             
         }
+
+        public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta)
+        {
+            delta = null;
+            return false;
+        }
     }
 }

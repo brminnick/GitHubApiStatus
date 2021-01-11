@@ -38,7 +38,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers));
         }
 
         [Test]
