@@ -11,6 +11,10 @@ on:
 jobs:
     UnitTests:
       runs-on: macos-latest
+      
+      env:
+        GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
+
       steps:
       - uses: actions/checkout@v1
 
