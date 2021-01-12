@@ -43,19 +43,22 @@ jobs:
 
           echo "Finished Injecting GitHub Personal Access Token"
 
-      - name: Run Unit Tests
+      - name: Run GitHubApiStatus.UnitTests
         run: |
           GitHubApiStatusUnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
           echo $GitHubApiStatusUnitTestProject
 
           GitHubApiStatusUnitTestDirectory=`dirname $GitHubApiStatusUnitTestProject`
           echo $GitHubApiStatusUnitTestDirectory
+          
+          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release'
 
+      - name: Run GitHubApiStatus.Extensions.UnitTests
+        run: |
           GitHubApiStatusExtensionsUnitTestProject=`find . -name GitHubApiStatus.Extensions.UnitTests.csproj`
           echo $GitHubApiStatusExtensionsUnitTestProject
 
           GitHubApiStatusExtensionsUnitTestDirectory=`dirname $GitHubApiStatusExtensionsUnitTestProject`
           echo $GitHubApiStatusExtensionsUnitTestDirectory
-          
-          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release'
+
           dotnet test $GitHubApiStatusExtensionsUnitTestDirectory -c 'Release'
