@@ -40,9 +40,17 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
         </Description>
         <PackageReleaseNotes>
 New In This Release:
-- Added HttpResponseHeadersExtensions
+- Added Interfaces: IGitHubApiStatusService, IGitHubApiRateLimitResponse, IGitHubApiRateLimits and IRateLimitStatus
+- Added GitHubApiClient
+- Added GitHubApiStatusService.AddProductHeaderValue()
+- Added GitHubApiStatusService.SetAuthenticationHeaderValue()
+- Added GitHubApiStatusService.IsProductHeaderValueValid
+- Added GitHubApiStatusService.IsAuthenticationHeaderValueSet
+- Added HttpResponseHeaders Extensions
+- Breaking Change: Removed GitHubApiStatusService.Instance
+- Breaking Change: Changed GitHubApiStatusService.IsAuthenticated to GitHubApiStatusService.IsResponseFromAuthenticatedRequest
         </PackageReleaseNotes>
-        <Version>2.0.0-pre10</Version>
+        <Version>2.0.0</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>

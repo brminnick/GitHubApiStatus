@@ -11,22 +11,22 @@ namespace GitHubApiStatus
         /// <summary>
         /// Returns whether HttpResponseHeaders Contain X-RateLimit-Limit
         /// </summary>
-        /// <param name="headers"></param>
+        /// <param name="responseHeaders"></param>
         /// <returns></returns>
-        public static bool DoesContainGitHubRateLimitHeader(this HttpResponseHeaders headers) => headers.Any(x => x.Key is GitHubApiStatusService.RateLimitHeader);
+        public static bool DoesContainGitHubRateLimitHeader(this HttpResponseHeaders responseHeaders) => responseHeaders.Any(x => x.Key is GitHubApiStatusService.RateLimitHeader);
 
         /// <summary>
         /// Returns whether HttpResponseHeaders Contain X-RateLimit-Reset
         /// </summary>
-        /// <param name="headers"></param>
+        /// <param name="responseHeaders"></param>
         /// <returns></returns>
-        public static bool DoesContainGitHubRateLimitResetHeader(this HttpResponseHeaders headers) => headers.Any(x => x.Key is GitHubApiStatusService.RateLimitResetHeader);
+        public static bool DoesContainGitHubRateLimitResetHeader(this HttpResponseHeaders responseHeaders) => responseHeaders.Any(x => x.Key is GitHubApiStatusService.RateLimitResetHeader);
 
         /// <summary>
         /// Returns whether HttpResponseHeaders Contain X-RateLimit-Remaining
         /// </summary>
-        /// <param name="headers"></param>
+        /// <param name="responseHeaders"></param>
         /// <returns></returns>
-        public static bool DoesContainGitHubRateLimitRemainingHeader(this HttpResponseHeaders headers) => headers.Any(x => x.Key is GitHubApiStatusService.RateLimitRemainingHeader);
+        public static bool DoesContainGitHubRateLimitRemainingHeader(this HttpResponseHeaders responseHeaders) => responseHeaders.Any(x => x.Key is GitHubApiStatusService.RateLimitRemainingHeader);
     }
 }
