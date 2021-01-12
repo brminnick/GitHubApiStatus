@@ -339,7 +339,7 @@ class MyPageModel : PageModel
     readonly ILogger<IndexModel> _logger;
     readonly IGitHubApiStatusService _gitHubApiStatusService;
 
-    public MyPageModel(IGitHubApiStatusService gitHubApiStatusService, ILogger<IndexModel> logger)
+    public MyPageModel(IGitHubApiStatusService gitHubApiStatusService, ILogger<MyPageModel> logger)
     {
         _logger = logger;
         _gitHubApiStatusService = gitHubApiStatusService;
