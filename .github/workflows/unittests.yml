@@ -27,7 +27,17 @@ jobs:
       - name: Setup .NET Core v2.1
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '2.1.x'      
+          dotnet-version: '2.1.x'   
+
+      - name: Inject GitHub Personal Access Token
+        run: |
+          GitHubConstantsFile=`find . -name GitHubConstants.cs | head -1`
+
+          echo GitHubConstantsFile = $GitHubConstantsFile
+
+          sed -i '' "s/PersonalAccessToken = \"\"/PersonalAccessToken = \"$GitHubPersonalAccessToken\"/g" "$GitHubConstantsFile"
+
+          echo "Finished Injecting GitHub Personal Access Token"
 
       - name: Run Unit Tests
         run: |
