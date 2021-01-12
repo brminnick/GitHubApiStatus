@@ -248,7 +248,7 @@ static async Task Main(string[] args)
     int rateLimit = gitHubApiStatusService.GetRateLimit(restApiResponse.Headers);
     int remainingRequestCount = gitHubApiStatusService.GetRemainingRequestCount(restApiResponse.Headers);
 
-    bool isAuthenticated = gitHubApiStatusService.IsAuthenticated(restApiResponse.Headers);
+    bool isAuthenticated = gitHubApiStatusService.IsResponseFromAuthenticatedRequest(restApiResponse.Headers);
 
     bool hasReachedMaximumApiLimit = gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
 
