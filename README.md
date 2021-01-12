@@ -97,10 +97,10 @@ public TimeSpan GetRateLimitTimeRemaining(HttpResponseHeaders httpResponseHeader
 - Get the time remaining until GitHub API rate limit resets
 - Parses the `X-RateLimit-Reset` header and returns the `TimeSpan` value from the current time
   
-#### IsAuthenticated
+#### IsResponseFromAuthenticatedRequest
   
 ```csharp
-public bool IsAuthenticated(HttpResponseHeaders httpResponseHeaders)
+public bool IsResponseFromAuthenticatedRequest(HttpResponseHeaders httpResponseHeaders)
 ```
 - Determine whether the request was made using an authenticated bearer token
 - Determines whether or not the `Authorization` key exists in the `Vary` header 
