@@ -20,7 +20,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining);
 
             //Act
-            hasReachedMaximumApiCallLimit_Actual = GitHubApiStatus.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
+            hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
@@ -39,7 +39,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining);
 
             //Act
-            hasReachedMaximumApiCallLimit_Actual = GitHubApiStatus.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
+            hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
@@ -54,7 +54,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatus.HasReachedMaximimApiCallLimit(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(invalidHttpResponseMessage.Headers));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.HasReachedMaximimApiCallLimit(nullHttpResponseHeaders));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

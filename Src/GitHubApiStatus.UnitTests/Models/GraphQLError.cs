@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GitHubApiStatus.UnitTests
 {
-    public class GraphQLError
+    class GraphQLError
     {
         public GraphQLError(string message, GraphQLLocation[] locations)
         {
@@ -22,7 +22,7 @@ namespace GitHubApiStatus.UnitTests
         public IDictionary<string, JToken>? AdditonalEntries { get; set; }
     }
 
-    public class GraphQLLocation
+    class GraphQLLocation
     {
         [JsonProperty("line")]
         public long Line { get; }

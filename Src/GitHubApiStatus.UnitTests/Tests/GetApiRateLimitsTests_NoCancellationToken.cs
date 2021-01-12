@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using GitStatus.Shared;
 using NUnit.Framework;
@@ -9,48 +12,6 @@ namespace GitHubApiStatus.UnitTests
     class GetApiRateLimitsTests_NoCancellationToken : BaseTest
     {
         [Test]
-        public void GetApiRateLimits_NullAuthenticationHeaderValue()
-        {
-            //Arrange
-            AuthenticationHeaderValue? authenticationHeaderValue = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.ThrowsAsync<ArgumentNullException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-
-        [TestCase("Basic")]
-        [TestCase("Oauth")]
-        [TestCase("Digest")]
-        public void GetApiRateLimits_InvalidScheme(string scheme)
-        {
-            //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue(scheme, GitHubConstants.PersonalAccessToken);
-
-            //Act
-
-            //Assert
-            Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue));
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void GetApiRateLimits_InvalidParameter(string parameter)
-        {
-            //Arrange
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", parameter);
-
-            //Act
-
-            //Assert
-            Assert.ThrowsAsync<ArgumentException>(() => GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue));
-        }
-
-        [Test]
         public async Task GetApiRateLimits_ValidRestApiRequest()
         {
             //Arrange
@@ -58,15 +19,15 @@ namespace GitHubApiStatus.UnitTests
             GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
             var startTime = DateTimeOffset.UtcNow;
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var gitHubApiStatusService = (GitHubApiStatusService)GitHubApiStatusService;
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
             restApiStatus_Initial = gitHubApiRateLimits_Initial.RestApi;
 
             await SendValidRestApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
             restApiStatus_Final = gitHubApiRateLimits_Final.RestApi;
 
             //Assert
@@ -87,7 +48,7 @@ namespace GitHubApiStatus.UnitTests
             Assert.GreaterOrEqual(restApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
             Assert.AreEqual(restApiStatus_Initial.RateLimit, restApiStatus_Final.RateLimit);
-            Assert.AreEqual(restApiStatus_Initial.RateLimitReset_DateTime, restApiStatus_Final.RateLimitReset_DateTime);
+            Assert.IsTrue(restApiStatus_Initial.RateLimitReset_DateTime == restApiStatus_Final.RateLimitReset_DateTime || restApiStatus_Initial.RateLimitReset_DateTime == restApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
             Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_TimeRemaining, restApiStatus_Final.RateLimitReset_TimeRemaining);
             Assert.AreEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Final.RemainingRequestCount);
@@ -102,15 +63,15 @@ namespace GitHubApiStatus.UnitTests
             GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
             var startTime = DateTimeOffset.UtcNow;
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var gitHubApiStatusService = (GitHubApiStatusService)GitHubApiStatusService;
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
             graphQLApiStatus_Initial = gitHubApiRateLimits_Initial.GraphQLApi;
 
             await SendValidGraphQLApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Final = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
             graphQLApiStatus_Final = gitHubApiRateLimits_Final.GraphQLApi;
 
             //Assert
@@ -131,7 +92,7 @@ namespace GitHubApiStatus.UnitTests
             Assert.GreaterOrEqual(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
             Assert.AreEqual(graphQLApiStatus_Initial.RateLimit, graphQLApiStatus_Final.RateLimit);
-            Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime, graphQLApiStatus_Final.RateLimitReset_DateTime);
+            Assert.IsTrue(graphQLApiStatus_Initial.RateLimitReset_DateTime == graphQLApiStatus_Final.RateLimitReset_DateTime || graphQLApiStatus_Initial.RateLimitReset_DateTime == graphQLApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
             Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, graphQLApiStatus_Final.RateLimitReset_TimeRemaining);
             Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Final.RemainingRequestCount);
@@ -141,20 +102,20 @@ namespace GitHubApiStatus.UnitTests
         public async Task GetApiRateLimits_ValidSearchApiRequest()
         {
             //Arrange
-            RateLimitStatus searchApiStatus_Initial, codeScanningApiStatus_Final;
+            RateLimitStatus searchApiStatus_Initial, searchApiStatus_Final;
             GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
             var startTime = DateTimeOffset.UtcNow;
-            var authenticationHeaderValue = new AuthenticationHeaderValue("bearer", GitHubConstants.PersonalAccessToken);
+            var gitHubApiStatusService = (GitHubApiStatusService)GitHubApiStatusService;
 
             //Act
-            gitHubApiRateLimits_Initial = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
+            gitHubApiRateLimits_Initial = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
             searchApiStatus_Initial = gitHubApiRateLimits_Initial.SearchApi;
 
             await SendValidSearchApiRequest().ConfigureAwait(false);
 
-            gitHubApiRateLimits_Final = await GitHubApiStatusService.Instance.GetApiRateLimits(authenticationHeaderValue).ConfigureAwait(false);
-            codeScanningApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
+            gitHubApiRateLimits_Final = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
+            searchApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
 
             //Assert
             Assert.IsNotNull(searchApiStatus_Initial);
@@ -165,19 +126,37 @@ namespace GitHubApiStatus.UnitTests
             Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_DateTime, startTime);
             Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-            Assert.IsNotNull(codeScanningApiStatus_Final);
-            Assert.AreEqual(30, codeScanningApiStatus_Final.RateLimit);
-            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, 0);
-            Assert.LessOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, codeScanningApiStatus_Final.RateLimit);
-            Assert.AreEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime, startTime);
-            Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+            Assert.IsNotNull(searchApiStatus_Final);
+            Assert.AreEqual(30, searchApiStatus_Final.RateLimit);
+            Assert.GreaterOrEqual(searchApiStatus_Final.RemainingRequestCount, 0);
+            Assert.LessOrEqual(searchApiStatus_Final.RemainingRequestCount, searchApiStatus_Final.RateLimit);
+            Assert.AreEqual(searchApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_DateTime, startTime);
+            Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-            Assert.AreEqual(searchApiStatus_Initial.RateLimit, codeScanningApiStatus_Final.RateLimit);
-            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_DateTime, codeScanningApiStatus_Final.RateLimitReset_DateTime);
-            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, codeScanningApiStatus_Final.RateLimitReset_TimeRemaining);
-            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-            Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, codeScanningApiStatus_Final.RemainingRequestCount);
+            Assert.AreEqual(searchApiStatus_Initial.RateLimit, searchApiStatus_Final.RateLimit);
+            Assert.IsTrue(searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime || searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
+            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, searchApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+            Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
+        }
+
+        [Test]
+        public void GetApiRateLimits_InvalidBearerToken()
+        {
+            //Arrange
+            var gitHubApiStatusService = (GitHubApiStatusService)GitHubApiStatusService;
+            gitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, "abc 123"));
+
+            //Act
+
+            //Assert
+            var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => gitHubApiStatusService.GetApiRateLimits());
+#if NET5_0
+            Assert.AreEqual(HttpStatusCode.Unauthorized, httpRequestException?.StatusCode);
+#else
+            Assert.IsTrue(httpRequestException?.Message.Contains("Unauthorized"));
+#endif
         }
     }
 }

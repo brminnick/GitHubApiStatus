@@ -5,7 +5,7 @@ namespace GitHubApiStatus
     /// <summary>
     /// GitHub API Rate Limit Status
     /// </summary>
-    public class RateLimitStatus
+    public class RateLimitStatus : IRateLimitStatus
     {
 
         /// <summary>
@@ -47,5 +47,17 @@ namespace GitHubApiStatus
         /// Rate Limit Reset Time Stamp
         /// </summary>
         public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 #if NETSTANDARD
+using System.IO;
 using Newtonsoft.Json;
 #else
 using System.Text.Json;
@@ -17,22 +17,9 @@ namespace GitHubApiStatus
     /// <summary>
     /// GitHub API Status Service
     /// </summary>
-    public class GitHubApiStatusService
+    public class GitHubApiStatusService : IGitHubApiStatusService
     {
-        readonly static Lazy<SemaphoreSlim> _semaphoreSlimHolder = new Lazy<SemaphoreSlim>(() => new SemaphoreSlim(1, 1));
-        readonly static Lazy<GitHubApiStatusService> _instanceHolder = new Lazy<GitHubApiStatusService>(() => new GitHubApiStatusService());
-
-#if NETSTANDARD
-        readonly static Lazy<JsonSerializer> _serializerHolder = new Lazy<JsonSerializer>(() => new JsonSerializer());
-#endif
-
-        readonly static Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => new HttpClient
-        {
-            DefaultRequestHeaders =
-            {
-                { "User-Agent", nameof(GitHubApiStatus) },
-            }
-        });
+        readonly HttpClient _client;
 
         /// <summary>
         /// GitHub Http Response Rate Limit Header Key
@@ -49,59 +36,129 @@ namespace GitHubApiStatus
         /// </summary>
         public const string RateLimitRemainingHeader = "X-RateLimit-Remaining";
 
+#if NETSTANDARD
+        readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
+#endif
 
         /// <summary>
-        /// Static Instance of GitHubApiStatusService 
+        /// Initializes GitHubApiStatusService
         /// </summary>
-        public static GitHubApiStatusService Instance => _instanceHolder.Value;
+        public GitHubApiStatusService()
+        {
+            _client = new HttpClient();
+        }
 
-        static HttpClient Client => _clientHolder.Value;
+        /// <summary>
+        /// Initializes GitHubApiStatusService
+        /// </summary>
+        /// <param name="authenticationHeaderValue">GitHub Authentication Bearer Token</param>
+        /// <param name="productHeaderValue">User-Agent Name</param>
+        public GitHubApiStatusService(AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue)
+        {
+            ValidateAuthenticationHeaderValue(authenticationHeaderValue);
+            ValidateProductHeaderValue(productHeaderValue);
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+
+            _client = client;
+        }
+
+        /// <summary>
+        /// Initializes GitHubApiStatusService
+        /// </summary>
+        /// <param name="client">GitHub API requires the following Headers: Authorization and User-Agent</param>
+        public GitHubApiStatusService(HttpClient client)
+        {
+            if (client is null)
+                throw new GitHubApiStatusException($"{nameof(client)} cannot be null");
+
+            ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
+            ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
+
+            _client = client;
+        }
+
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.UserAgent is Valid
+        /// </summary>
+        public bool IsProductHeaderValueValid
+        {
+            get
+            {
+                try
+                {
+                    ValidateProductHeaderValue(_client.DefaultRequestHeaders.UserAgent);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determines if GitHubApiClient.DefaultRequestHeaders.Authorization is Valid
+        /// </summary>
+        public bool IsAuthenticationHeaderValueSet
+        {
+            get
+            {
+                try
+                {
+                    ValidateAuthenticationHeaderValue(_client.DefaultRequestHeaders.Authorization);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
 
 #if NETSTANDARD
         static JsonSerializer Serializer => _serializerHolder.Value;
 #endif
-        static SemaphoreSlim SemaphoreSlim => _semaphoreSlimHolder.Value;
+
+        /// <summary>
+        /// Add ProductHeaderValue to HttpClient.DefaultRequestHeaders.UserAgent
+        /// </summary>
+        /// <param name="productHeaderValue"></param>
+        public void AddProductHeaderValue(ProductHeaderValue productHeaderValue)
+        {
+            ValidateProductHeaderValue(productHeaderValue);
+
+            _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productHeaderValue));
+        }
+
+        /// <summary>
+        /// Set HttpClient.DefaultRequestHeaders.Authorization
+        /// </summary>
+        /// <param name="authenticationHeaderValue"></param>
+        public void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue)
+        {
+            ValidateAuthenticationHeaderValue(authenticationHeaderValue);
+
+            _client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+        }
 
         /// <summary>
         /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
         /// </summary>
-        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
         /// <returns>The API Status for each GitHub API</returns>
-        public Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue) => GetApiRateLimits(authenticationHeaderValue, CancellationToken.None);
+        public Task<GitHubApiRateLimits> GetApiRateLimits() => GetApiRateLimits(CancellationToken.None);
 
         /// <summary>
         /// Get the API Rate Limits for the GitHub REST API, GraphQL API, Search API, Code Scanning API and App Manifest Configuration API
         /// </summary>
-        /// <param name="authenticationHeaderValue">Authentication Header, e.g. `new AuthenticationHeaderValue(bearer, 91820398037201212)`</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        public async Task<GitHubApiRateLimits> GetApiRateLimits(AuthenticationHeaderValue authenticationHeaderValue, CancellationToken cancellationToken)
+        public async Task<GitHubApiRateLimits> GetApiRateLimits(CancellationToken cancellationToken)
         {
-            if (authenticationHeaderValue is null)
-                throw new ArgumentNullException(nameof(authenticationHeaderValue));
-
-            if (!authenticationHeaderValue.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
-
-            if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
-                throw new ArgumentException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be null or empty");
-
-            try
-            {
-                await SemaphoreSlim.WaitAsync().ConfigureAwait(false);
-
-                Client.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
-
-                var response = await GetGitHubApiRateLimitResponse(cancellationToken);
-
-                Client.DefaultRequestHeaders.Authorization = null;
-
-                return response.Results;
-            }
-            finally
-            {
-                SemaphoreSlim.Release();
-            }
+            var response = await GetGitHubApiRateLimitResponse(_client, cancellationToken).ConfigureAwait(false);
+            return response.Results;
         }
 
         /// <summary>
@@ -111,23 +168,33 @@ namespace GitHubApiStatus
         /// <returns>GitHub Api Rate Limit </returns>
         public int GetRateLimit(in HttpResponseHeaders httpResponseHeaders)
         {
-            var rateLimitRemainingHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
-            var rateLimit = int.Parse(rateLimitRemainingHeader.Value.First());
+            ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            return rateLimit;
+            try
+            {
+                var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitHeader, StringComparison.OrdinalIgnoreCase));
+                var rateLimit = int.Parse(rateLimitRemainingHeader.Value.First());
+
+                return rateLimit;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Header Not Found, {RateLimitHeader}", ex);
+            }
         }
 
         /// <summary>
-        /// Get Number of GitHub API Requests Remaining
+        /// Determines Whether GitHub's Abuse Rate Limit Has Been Reached
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
-        /// <returns>Number of GitHub API Requests Remaining</returns>
-        public int GetRemainingRequestCount(in HttpResponseHeaders httpResponseHeaders)
+        /// <param name="delta">Time Remaining in Retry-After Header</param>
+        /// <returns></returns>
+        public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta)
         {
-            var rateLimitRemainingHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
-            var remainingApiRequests = int.Parse(rateLimitRemainingHeader.Value.First());
+            ValidateHttpResponseHeaders(httpResponseHeaders);
 
-            return remainingApiRequests;
+            delta = httpResponseHeaders.RetryAfter?.Delta;
+            return delta is not null;
         }
 
         /// <summary>
@@ -142,18 +209,44 @@ namespace GitHubApiStatus
         }
 
         /// <summary>
-        /// Get Time Remaining Until GitHub API Rate Limit Resets
+        /// Get Number of GitHub API Requests Remaining
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
-        /// <returns>Time Remaining Until GitHub API Rate Limit Resets</returns>
-        public TimeSpan GetRateLimitTimeRemaining(in HttpResponseHeaders httpResponseHeaders) => GetRateLimitResetDateTime(httpResponseHeaders).Subtract(DateTimeOffset.UtcNow);
+        /// <returns>Number of GitHub API Requests Remaining</returns>
+        public int GetRemainingRequestCount(in HttpResponseHeaders httpResponseHeaders)
+        {
+            ValidateHttpResponseHeaders(httpResponseHeaders);
+
+            try
+            {
+                var rateLimitRemainingHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitRemainingHeader, StringComparison.OrdinalIgnoreCase));
+                var remainingApiRequests = int.Parse(rateLimitRemainingHeader.Value.First());
+
+                return remainingApiRequests;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Remaining Header not found, {RateLimitRemainingHeader}", ex);
+            }
+        }
 
         /// <summary>
         /// Determines Whether the Http Response Was From an Authenticated Http Request
         /// </summary>
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
         /// <returns>Whether the Http Response Was From an Authenticated Http Request</returns>
-        public bool IsAuthenticated(in HttpResponseHeaders httpResponseHeaders) => httpResponseHeaders?.Vary.Any(x => x is "Authorization") ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
+        public bool IsResponseFromAuthenticatedRequest(in HttpResponseHeaders httpResponseHeaders)
+        {
+            ValidateHttpResponseHeaders(httpResponseHeaders);
+            return httpResponseHeaders.Vary.Any(x => x is "Authorization");
+        }
+
+        /// <summary>
+        /// Get Time Remaining Until GitHub API Rate Limit Resets
+        /// </summary>
+        /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
+        /// <returns>Time Remaining Until GitHub API Rate Limit Resets</returns>
+        public TimeSpan GetRateLimitTimeRemaining(in HttpResponseHeaders httpResponseHeaders) => GetRateLimitResetDateTime(httpResponseHeaders).Subtract(DateTimeOffset.UtcNow);
 
         /// <summary>
         /// Get the DateTimeOffset When the GitHub API Rate Limit Will Reset
@@ -170,15 +263,75 @@ namespace GitHubApiStatus
         /// <returns>Unix Epoch Seconds When the GitHub API Rate Limit Will Reset</returns>
         public long GetRateLimitResetDateTime_UnixEpochSeconds(in HttpResponseHeaders httpResponseHeaders)
         {
-            var rateLimitResetHeader = httpResponseHeaders?.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase)) ?? throw new ArgumentNullException(nameof(httpResponseHeaders));
-            return long.Parse(rateLimitResetHeader.Value.First());
+            ValidateHttpResponseHeaders(httpResponseHeaders);
+
+            try
+            {
+                var rateLimitResetHeader = httpResponseHeaders.Single(x => x.Key.Equals(RateLimitResetHeader, StringComparison.OrdinalIgnoreCase));
+                return long.Parse(rateLimitResetHeader.Value.First());
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GitHubApiStatusException($"Rate Limit Reset Header Not Found, {RateLimitResetHeader}", ex);
+            }
+        }
+
+        internal static void ValidateHttpResponseHeaders(in HttpResponseHeaders? httpResponseHeaders)
+        {
+            if (httpResponseHeaders is null)
+                throw new GitHubApiStatusException($"{nameof(HttpResponseHeaders)} cannot be null or whitespace");
+        }
+
+        internal static void ValidateProductHeaderValue(in HttpHeaderValueCollection<ProductInfoHeaderValue>? productInfoHeaderValues)
+        {
+            if (productInfoHeaderValues is null)
+                throw new GitHubApiStatusException($"{nameof(ProductHeaderValue)} cannot be null or whitespace");
+
+            if (!productInfoHeaderValues.Any(x => !string.IsNullOrWhiteSpace(x?.Product?.Name)))
+                throw new GitHubApiStatusException($"{nameof(ProductHeaderValue)}.{nameof(ProductHeaderValue.Name)} cannot be null or whitespace");
+        }
+
+        internal static void ValidateProductHeaderValue(in ProductHeaderValue? productHeaderValue)
+        {
+            if (productHeaderValue is null)
+                throw new GitHubApiStatusException($"{nameof(ProductHeaderValue)} cannot be null");
+
+            ValidateProductHeaderValue(new ProductInfoHeaderValue(productHeaderValue));
+        }
+
+        internal static void ValidateProductHeaderValue(in ProductInfoHeaderValue? productInfoHeaderValue)
+        {
+            if (string.IsNullOrWhiteSpace(productInfoHeaderValue?.Product?.Name))
+                throw new GitHubApiStatusException($"{nameof(ProductHeaderValue)}.{nameof(ProductHeaderValue.Name)} cannot be null or whitespace");
+        }
+
+        internal static void ValidateAuthenticationHeaderValue(in AuthenticationHeaderValue? authenticationHeaderValue)
+        {
+            if (authenticationHeaderValue is null)
+                throw new GitHubApiStatusException($"{nameof(AuthenticationHeaderValue)} cannot be null");
+
+            if (!authenticationHeaderValue.Scheme.Equals("bearer", StringComparison.OrdinalIgnoreCase))
+                throw new GitHubApiStatusException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Scheme)} must be `bearer`");
+
+            if (string.IsNullOrWhiteSpace(authenticationHeaderValue.Parameter))
+                throw new GitHubApiStatusException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
         }
 
         // Use Streams to optimize performance: https://www.newtonsoft.com/json/help/html/Performance.htm
-        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(CancellationToken cancellationToken)
+        static async Task<GitHubApiRateLimitResponse> GetGitHubApiRateLimitResponse(HttpClient client, CancellationToken cancellationToken)
         {
-            using var response = await Client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+            ValidateProductHeaderValue(client.DefaultRequestHeaders.UserAgent);
+            ValidateAuthenticationHeaderValue(client.DefaultRequestHeaders.Authorization);
+
+            using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+#if NET5_0
+            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+#else
             using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#endif
+
 
 #if NETSTANDARD
             using var streamReader = new StreamReader(stream);
@@ -186,7 +339,7 @@ namespace GitHubApiStatus
 
             return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
 #else
-            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream).ConfigureAwait(false) ?? throw new JsonException();
+            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 
             return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
 #endif

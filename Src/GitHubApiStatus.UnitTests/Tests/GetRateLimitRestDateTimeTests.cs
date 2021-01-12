@@ -19,7 +19,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, rateLimitResetDateTime_Expected, rateLimit - 5);
 
             //Act
-            rateLimitResetDateTime_Actual = GitHubApiStatus.GetRateLimitResetDateTime(validHttpResponseHeaders);
+            rateLimitResetDateTime_Actual = GitHubApiStatusService.GetRateLimitResetDateTime(validHttpResponseHeaders);
 
             //Assert Test all values except Milliseconds, because GitHub API 
             Assert.AreEqual(rateLimitResetDateTime_Expected.Second, rateLimitResetDateTime_Actual.Second);
@@ -38,7 +38,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatus.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.GetRateLimitResetDateTime(nullHttpResponseHeaders));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

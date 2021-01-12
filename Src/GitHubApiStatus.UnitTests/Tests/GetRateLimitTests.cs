@@ -17,7 +17,7 @@ namespace GitHubApiStatus.UnitTests
             var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit_Expected, DateTimeOffset.UtcNow, rateLimit_Expected - 5);
 
             //Act
-            rateLimit_Actual = GitHubApiStatus.GetRateLimit(validHttpResponseHeaders);
+            rateLimit_Actual = GitHubApiStatusService.GetRateLimit(validHttpResponseHeaders);
 
             //Assert
             Assert.AreEqual(rateLimit_Expected, rateLimit_Actual);
@@ -32,7 +32,7 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
-            Assert.Throws<InvalidOperationException>(() => GitHubApiStatus.GetRateLimit(invalidHttpResponseMessage.Headers));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimit(invalidHttpResponseMessage.Headers));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace GitHubApiStatus.UnitTests
 
             //Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => GitHubApiStatus.GetRateLimit(nullHttpResponseHeaders));
+            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimit(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }
