@@ -281,7 +281,7 @@ public class Program
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
         // AddGitHubApiStatusService 
-        builder.Services.AddGitHubApiStatusService(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue("MyApp"))
+        builder.Services.AddGitHubApiStatusService(new AuthenticationHeaderValue("bearer", "[Your GitHub Personal Access Token, e.g. 123456789012345]"), new ProductHeaderValue("MyApp"))
             .ConfigurePrimaryHttpMessageHandler(config => new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate });
 
         return builder.Build().RunAsync();
@@ -322,7 +322,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddGitHubApiStatusService(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue("MyApp"))
+        services.AddGitHubApiStatusService(new AuthenticationHeaderValue("bearer", "[Your GitHub Personal Access Token, e.g. 123456789012345]"), new ProductHeaderValue("MyApp"))
             .ConfigurePrimaryHttpMessageHandler(config => new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate });
 
         services.AddRazorPages();
@@ -362,7 +362,7 @@ namespace MyApp.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddGitHubApiStatusService(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue("MyApp"))
+            builder.Services.AddGitHubApiStatusService(new AuthenticationHeaderValue("bearer", "[Your GitHub Personal Access Token, e.g. 123456789012345]"), new ProductHeaderValue("MyApp"))
                 .ConfigurePrimaryHttpMessageHandler(config => new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate });
         }
     }
