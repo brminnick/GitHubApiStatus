@@ -26,7 +26,7 @@ namespace GitHubApiStatus.Extensions
         /// <param name="services">Microsoft.Extensions.DependencyInjection.IServiceCollection</param>
         /// <param name="authenticationHeaderValue">GitHub API Personal Access Token</param>
         /// <param name="productHeaderValue">User-Agent</param>
-        /// <returns></returns>
+        /// <returns>IHttpClientBuilder</returns>
         public static IHttpClientBuilder AddGitHubApiStatusService<TGitHubApiStatusService>(this IServiceCollection services, AuthenticationHeaderValue authenticationHeaderValue, ProductHeaderValue productHeaderValue) where TGitHubApiStatusService : class, IGitHubApiStatusService
         {
             if (productHeaderValue is null)
