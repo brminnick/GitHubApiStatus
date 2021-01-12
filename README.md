@@ -45,7 +45,7 @@ GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
 [![NuGet](https://buildstats.info/nuget/GitHubApiStatus.Extensions?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/)
 
-- Available on NuGet: https://www.nuget.org/packages/GitHubApiStatus/ 
+- Available on NuGet: https://www.nuget.org/packages/GitHubApiStatus.Extensions/ 
 - Add to any project supporting .NET Standard 2.0
 - Leverages [Microsoft.Extensions.Http](https://www.nuget.org/packages/Microsoft.Extensions.Http/)
 
