@@ -16,7 +16,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           GitHubApiStatusUnitTestProject=`find . -name GitHubApiStatus.UnitTests.csproj`
-          echo $UnitTestProject
+          echo $GitHubApiStatusUnitTestProject
 
           GitHubApiStatusUnitTestDirectory=`dirname $GitHubApiStatusUnitTestProject`
           echo $GitHubApiStatusUnitTestDirectory
