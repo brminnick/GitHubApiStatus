@@ -18,7 +18,7 @@
         <PackageReference Include="Refit" Version="5.2.4" />
         <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="5.0.2" />
         <PackageReference Include="GraphQL.Client" Version="3.2.1" />
-        <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="1.0.0" />
+        <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="1.0.2" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Pages\" />
