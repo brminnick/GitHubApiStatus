@@ -14,6 +14,9 @@ GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 - [Jump to the GitHubApiStatus.Extensions API](#GitHubApiStatusExtensions-API)
 - [Jump to Examples](#Examples)
 
+For more information, check out this blog post, [Introducing GitHubApiStatus](https://codetraveler.io/2021/01/12/introducing-githubapistatus/)
+<a href="https://codetraveler.io/2021/01/12/introducing-githubapistatus"><img width="490" alt="Screen Shot 2021-01-22 at 12 07 53 PM" src="https://user-images.githubusercontent.com/13558917/105540107-8aee4980-5caa-11eb-975c-2f44cf71e862.png" >
+
 ## GitHub API Rate Limits
 
 ### REST API
