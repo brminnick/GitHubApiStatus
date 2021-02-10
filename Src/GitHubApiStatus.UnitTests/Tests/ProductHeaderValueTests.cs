@@ -32,7 +32,9 @@ namespace GitHubApiStatus.UnitTests
             //Act
 
             //Assert
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentException>(() => gitHubApiStatusService.AddProductHeaderValue(new ProductHeaderValue(null)));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.IsFalse(gitHubApiStatusService.IsProductHeaderValueValid);
         }
 

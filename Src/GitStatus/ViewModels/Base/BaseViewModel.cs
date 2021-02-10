@@ -7,7 +7,7 @@ namespace GitStatus
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        readonly WeakEventManager _propertyChangedEventManager = new ();
+        readonly WeakEventManager _propertyChangedEventManager = new();
 
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
