@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-#if NETSTANDARD
+#if NETSTANDARD1_3
 using System.IO;
 using Newtonsoft.Json;
 #else
@@ -36,7 +36,7 @@ namespace GitHubApiStatus
         /// </summary>
         public const string RateLimitRemainingHeader = "X-RateLimit-Remaining";
 
-#if NETSTANDARD
+#if NETSTANDARD1_3
         readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
 
@@ -118,7 +118,7 @@ namespace GitHubApiStatus
             }
         }
 
-#if NETSTANDARD
+#if NETSTANDARD1_3
         static JsonSerializer Serializer => _serializerHolder.Value;
 #endif
 
@@ -326,14 +326,14 @@ namespace GitHubApiStatus
             using var response = await client.GetAsync("https://api.github.com/rate_limit", cancellationToken).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-#if NET5_0
+#if NET
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
 #else
             using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3
             using var streamReader = new StreamReader(stream);
             using var jsonTextReader = new JsonTextReader(streamReader);
 

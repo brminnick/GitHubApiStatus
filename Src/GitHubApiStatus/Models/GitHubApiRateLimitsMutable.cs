@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD
+﻿#if !NETSTANDARD1_3
 using System;
 using System.Text.Json.Serialization;
 

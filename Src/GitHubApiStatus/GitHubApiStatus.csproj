@@ -40,17 +40,9 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
         </Description>
         <PackageReleaseNotes>
 New In This Release:
-- Added Interfaces: IGitHubApiStatusService, IGitHubApiRateLimitResponse, IGitHubApiRateLimits and IRateLimitStatus
-- Added GitHubApiClient
-- Added GitHubApiStatusService.AddProductHeaderValue()
-- Added GitHubApiStatusService.SetAuthenticationHeaderValue()
-- Added GitHubApiStatusService.IsProductHeaderValueValid
-- Added GitHubApiStatusService.IsAuthenticationHeaderValueSet
-- Added HttpResponseHeaders Extensions
-- Breaking Change: Removed GitHubApiStatusService.Instance
-- Breaking Change: Changed GitHubApiStatusService.IsAuthenticated to GitHubApiStatusService.IsResponseFromAuthenticatedRequest
+- Use System.Text.Json for .NET Standard 2.0 
         </PackageReleaseNotes>
-        <Version>2.0.0</Version>
+        <Version>2.0.1</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -99,9 +91,9 @@ New In This Release:
     <ItemGroup Condition=" '$(Configuration)'=='Release' ">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard1.3')) ">
         <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
     <ItemGroup Condition=" $(TargetFramework.StartsWith('net5')) ">
     </ItemGroup>
@@ -110,5 +102,8 @@ New In This Release:
     <ItemGroup>
         <Folder Include="Services\" />
         <Folder Include="Interfaces\" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="System.Text.Json" Version="4.6.0" />
     </ItemGroup>
 </Project>
