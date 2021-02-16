@@ -338,6 +338,8 @@ namespace GitHubApiStatus
             using var jsonTextReader = new JsonTextReader(streamReader);
 
             return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
+#elif NET
+            return await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponse>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 #else
             var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 
