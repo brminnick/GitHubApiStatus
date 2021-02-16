@@ -19,6 +19,12 @@ namespace GitHubApiStatus
     /// </summary>
     public class GitHubApiStatusService : IGitHubApiStatusService
     {
+#if !NETSTANDARD1_3
+        static readonly JsonSerializerOptions _options = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+#endif
         readonly HttpClient _client;
 
         /// <summary>
@@ -338,10 +344,8 @@ namespace GitHubApiStatus
             using var jsonTextReader = new JsonTextReader(streamReader);
 
             return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
-#elif NET
-            return await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponse>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 #else
-            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
+            var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseRecord>(stream, _options, cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 
             return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
 #endif

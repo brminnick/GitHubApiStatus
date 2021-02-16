@@ -68,7 +68,7 @@ New In This Release:
         <DocumentationFile>bin\Release\netstandard1.0\GitHubApiStatus.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="Models\GitHubApiRateLimitsMutable.cs" />
+        <Compile Include="Models\GitHubApiRateLimitsRecord.cs" />
         <Compile Include="Services\GitHubApiStatusService.cs">
             <SubType>
             </SubType>

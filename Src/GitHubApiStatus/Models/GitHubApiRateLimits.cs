@@ -14,9 +14,6 @@
         /// <param name="source_import">Source Import API</param>
         /// <param name="integration_manifest">Integration Manifest API</param>
         /// <param name="code_scanning_upload">Code Scanning API</param>
-#if NET
-        [System.Text.Json.Serialization.JsonConstructor]
-#endif
         public GitHubApiRateLimits(RateLimitStatus core,
                                         RateLimitStatus search,
                                         RateLimitStatus graphql,
@@ -72,9 +69,6 @@
 
     class GitHubApiRateLimitResponse : IGitHubApiRateLimitResponse
     {
-#if NET
-        [System.Text.Json.Serialization.JsonConstructor]
-#endif
         public GitHubApiRateLimitResponse(GitHubApiRateLimits resources) => Results = resources;
 
         public GitHubApiRateLimits Results { get; }
