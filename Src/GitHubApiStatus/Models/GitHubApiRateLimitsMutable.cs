@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD1_3 && !NET
+﻿#if NETSTANDARD2_0 || NETCOREAPP3_0
 using System;
 using System.Text.Json.Serialization;
 
