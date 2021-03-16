@@ -2,9 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
-        <LangVersion>latest</LangVersion>
-        <Nullable>enable</Nullable>
-        <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>GitHubApiStatus.Extensions.snk</AssemblyOriginatorKeyFile>
         <AssemblyName>GitHubApiStatus.Extensions</AssemblyName>
