@@ -2,8 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <Nullable>enable</Nullable>
-        <LangVersion>latest</LangVersion>
         <TargetFramework>net5.0</TargetFramework>
         <AssemblyName>GitStatus.ConsoleApp</AssemblyName>
     </PropertyGroup>
