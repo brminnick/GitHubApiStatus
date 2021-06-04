@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Inject API Key:
+    Inject_API_Key:
       runs-on: macos-latest
       
       env:
@@ -46,7 +46,7 @@ jobs:
     Android:
       runs-on: macos-latest
       
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
@@ -58,7 +58,7 @@ jobs:
     API:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
@@ -70,7 +70,7 @@ jobs:
     Console:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
@@ -82,7 +82,7 @@ jobs:
     Web:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
@@ -94,7 +94,7 @@ jobs:
     GitHubApiStats:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
