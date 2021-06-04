@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-    Inject API Key:
+    Inject_API_Key:
       runs-on: macos-latest
       
       env:
@@ -42,59 +42,63 @@ jobs:
           sed -i '' "s/PersonalAccessToken = \"\"/PersonalAccessToken = \"$GitHubPersonalAccessToken\"/g" "$GitHubConstantsFile"
 
           echo "Finished Injecting GitHub Personal Access Token"
+      
+      - name: Restore NuGet 
+        run: |
+          nuget restore ./Src
 
     Android:
       runs-on: macos-latest
       
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
 
       - name: Build Android App
         run: |                    
-          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitHubApiStatus.Android/GitHubApiStatus.Android.csproj /verbosity:normal /p:Configuration=Release     
+          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitStatus.Android/GitStatus.Android.csproj /verbosity:normal /p:Configuration=Release     
 
     API:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
 
       - name: Build API App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.API/GitHubApiStatus.API.csproj
+          dotnet build -c Release ./Src/GitStatus.API/GitStatus.API.csproj
 
     Console:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
 
       - name: Build Console App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.ConsoleApp/GitHubApiStatus.ConsoleApp.csproj
+          dotnet build -c Release ./Src/GitStatus.ConsoleApp/GitStatus.ConsoleApp.csproj
 
     Web:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1
 
       - name: Build Web App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.Web/GitHubApiStatus.Web.csproj
+          dotnet build -c Release ./Src/GitStatus.Web/GitStatus.Web.csproj
 
-    GitHubApiStats:
+    GitHubApiStatus:
       runs-on: macos-latest
 
-      needs: "Inject API Key"
+      needs: Inject_API_Key
 
       steps:
       - uses: actions/checkout@v1

@@ -49,7 +49,7 @@ namespace GitHubApiStatus.UnitTests
 
             Assert.AreEqual(restApiStatus_Initial.RateLimit, restApiStatus_Final.RateLimit);
             Assert.IsTrue(restApiStatus_Initial.RateLimitReset_DateTime == restApiStatus_Final.RateLimitReset_DateTime || restApiStatus_Initial.RateLimitReset_DateTime == restApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
-            Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_TimeRemaining, restApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, restApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
             Assert.AreEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Final.RemainingRequestCount);
 
@@ -93,7 +93,7 @@ namespace GitHubApiStatus.UnitTests
 
             Assert.AreEqual(graphQLApiStatus_Initial.RateLimit, graphQLApiStatus_Final.RateLimit);
             Assert.IsTrue(graphQLApiStatus_Initial.RateLimitReset_DateTime == graphQLApiStatus_Final.RateLimitReset_DateTime || graphQLApiStatus_Initial.RateLimitReset_DateTime == graphQLApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
-            Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, graphQLApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, graphQLApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
             Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Final.RemainingRequestCount);
         }
@@ -136,7 +136,7 @@ namespace GitHubApiStatus.UnitTests
 
             Assert.AreEqual(searchApiStatus_Initial.RateLimit, searchApiStatus_Final.RateLimit);
             Assert.IsTrue(searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime || searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
-            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, searchApiStatus_Final.RateLimitReset_TimeRemaining);
+            Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, searchApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
             Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
             Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
         }
