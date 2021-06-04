@@ -53,7 +53,7 @@ jobs:
 
       - name: Build Android App
         run: |                    
-          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitHubApiStatus.Android/GitHubApiStatus.Android.csproj /verbosity:normal /p:Configuration=Release     
+          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitStatus.Android/GitStatus.Android.csproj /verbosity:normal /p:Configuration=Release     
 
     API:
       runs-on: macos-latest
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build API App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.API/GitHubApiStatus.API.csproj
+          dotnet build -c Release ./Src/GitStatus.API/GitStatus.API.csproj
 
     Console:
       runs-on: macos-latest
@@ -77,7 +77,7 @@ jobs:
 
       - name: Build Console App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.ConsoleApp/GitHubApiStatus.ConsoleApp.csproj
+          dotnet build -c Release ./Src/GitStatus.ConsoleApp/GitStatus.ConsoleApp.csproj
 
     Web:
       runs-on: macos-latest
@@ -89,7 +89,7 @@ jobs:
 
       - name: Build Web App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.Web/GitHubApiStatus.Web.csproj
+          dotnet build -c Release ./Src/GitStatus.Web/GitStatus.Web.csproj
 
     GitHubApiStats:
       runs-on: macos-latest
@@ -101,4 +101,4 @@ jobs:
 
       - name: Build Web App
         run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.Extensions/GitHubApiStatus.Extensions.csproj
+          dotnet build -c Release ./Src/GitStatus.Extensions/GitStatus.Extensions.csproj
