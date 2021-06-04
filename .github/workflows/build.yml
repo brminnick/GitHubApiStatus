@@ -91,7 +91,7 @@ jobs:
         run: |                    
           dotnet build -c Release ./Src/GitStatus.Web/GitStatus.Web.csproj
 
-    GitHubApiStats:
+    GitHubApiStatus:
       runs-on: macos-latest
 
       needs: Inject_API_Key
@@ -101,4 +101,4 @@ jobs:
 
       - name: Build Web App
         run: |                    
-          dotnet build -c Release ./Src/GitStatus.Extensions/GitStatus.Extensions.csproj
+          dotnet build -c Release ./Src/GitHubApiStatus.Extensions/GitHubApiStatus.Extensions.csproj
