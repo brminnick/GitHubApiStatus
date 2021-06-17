@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.0;net5.0;net6.0</TargetFrameworks>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>GitHubApiStatus.Extensions.snk</AssemblyOriginatorKeyFile>
         <AssemblyName>GitHubApiStatus.Extensions</AssemblyName>
@@ -25,8 +25,7 @@ Extentions for GitHub API Rate Limit Status
         </Description>
         <PackageReleaseNotes>
 New In This Release:
-- Add Support for Microsoft.Extensions.DependencyInjection
-- Implements Microsoft.Extensions.Http
+- Optimizations for .NET 6.0
         </PackageReleaseNotes>
         <Version>2.0.1</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>

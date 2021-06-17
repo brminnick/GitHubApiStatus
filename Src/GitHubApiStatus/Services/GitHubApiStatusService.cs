@@ -338,10 +338,14 @@ namespace GitHubApiStatus
             using var jsonTextReader = new JsonTextReader(streamReader);
 
             return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
-#else
+#elif NET5_0 || NETSTANDARD2_0
             var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 
             return gitHubApiRateLimitResponse_Mutable?.ToGitHubApiRateLimitResponse() ?? throw new NullReferenceException();
+#else
+            var gitHubApiRateLimitResponse = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponse>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
+
+            return gitHubApiRateLimitResponse;
 #endif
         }
     }
