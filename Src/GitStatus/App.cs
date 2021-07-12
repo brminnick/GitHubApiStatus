@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace GitStatus
@@ -17,7 +18,7 @@ namespace GitStatus
             var graphQLStatusNavigationPage = new Xamarin.Forms.NavigationPage(graphQLApiStatusPage);
             graphQLStatusNavigationPage.On<iOS>().SetPrefersLargeTitles(true);
 
-            MainPage = new Xamarin.Forms.TabbedPage
+            var tabbedPage = new Xamarin.Forms.TabbedPage
             {
                 Children =
                 {
@@ -25,6 +26,10 @@ namespace GitStatus
                     graphQLApiStatusPage
                 }
             };
+
+            tabbedPage.On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+
+            MainPage = tabbedPage;
         }
     }
 }
