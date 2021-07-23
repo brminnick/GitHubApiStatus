@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp3.0;net5.0</TargetFrameworks>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>GitHubApiStatus.snk</AssemblyOriginatorKeyFile>
-        <AssemblyName>GitHubApiStatus</AssemblyName>
-        <RootNamespace>GitHubApiStatus</RootNamespace>
-        <PackageId>GitHubApiStatus</PackageId>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <Summary>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp3.0;net5.0;net6.0</TargetFrameworks>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>GitHubApiStatus.snk</AssemblyOriginatorKeyFile>
+		<AssemblyName>GitHubApiStatus</AssemblyName>
+		<RootNamespace>GitHubApiStatus</RootNamespace>
+		<PackageId>GitHubApiStatus</PackageId>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Summary>
 GitHub API Rate Limit Status
 
 Calculate the GitHub API Rate Limits for the following GitHub APIs
@@ -22,9 +22,9 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
 - Code Scanning Upload API
 - App Manifest Configuration API
         </Summary>
-        <PackageTags>github, git, api, rate, rate limit</PackageTags>
-        <Title>GitHub API Rate Limit Status</Title>
-        <Description>
+		<PackageTags>github, git, api, rate, rate limit</PackageTags>
+		<Title>GitHub API Rate Limit Status</Title>
+		<Description>
 GitHub API Rate Limit Status
 
 Calculate the GitHub API Rate Limits for the following GitHub APIs
@@ -35,63 +35,64 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
 - Code Scanning Upload API
 - App Manifest Configuration API
         </Description>
-        <PackageReleaseNotes>
+		<PackageReleaseNotes>
 New In This Release:
-- Use System.Text.Json for .NET Standard 2.0 
+- Add `[NotNullWhen]` to `IsAbuseRateLimit`
+- Add .NET 6 Support
         </PackageReleaseNotes>
-        <Version>2.0.2</Version>
-        <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
-        <Product>$(AssemblyName) ($(TargetFramework))</Product>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-        <PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
-        <Authors>Brandon Minnick</Authors>
-        <Owners>Brandon Minnick</Owners>
-        <NeutralLanguage>en</NeutralLanguage>
-        <Copyright>©Copyright 2020 Brandon Minnick. All rights reserved.</Copyright>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <DefineConstants>$(DefineConstants);</DefineConstants>
-        <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
-        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/brminnick/GitHubApiStatus</PackageProjectUrl>
-        <DebugType>portable</DebugType>
-        <Configurations>Release;Debug</Configurations>
-        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>portable</DebugType>
-        <DocumentationFile>bin\Release\netstandard1.0\GitHubApiStatus.xml</DocumentationFile>
-    </PropertyGroup>
-    <ItemGroup>
-        <Compile Include="Models\GitHubApiRateLimitsMutable.cs" />
-        <Compile Include="Services\GitHubApiStatusService.cs" />
-        <Compile Include="Models\RateLimitStatus.cs" />
-        <Compile Include="Models\GitHubApiRateLimits.cs" />
-        <Compile Include="Interfaces\IGitHubApiRateLimitResponse.cs" />
-        <Compile Include="Interfaces\IGitHubApiRateLimits.cs" />
-        <Compile Include="Interfaces\IRateLimitStatus.cs" />
-        <Compile Include="Interfaces\IGitHubApiStatusService.cs" />
-        <Compile Include="GitHubApiStatusException.cs" />
-        <Compile Include="HttpResponseHeadersExtensions.cs" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Configuration)'=='Release' ">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard1.3')) ">
-        <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('net5')) ">
-    </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netcoreapp3')) ">
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Services\" />
-        <Folder Include="Interfaces\" />
-    </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard2')) ">
-      <PackageReference Include="System.Text.Json" Version="4.6.0" />
-    </ItemGroup>
+		<Version>2.0.2</Version>
+		<RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
+		<Product>$(AssemblyName) ($(TargetFramework))</Product>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+		<PackageVersion>$(Version)$(VersionSuffix)</PackageVersion>
+		<Authors>Brandon Minnick</Authors>
+		<Owners>Brandon Minnick</Owners>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Copyright>©Copyright 2020 Brandon Minnick. All rights reserved.</Copyright>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<DefineConstants>$(DefineConstants);</DefineConstants>
+		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/brminnick/GitHubApiStatus</PackageProjectUrl>
+		<DebugType>portable</DebugType>
+		<Configurations>Release;Debug</Configurations>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>portable</DebugType>
+		<DocumentationFile>bin\Release\netstandard1.0\GitHubApiStatus.xml</DocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="Models\GitHubApiRateLimitsMutable.cs" />
+		<Compile Include="Services\GitHubApiStatusService.cs" />
+		<Compile Include="Models\RateLimitStatus.cs" />
+		<Compile Include="Models\GitHubApiRateLimits.cs" />
+		<Compile Include="Interfaces\IGitHubApiRateLimitResponse.cs" />
+		<Compile Include="Interfaces\IGitHubApiRateLimits.cs" />
+		<Compile Include="Interfaces\IRateLimitStatus.cs" />
+		<Compile Include="Interfaces\IGitHubApiStatusService.cs" />
+		<Compile Include="GitHubApiStatusException.cs" />
+		<Compile Include="HttpResponseHeadersExtensions.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(Configuration)'=='Release' ">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard1.3')) ">
+		<PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('net5')) ">
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('netcoreapp3')) ">
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Services\" />
+		<Folder Include="Interfaces\" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard2')) ">
+		<PackageReference Include="System.Text.Json" Version="4.6.0" />
+	</ItemGroup>
 </Project>
