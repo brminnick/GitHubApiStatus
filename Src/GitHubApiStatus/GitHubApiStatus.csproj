@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp3.0;net5.0</TargetFrameworks>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>GitHubApiStatus.snk</AssemblyOriginatorKeyFile>
         <AssemblyName>GitHubApiStatus</AssemblyName>
@@ -39,7 +39,7 @@ Calculate the GitHub API Rate Limits for the following GitHub APIs
 New In This Release:
 - Use System.Text.Json for .NET Standard 2.0 
         </PackageReleaseNotes>
-        <Version>2.0.1</Version>
+        <Version>2.0.2</Version>
         <RepositoryUrl>https://github.com/brminnick/GitHubApiStatus</RepositoryUrl>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -66,18 +66,9 @@ New In This Release:
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="Models\GitHubApiRateLimitsMutable.cs" />
-        <Compile Include="Services\GitHubApiStatusService.cs">
-            <SubType>
-            </SubType>
-        </Compile>
-        <Compile Include="Models\RateLimitStatus.cs">
-            <SubType>
-            </SubType>
-        </Compile>
-        <Compile Include="Models\GitHubApiRateLimits.cs">
-            <SubType>
-            </SubType>
-        </Compile>
+        <Compile Include="Services\GitHubApiStatusService.cs" />
+        <Compile Include="Models\RateLimitStatus.cs" />
+        <Compile Include="Models\GitHubApiRateLimits.cs" />
         <Compile Include="Interfaces\IGitHubApiRateLimitResponse.cs" />
         <Compile Include="Interfaces\IGitHubApiRateLimits.cs" />
         <Compile Include="Interfaces\IRateLimitStatus.cs" />
@@ -100,7 +91,7 @@ New In This Release:
         <Folder Include="Services\" />
         <Folder Include="Interfaces\" />
     </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard2')) ">
       <PackageReference Include="System.Text.Json" Version="4.6.0" />
     </ItemGroup>
 </Project>

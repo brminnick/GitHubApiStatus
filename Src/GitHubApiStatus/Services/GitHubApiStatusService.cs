@@ -12,6 +12,10 @@ using Newtonsoft.Json;
 using System.Text.Json;
 #endif
 
+#if NETSTANDARD2_1 || NET
+using System.Diagnostics.CodeAnalysis;
+#endif
+
 namespace GitHubApiStatus
 {
     /// <summary>
@@ -189,7 +193,12 @@ namespace GitHubApiStatus
         /// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
         /// <param name="delta">Time Remaining in Retry-After Header</param>
         /// <returns></returns>
-        public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta)
+        public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders,
+#if NETSTANDARD2_1 || NET
+                                        [NotNullWhen(true)] out TimeSpan? delta)
+#else
+                                        out TimeSpan? delta)
+#endif
         {
             ValidateHttpResponseHeaders(httpResponseHeaders);
 

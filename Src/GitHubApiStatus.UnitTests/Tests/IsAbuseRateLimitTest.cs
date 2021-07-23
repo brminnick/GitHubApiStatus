@@ -12,7 +12,7 @@ namespace GitHubApiStatus.UnitTests
             var httpResponseHeaders = CreateHttpResponseHeaders(500, DateTimeOffset.UtcNow, 0, isAbuseRateLimit: true);
 
             //Act
-            var isAbuseRateLimit = GitHubApiStatusService.IsAbuseRateLimit(httpResponseHeaders, out TimeSpan? delta);
+            var isAbuseRateLimit = GitHubApiStatusService.IsAbuseRateLimit(httpResponseHeaders, out var delta);
 
             //Assert
             Assert.IsTrue(isAbuseRateLimit);
