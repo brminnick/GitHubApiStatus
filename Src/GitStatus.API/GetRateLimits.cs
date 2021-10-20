@@ -1,10 +1,9 @@
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GitHubApiStatus;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
 namespace GitStatus.API
@@ -15,14 +14,17 @@ namespace GitStatus.API
 
         public GitHubApiStatus(IGitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
 
-        [FunctionName(nameof(GitHubApiStatus))]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger log)
+        [Function(nameof(GitHubApiStatus))]
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequestData req, FunctionContext context)
         {
-            log.LogInformation("Retrieving Api Rate Limits");
+            context.GetLogger<GitHubApiStatus>().LogInformation("Retrieving Api Rate Limits");
 
             var apiStatus = await _gitHubApiStatusService.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
 
-            return new OkObjectResult(apiStatus);
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(apiStatus).ConfigureAwait(false);
+
+            return response;
         }
     }
 }
