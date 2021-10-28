@@ -5,7 +5,7 @@ using GitHubApiStatus;
 
 namespace GitStatus
 {
-    class RestApiStatusViewModel : BaseStatusViewModel
+    public class RestApiStatusViewModel : BaseStatusViewModel
     {
         readonly IGitHubApiStatusService _gitHubApiStatusService;
 

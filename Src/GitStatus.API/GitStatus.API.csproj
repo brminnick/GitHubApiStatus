@@ -21,10 +21,7 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj">
-			<GlobalPropertiesToRemove>
-			</GlobalPropertiesToRemove>
-		</ProjectReference>
+		<ProjectReference Include="..\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj" />
 	</ItemGroup>
 	<Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>

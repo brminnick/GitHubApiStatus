@@ -5,7 +5,7 @@ using GitHubApiStatus;
 
 namespace GitStatus
 {
-    class GraphQLApiStatusViewModel : BaseStatusViewModel
+    public class GraphQLApiStatusViewModel : BaseStatusViewModel
     {
         readonly IGitHubApiStatusService _gitHubApiStatusService;
 

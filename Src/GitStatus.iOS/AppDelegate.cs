@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Microsoft.Extensions.DependencyInjection;
 using UIKit;
 
 namespace GitStatus.iOS
@@ -9,7 +10,7 @@ namespace GitStatus.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(ContainerService.Container.GetRequiredService<App>());
 
             return base.FinishedLaunching(app, options);
         }

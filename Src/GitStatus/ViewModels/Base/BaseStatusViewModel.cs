@@ -5,7 +5,7 @@ using Xamarin.Essentials;
 
 namespace GitStatus
 {
-    abstract class BaseStatusViewModel : BaseViewModel
+    public abstract class BaseStatusViewModel : BaseViewModel
     {
         string _statusLabelText = string.Empty;
         bool _isBusy;

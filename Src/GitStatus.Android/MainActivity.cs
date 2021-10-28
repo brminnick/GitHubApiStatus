@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GitStatus.Droid
 {
@@ -23,7 +24,7 @@ namespace GitStatus.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(ContainerService.Container.GetRequiredService<App>());
         }
     }
 }

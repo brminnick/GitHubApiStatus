@@ -4,7 +4,7 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace GitStatus
 {
-    abstract class BaseContentPage : ContentPage
+    public abstract class BaseContentPage : ContentPage
     {
         protected BaseContentPage(in string title = "", bool shouldUseSafeArea = true)
         {
@@ -15,7 +15,7 @@ namespace GitStatus
         }
     }
 
-    abstract class BaseContentPage<T> : BaseContentPage where T : BaseViewModel
+    public abstract class BaseContentPage<T> : BaseContentPage where T : BaseViewModel
     {
         protected BaseContentPage(in T viewModel, in string title = "", bool shouldUseSafeArea = false)
             : base(title, shouldUseSafeArea)

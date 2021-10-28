@@ -16,6 +16,8 @@ namespace GitStatus
         {
             var services = new ServiceCollection();
 
+            services.AddSingleton<App>();
+
             //ContentPage
             services.AddTransient<RestApiStatusPage>();
             services.AddTransient<GraphQLApiStatusPage>();

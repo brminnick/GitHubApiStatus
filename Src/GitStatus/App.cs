@@ -7,11 +7,8 @@ namespace GitStatus
 {
     public class App : Xamarin.Forms.Application
     {
-        public App()
+        public App(RestApiStatusPage restApiStatusPage, GraphQLApiStatusPage graphQLApiStatusPage)
         {
-            var restApiStatusPage = ContainerService.Container.GetService<RestApiStatusPage>();
-            var graphQLApiStatusPage = ContainerService.Container.GetService<GraphQLApiStatusPage>();
-
             var restStatusNavigationPage = new Xamarin.Forms.NavigationPage(restApiStatusPage);
             restStatusNavigationPage.On<iOS>().SetPrefersLargeTitles(true);
 
