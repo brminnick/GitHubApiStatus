@@ -27,10 +27,6 @@ jobs:
           sed -i '' "s/PersonalAccessToken = \"\"/PersonalAccessToken = \"$GitHubPersonalAccessToken\"/g" "$GitHubConstantsFile"
 
           echo "Finished Injecting GitHub Personal Access Token"
-      
-      - name: Restore NuGet 
-        run: |
-          dotnet restore ./Src
 
     Android:
       runs-on: macos-latest
