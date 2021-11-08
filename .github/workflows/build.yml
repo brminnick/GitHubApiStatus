@@ -30,7 +30,7 @@ jobs:
       
       - name: Restore NuGet 
         run: |
-          nuget restore ./Src
+          dotnet restore ./Src
 
     Android:
       runs-on: macos-latest
