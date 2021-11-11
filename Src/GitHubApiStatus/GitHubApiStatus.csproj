@@ -78,7 +78,7 @@ New In This Release:
 		<Compile Include="HttpResponseHeadersExtensions.cs" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(Configuration)'=='Release' ">
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard1.3')) ">
 		<PackageReference Update="NETStandard.Library" PrivateAssets="all" />
