@@ -1,4 +1,4 @@
-[![Build Projects](https://github.com/brminnick/GitHubApiStatus/actions/workflows/build.yml/badge.svg)](https://github.com/brminnick/GitHubApiStatus/actions/workflows/build.yml) ![Unit Tests](https://github.com/brminnick/GitHubApiStatus/workflows/Run%20Unit%20Tests/badge.svg)
+[![Build Projects](https://github.com/brminnick/GitHubApiStatus/actions/workflows/build.yml/badge.svg)](https://github.com/brminnick/GitHubApiStatus/actions/workflows/build.yml) [![Run Unit Tests](https://github.com/brminnick/GitHubApiStatus/actions/workflows/unittests.yml/badge.svg)](https://github.com/brminnick/GitHubApiStatus/actions/workflows/unittests.yml)
 
 
 # GitHubApiStatus
