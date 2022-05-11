@@ -9,115 +9,116 @@ on:
       - "*"
 
 jobs:
-    Inject_API_Key:
-      runs-on: macos-latest
+  Inject_API_Key:
+    runs-on: macos-latest
+    
+    env:
+      GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Inject GitHub Personal Access Token
+      run: |
+        GitHubConstantsFile=`find . -name GitHubConstants.cs | head -1`
+
+        echo GitHubConstantsFile = $GitHubConstantsFile
+
+        sed -i '' "s/PersonalAccessToken = \"\"/PersonalAccessToken = \"$GitHubPersonalAccessToken\"/g" "$GitHubConstantsFile"
+
+        echo "Finished Injecting GitHub Personal Access Token"
+
+  Android:
+    runs-on: macos-latest
+    
+    needs: Inject_API_Key
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup .NET v6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Install Boots
+      run : |
+        dotnet tool install --global boots --prerelease
+        boots --alpha Mono
+        boots --alpha Xamarin.Android
       
-      env:
-        GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
+    - name: Print Build Info
+      run : |
+        mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll --version
+        dotnet --info
+    - name: Build Android App
+      run: |                    
+        mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitStatus.Android/GitStatus.Android.csproj /verbosity:normal /p:Configuration=Release /restore
 
-      steps:
-      - uses: actions/checkout@v1
+  API:
+    runs-on: macos-latest
 
-      - name: Inject GitHub Personal Access Token
-        run: |
-          GitHubConstantsFile=`find . -name GitHubConstants.cs | head -1`
+    needs: Inject_API_Key
 
-          echo GitHubConstantsFile = $GitHubConstantsFile
+    steps:
+    - uses: actions/checkout@v1
 
-          sed -i '' "s/PersonalAccessToken = \"\"/PersonalAccessToken = \"$GitHubPersonalAccessToken\"/g" "$GitHubConstantsFile"
+    - name: Setup .NET v6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
 
-          echo "Finished Injecting GitHub Personal Access Token"
+    - name: Build API App
+      run: |                    
+        dotnet build -c Release ./Src/GitStatus.API/GitStatus.API.csproj
 
-    Android:
-      runs-on: macos-latest
-      
-      needs: Inject_API_Key
+  Console:
+    runs-on: macos-latest
 
-      steps:
-      - uses: actions/checkout@v1
+    needs: Inject_API_Key
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+    steps:
+    - uses: actions/checkout@v1
 
-      - name: Restore Android NuGet Packages
-        run: |                    
-          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll -t:restore ./Src/GitStatus.Android/GitStatus.Android.csproj
-        
-      - name: Build Android App
-        run: |                    
-          mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitStatus.Android/GitStatus.Android.csproj /verbosity:normal /p:Configuration=Release     
+    - name: Setup .NET v6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
 
-    API:
-      runs-on: macos-latest
+    - name: Build Console App
+      run: |                    
+        dotnet build -c Release ./Src/GitStatus.ConsoleApp/GitStatus.ConsoleApp.csproj
 
-      needs: Inject_API_Key
+  Web:
+    runs-on: macos-latest
 
-      steps:
-      - uses: actions/checkout@v1
+    needs: Inject_API_Key
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+    steps:
+    - uses: actions/checkout@v1
 
-      - name: Build API App
-        run: |                    
-          dotnet build -c Release ./Src/GitStatus.API/GitStatus.API.csproj
+    - name: Setup .NET v6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
 
-    Console:
-      runs-on: macos-latest
+    - name: Build Web App
+      run: |                    
+        dotnet build -c Release ./Src/GitStatus.Web/GitStatus.Web.csproj
 
-      needs: Inject_API_Key
+  GitHubApiStatus:
+    runs-on: macos-latest
 
-      steps:
-      - uses: actions/checkout@v1
+    needs: Inject_API_Key
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+    steps:
+    - uses: actions/checkout@v1
 
-      - name: Build Console App
-        run: |                    
-          dotnet build -c Release ./Src/GitStatus.ConsoleApp/GitStatus.ConsoleApp.csproj
+    - name: Setup .NET v6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
 
-    Web:
-      runs-on: macos-latest
-
-      needs: Inject_API_Key
-
-      steps:
-      - uses: actions/checkout@v1
-
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
-      - name: Build Web App
-        run: |                    
-          dotnet build -c Release ./Src/GitStatus.Web/GitStatus.Web.csproj
-
-    GitHubApiStatus:
-      runs-on: macos-latest
-
-      needs: Inject_API_Key
-
-      steps:
-      - uses: actions/checkout@v1
-
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
-      - name: Build Web App
-        run: |                    
-          dotnet build -c Release ./Src/GitHubApiStatus.Extensions/GitHubApiStatus.Extensions.csproj
+    - name: Build Web App
+      run: |                    
+        dotnet build -c Release ./Src/GitHubApiStatus.Extensions/GitHubApiStatus.Extensions.csproj
