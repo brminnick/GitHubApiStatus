@@ -47,9 +47,12 @@ jobs:
         boots --alpha Mono
         boots --alpha Xamarin.Android
       
+    - name: Print Build Info
+      run : |
+        mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll --version
+        dotnet --info
     - name: Build Android App
       run: |                    
-        mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll --version
         mono /Applications/Visual\ studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/MSBuild.dll ./Src/GitStatus.Android/GitStatus.Android.csproj /verbosity:normal /p:Configuration=Release /restore
 
   API:
