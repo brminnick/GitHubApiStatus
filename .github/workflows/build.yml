@@ -26,13 +26,7 @@ jobs:
 
       - name: Build Android App
         run: |
-          MobileProject=`find . -name GitStatus.Mobile.csproj`
-          echo $MobileProject
-
-          MobileProjectDirectory=`dirname $MobileProject`
-          echo $MobileProjectDirectory
-
-          dotnet build $MobileProjectDirectory -f net6.0-android
+         dotnet build ./samples/GitStatus.Mobile/ -t net6.0-android
 
   iOS:
     runs-on: macos-12
@@ -116,7 +110,7 @@ jobs:
 
       - name: Build Windows App
         run: |
-          dotnet build ./sampes/GitStatus.Mobile/
+          dotnet build ./samples/GitStatus.Mobile/
 
   API:
     runs-on: macos-latest
