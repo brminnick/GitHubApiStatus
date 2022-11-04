@@ -8,4 +8,3 @@ namespace GitStatus;
 public class MainActivity : MauiAppCompatActivity
 {
 }
-

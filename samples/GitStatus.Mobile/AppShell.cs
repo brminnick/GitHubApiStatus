@@ -14,4 +14,3 @@ class AppShell : Shell
 		});
 	}
 }
-

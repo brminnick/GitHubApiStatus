@@ -7,24 +7,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GitStatus.API
+namespace GitStatus.API;
+
+class Program
 {
-    class Program
-    {
-        static Task Main(string[] args)
-        {
-            var host = new HostBuilder()
-                .ConfigureAppConfiguration(configurationBuilder => configurationBuilder.AddCommandLine(args))
-                .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices( services =>
-                {
-                    services.AddGitHubApiStatusService(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)))
-                        .ConfigurePrimaryHttpMessageHandler(config => new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate });
-                })
-                .Build();
+	static Task Main(string[] args)
+	{
+		var host = new HostBuilder()
+			.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.AddCommandLine(args))
+			.ConfigureFunctionsWorkerDefaults()
+			.ConfigureServices(services =>
+			{
+				services.AddGitHubApiStatusService(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitStatus)))
+					.ConfigurePrimaryHttpMessageHandler(config => new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate });
+			})
+			.Build();
 
-            return host.RunAsync();
-        }
-    }
+		return host.RunAsync();
+	}
 }
-

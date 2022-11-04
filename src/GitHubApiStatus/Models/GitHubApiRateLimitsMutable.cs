@@ -2,8 +2,8 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace GitHubApiStatus
-{
+namespace GitHubApiStatus;
+
     class GitHubApiRateLimitsMutable : IGitHubApiRateLimits
     {
         [JsonPropertyName("core")]
@@ -75,5 +75,4 @@ namespace GitHubApiStatus
 
         public GitHubApiRateLimitResponse ToGitHubApiRateLimitResponse() => new GitHubApiRateLimitResponse(Results?.ToGitHubApiRateLimits() ?? throw new NullReferenceException());
     }
-}
 #endif

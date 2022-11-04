@@ -43,7 +43,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	bool _disposedValue;
 
 #if NETSTANDARD1_3
-    static readonly Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
+	static readonly Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
 
 	/// <summary>
@@ -133,7 +133,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 #if NETSTANDARD1_3
-    static JsonSerializer Serializer => _serializerHolder.Value;
+	static JsonSerializer Serializer => _serializerHolder.Value;
 #endif
 
 	/// <summary>
@@ -216,7 +216,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 #if NETSTANDARD2_1 || NET
 									[NotNullWhen(true)] out TimeSpan? delta)
 #else
-                                    out TimeSpan? delta)
+									out TimeSpan? delta)
 #endif
 	{
 		ValidateHttpResponseHeaders(httpResponseHeaders);
@@ -374,15 +374,15 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 #if NET
 		using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
 #else
-        using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+		using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
 
 
 #if NETSTANDARD1_3
-        using var streamReader = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(streamReader);
+		using var streamReader = new StreamReader(stream);
+		using var jsonTextReader = new JsonTextReader(streamReader);
 
-        return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
+		return Serializer.Deserialize<GitHubApiRateLimitResponse>(jsonTextReader) ?? throw new NullReferenceException();
 #else
 		var gitHubApiRateLimitResponse_Mutable = await JsonSerializer.DeserializeAsync<GitHubApiRateLimitResponseMutable>(stream, cancellationToken: cancellationToken).ConfigureAwait(false) ?? throw new JsonException();
 

@@ -38,4 +38,3 @@ public static class MauiProgram
 		return services.AddTransientWithShellRoute<TPage, TViewModel>($"//{typeof(TPage).Name}");
 	}
 }
-
