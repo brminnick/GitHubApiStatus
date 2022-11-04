@@ -16,8 +16,5 @@
     <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\Base\" />
-  </ItemGroup>
-  <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\samples\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\..\samples\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>

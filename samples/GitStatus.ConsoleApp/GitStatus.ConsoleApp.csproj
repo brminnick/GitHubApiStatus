@@ -6,7 +6,7 @@
         <AssemblyName>GitStatus.ConsoleApp</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
+      <ProjectReference Include="..\..\src\GitHubApiStatus\GitHubApiStatus.csproj" />
     </ItemGroup>
     <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>
