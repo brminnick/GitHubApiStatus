@@ -40,24 +40,30 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 
 	readonly HttpClient _client;
 
-	bool disposedValue;
+	bool _disposedValue;
 
 #if NETSTANDARD1_3
     readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
 
 	/// <summary>
-	/// Initializes GitHubApiStatusService
+	/// Initializes <see cref="GitHubApiStatus"/>
 	/// </summary>
 	public GitHubApiStatusService()
 	{
 		_client = new HttpClient();
 	}
 
-	~GitHubApiStatusService() => Dispose(disposing: false);
+	/// <summary>
+	/// Finalizes <see cref="GitHubApiStatus"/>
+	/// </summary>
+	~GitHubApiStatusService()
+	{
+		Dispose(disposing: false);
+	}
 
 	/// <summary>
-	/// Initializes GitHubApiStatusService
+	/// Initializes <see cref="GitHubApiStatus"/>
 	/// </summary>
 	/// <param name="authenticationHeaderValue">GitHub Authentication Bearer Token</param>
 	/// <param name="productHeaderValue">User-Agent Name</param>
@@ -74,7 +80,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Initializes GitHubApiStatusService
+	/// Initializes <see cref="GitHubApiStatus"/>
 	/// </summary>
 	/// <param name="client">GitHub API requires the following Headers: Authorization and User-Agent</param>
 	public GitHubApiStatusService(HttpClient client)
@@ -89,7 +95,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Determines if GitHubApiClient.DefaultRequestHeaders.UserAgent is Valid
+	/// Determines if <see cref="GitHubApiClient.DefaultRequestHeaders.UserAgent"/> is Valid
 	/// </summary>
 	public bool IsProductHeaderValueValid
 	{
@@ -108,7 +114,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Determines if GitHubApiClient.DefaultRequestHeaders.Authorization is Valid
+	/// Determines if <see cref="GitHubApiClient.DefaultRequestHeaders.Authorization"/> is Valid
 	/// </summary>
 	public bool IsAuthenticationHeaderValueSet
 	{
@@ -130,15 +136,17 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
     static JsonSerializer Serializer => _serializerHolder.Value;
 #endif
 
+	/// <summary>
+	/// Dispose
+	/// </summary>
 	public void Dispose()
 	{
-		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 		Dispose(disposing: true);
 		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
-	/// Add ProductHeaderValue to HttpClient.DefaultRequestHeaders.UserAgent
+	/// Add <see cref="ProductHeaderValue"/>to <see cref="HttpClient.DefaultRequestHeaders.UserAgent"/>
 	/// </summary>
 	/// <param name="productHeaderValue"></param>
 	public void AddProductHeaderValue(ProductHeaderValue productHeaderValue)
@@ -149,7 +157,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Set HttpClient.DefaultRequestHeaders.Authorization
+	/// Set <see cref="HttpClient.DefaultRequestHeaders.Authorization"/>
 	/// </summary>
 	/// <param name="authenticationHeaderValue"></param>
 	public void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue)
@@ -339,14 +347,14 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 
 	protected virtual void Dispose(bool disposing)
 	{
-		if (!disposedValue)
+		if (!_disposedValue)
 		{
 			if (disposing)
 			{
 				_client.Dispose();
 			}
 
-			disposedValue = true;
+			_disposedValue = true;
 		}
 	}
 
