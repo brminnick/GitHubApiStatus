@@ -24,10 +24,6 @@ jobs:
         run: |
           dotnet workload install maui
 
-      - name: Restore NuGet
-        run: |
-          dotnet restore ./samples
-
       - name: Build Android App
         run: |
           MobileProject=`find . -name GitStatus.Mobile.csproj`
@@ -52,10 +48,6 @@ jobs:
       - name: Install .NET MAUI Workload
         run: |
           dotnet workload install maui
-
-      - name: Restore NuGet
-        run: |
-          dotnet restore ./samples
 
       - name: Install Xcode
         uses: maxim-lobanov/setup-xcode@v1
@@ -86,10 +78,6 @@ jobs:
       - name: Install .NET MAUI Workload
         run: |
           dotnet workload install maui
-
-      - name: Restore NuGet
-        run: |
-          dotnet restore ./src
 
       - name: Install Xcode
         uses: maxim-lobanov/setup-xcode@v1
@@ -125,10 +113,6 @@ jobs:
       - name: Install .NET MAUI Workload
         run: |
           dotnet workload install maui
-
-      - name: Restore NuGet
-        run: |
-          dotnet restore ./samples
 
       - name: Build Windows App
         run: |
