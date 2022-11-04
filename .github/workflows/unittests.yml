@@ -10,7 +10,7 @@ on:
 
 jobs:
     UnitTests:
-      runs-on: macos-latest
+      runs-on: windows-latest
       
       env:
         GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
@@ -22,7 +22,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-          include-prerelease: true
 
       - name: Setup .NET v5.0
         uses: actions/setup-dotnet@v1
