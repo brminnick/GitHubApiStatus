@@ -43,7 +43,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	bool _disposedValue;
 
 #if NETSTANDARD1_3
-    readonly static Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
+    static readonly Lazy<JsonSerializer> _serializerHolder = new(() => new JsonSerializer());
 #endif
 
 	/// <summary>
@@ -82,7 +82,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	/// <summary>
 	/// Initializes <see cref="GitHubApiStatus"/>
 	/// </summary>
-	/// <param name="client">GitHub API requires the following Headers: Authorization and User-Agent</param>
+	/// <param name="client">GitHub API requires the following Headers: Authorization and UserAgent</param>
 	public GitHubApiStatusService(HttpClient client)
 	{
 		if (client is null)
@@ -95,7 +95,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Determines if <see cref="GitHubApiClient.DefaultRequestHeaders.UserAgent"/> is Valid
+	/// Determines if <see cref="HttpClient.DefaultRequestHeaders"/> UserAgent is Valid
 	/// </summary>
 	public bool IsProductHeaderValueValid
 	{
@@ -114,7 +114,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Determines if <see cref="GitHubApiClient.DefaultRequestHeaders.Authorization"/> is Valid
+	/// Determines if <see cref="HttpClient.DefaultRequestHeaders"/> Authorization is Valid
 	/// </summary>
 	public bool IsAuthenticationHeaderValueSet
 	{
@@ -146,7 +146,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Add <see cref="ProductHeaderValue"/>to <see cref="HttpClient.DefaultRequestHeaders.UserAgent"/>
+	/// Add <see cref="ProductHeaderValue"/>to <see cref="HttpClient.DefaultRequestHeaders"/> UserAgent
 	/// </summary>
 	/// <param name="productHeaderValue"></param>
 	public void AddProductHeaderValue(ProductHeaderValue productHeaderValue)
@@ -157,7 +157,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	}
 
 	/// <summary>
-	/// Set <see cref="HttpClient.DefaultRequestHeaders.Authorization"/>
+	/// Set <see cref="HttpClient.DefaultRequestHeaders"/> Authorization
 	/// </summary>
 	/// <param name="authenticationHeaderValue"></param>
 	public void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue)
@@ -345,6 +345,10 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 			throw new GitHubApiStatusException($"{nameof(AuthenticationHeaderValue)}.{nameof(AuthenticationHeaderValue.Parameter)} cannot be blank");
 	}
 
+	/// <summary>
+	/// Handle disposing of <see cref="GitHubApiStatus"/>
+	/// </summary>
+	/// <param name="disposing"></param>
 	protected virtual void Dispose(bool disposing)
 	{
 		if (!_disposedValue)
