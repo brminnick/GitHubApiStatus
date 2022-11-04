@@ -10,7 +10,7 @@ on:
 
 jobs:
   Android:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -26,7 +26,13 @@ jobs:
 
       - name: Build Android App
         run: |
-         dotnet build ./samples/GitStatus.Mobile/ -t net6.0-android
+          MobileProject=`find . -name GitStatus.Mobile.csproj`
+          echo $MobileProject
+
+          MobileProjectDirectory=`dirname $MobileProject`
+          echo $MobileProjectDirectory
+
+          dotnet build $MobileProjectDirectory -f:net6.0-android
 
   iOS:
     runs-on: macos-12
@@ -86,7 +92,7 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f net6.0-maccatalyst
+          dotnet build $MobileProjectDirectory -f:net6.0-maccatalyst
 
   Windows:
     runs-on: windows-latest
