@@ -116,13 +116,7 @@ jobs:
 
       - name: Build Windows App
         run: |
-          MobileProject=`find . -name GitStatus.Mobile.csproj`
-          echo $MobileProject
-
-          MobileProjectDirectory=`dirname $MobileProject`
-          echo $MobileProjectDirectory
-
-          dotnet build $MobileProjectDirectory
+          dotnet build ./sampes/GitStatus.Mobile/
 
   API:
     runs-on: macos-latest
