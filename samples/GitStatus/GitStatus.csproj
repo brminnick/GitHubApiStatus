@@ -22,7 +22,7 @@
         <Folder Include="ViewModels\Base\" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj" />
+      <ProjectReference Include="..\..\src\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj" />
     </ItemGroup>
     <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>
