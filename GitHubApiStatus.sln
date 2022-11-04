@@ -1,14 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30626.31
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.iOS", "samples\GitStatus.iOS\GitStatus.iOS.csproj", "{CB1D6D22-982F-4FB1-A1AE-A871525D603B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E2BF43DD-5550-414E-9F01-7F7E5492CCB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiStatus", "src\GitHubApiStatus\GitHubApiStatus.csproj", "{81D2DA42-62DB-418D-ADF2-3B5A1D0EB71A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApiStatus", "src\GitHubApiStatus\GitHubApiStatus.csproj", "{81D2DA42-62DB-418D-ADF2-3B5A1D0EB71A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus", "samples\GitStatus\GitStatus.csproj", "{6B19FDF5-8384-4F8D-838C-EB0C3F3F1EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitStatus", "samples\GitStatus\GitStatus.csproj", "{6B19FDF5-8384-4F8D-838C-EB0C3F3F1EB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApiStatus.UnitTests", "src\GitHubApiStatus.UnitTests\GitHubApiStatus.UnitTests.csproj", "{9A30833A-01C9-44ED-B8E2-032A4846574F}"
 EndProject
@@ -18,15 +18,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{A52818
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{1D178B33-C69B-47E7-AF90-B460B34BCC37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.ConsoleApp", "samples\GitStatus.ConsoleApp\GitStatus.ConsoleApp.csproj", "{BE045971-4CE8-4C59-BAEB-0BF3A42A9C0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitStatus.ConsoleApp", "samples\GitStatus.ConsoleApp\GitStatus.ConsoleApp.csproj", "{BE045971-4CE8-4C59-BAEB-0BF3A42A9C0A}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GitStatus.Shared", "samples\GitStatus.Shared\GitStatus.Shared.shproj", "{EE691483-A8A2-4071-9C75-E70F0250E5D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{6DE141A9-EDFE-464D-BB27-2CFB182118AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiStatus.Extensions", "src\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj", "{AE935942-772A-4A9D-A1E1-2BC99D41F4C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubApiStatus.Extensions", "src\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj", "{AE935942-772A-4A9D-A1E1-2BC99D41F4C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitStatus.Web", "samples\GitStatus.Web\GitStatus.Web.csproj", "{A5FF2946-AE9A-4FE4-8650-75719BA23D5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitStatus.Web", "samples\GitStatus.Web\GitStatus.Web.csproj", "{A5FF2946-AE9A-4FE4-8650-75719BA23D5B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AF841AED-C887-4B39-868A-02242D30780B}"
 EndProject
@@ -41,15 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		GitStatus.Shared\GitStatus.Shared.projitems*{6b19fdf5-8384-4f8d-838c-eb0c3f3f1eb4}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{70dba7cc-2319-4b3f-8f83-97b3368ac890}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{96eb4c30-7336-4dae-9a8b-a57ea0c2ac09}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{9a30833a-01c9-44ed-b8e2-032a4846574f}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{a5ff2946-ae9a-4fe4-8650-75719ba23d5b}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{be045971-4ce8-4c59-baeb-0bf3a42a9c0a}*SharedItemsImports = 5
-		GitStatus.Shared\GitStatus.Shared.projitems*{ee691483-a8a2-4071-9c75-e70f0250e5d2}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|iPhone = Debug|iPhone
@@ -199,5 +190,14 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA599595-DE29-4C58-AE9D-3A4818A02114}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{6b19fdf5-8384-4f8d-838c-eb0c3f3f1eb4}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{70dba7cc-2319-4b3f-8f83-97b3368ac890}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{96eb4c30-7336-4dae-9a8b-a57ea0c2ac09}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{9a30833a-01c9-44ed-b8e2-032a4846574f}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{a5ff2946-ae9a-4fe4-8650-75719ba23d5b}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{be045971-4ce8-4c59-baeb-0bf3a42a9c0a}*SharedItemsImports = 5
+		samples\GitStatus.Shared\GitStatus.Shared.projitems*{ee691483-a8a2-4071-9c75-e70f0250e5d2}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
