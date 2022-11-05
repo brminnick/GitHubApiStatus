@@ -1,5 +1,8 @@
 ﻿using System;
 
+
+/* Unmerged change from project 'GitHubApiStatus(netstandard2.0)'
+Before:
 namespace GitHubApiStatus
 {
     /// <summary>
@@ -60,4 +63,631 @@ Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
 Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
         }
     }
+}
+After:
+namespace GitHubApiStatus;
+
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+*/
+
+/* Unmerged change from project 'GitHubApiStatus(netstandard2.1)'
+Before:
+namespace GitHubApiStatus
+{
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+}
+After:
+namespace GitHubApiStatus;
+
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+*/
+
+/* Unmerged change from project 'GitHubApiStatus(netcoreapp3.0)'
+Before:
+namespace GitHubApiStatus
+{
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+}
+After:
+namespace GitHubApiStatus;
+
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+*/
+
+/* Unmerged change from project 'GitHubApiStatus(net5.0)'
+Before:
+namespace GitHubApiStatus
+{
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+}
+After:
+namespace GitHubApiStatus;
+
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+*/
+
+/* Unmerged change from project 'GitHubApiStatus(net6.0)'
+Before:
+namespace GitHubApiStatus
+{
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+}
+After:
+namespace GitHubApiStatus;
+
+    /// <summary>
+    /// GitHub API Rate Limit Status
+    /// </summary>
+    public class RateLimitStatus : IRateLimitStatus
+    {
+
+        /// <summary>
+        /// Create GitHub Rate Limit Status
+        /// </summary>
+        /// <param name="limit">Maximum API Requests</param>
+        /// <param name="remaining">Remaining API Requests</param>
+        /// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+        public RateLimitStatus(int limit, int remaining, long reset)
+        {
+            RateLimit = limit;
+            RemainingRequestCount = remaining;
+            RateLimitReset_UnixEpochSeconds = reset;
+
+            RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+        }
+
+        /// <summary>
+        /// Time Remaining until Rate Limit Reset
+        /// </summary>
+        public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);    
+
+        /// <summary>
+        /// GitHub API Rate Limit
+        /// </summary>
+        public int RateLimit { get; }
+
+        /// <summary>
+        /// Remaining Request Count to GitHub API 
+        /// </summary>
+        public int RemainingRequestCount { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+        /// </summary>
+        public long RateLimitReset_UnixEpochSeconds { get; }
+
+        /// <summary>
+        /// Rate Limit Reset Time Stamp
+        /// </summary>
+        public DateTimeOffset RateLimitReset_DateTime { get; }
+
+        /// <summary>
+        /// Rate Limit Status To String
+        /// </summary>
+        /// <returns>Rate Limit Status</returns>
+        public override string ToString()
+        {
+            return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+        }
+    }
+*/
+namespace GitHubApiStatus
+{
+	/// <summary>
+	/// GitHub API Rate Limit Status
+	/// </summary>
+	public class RateLimitStatus : IRateLimitStatus
+	{
+
+		/// <summary>
+		/// Create GitHub Rate Limit Status
+		/// </summary>
+		/// <param name="limit">Maximum API Requests</param>
+		/// <param name="remaining">Remaining API Requests</param>
+		/// <param name="reset">Rate Limit Reset Time Stamp in Unix Epoch Seconds</param>
+		public RateLimitStatus(int limit, int remaining, long reset)
+		{
+			RateLimit = limit;
+			RemainingRequestCount = remaining;
+			RateLimitReset_UnixEpochSeconds = reset;
+
+			RateLimitReset_DateTime = DateTimeOffset.FromUnixTimeSeconds(reset);
+		}
+
+		/// <summary>
+		/// Time Remaining until Rate Limit Reset
+		/// </summary>
+		public TimeSpan RateLimitReset_TimeRemaining => RateLimitReset_DateTime.Subtract(DateTimeOffset.UtcNow);
+
+		/// <summary>
+		/// GitHub API Rate Limit
+		/// </summary>
+		public int RateLimit { get; }
+
+		/// <summary>
+		/// Remaining Request Count to GitHub API 
+		/// </summary>
+		public int RemainingRequestCount { get; }
+
+		/// <summary>
+		/// Rate Limit Reset Time Stamp in Unix Epoch Seconds
+		/// </summary>
+		public long RateLimitReset_UnixEpochSeconds { get; }
+
+		/// <summary>
+		/// Rate Limit Reset Time Stamp
+		/// </summary>
+		public DateTimeOffset RateLimitReset_DateTime { get; }
+
+		/// <summary>
+		/// Rate Limit Status To String
+		/// </summary>
+		/// <returns>Rate Limit Status</returns>
+		public override string ToString()
+		{
+			return $@"Rate Limit: {RateLimit}
+Remaining Request Count: {RemainingRequestCount}
+Rate Limit Reset: {RateLimitReset_DateTime:dd MMMM @ HH:mm}
+Reset Time Remainaing: {RateLimitReset_TimeRemaining}";
+		}
+	}
 }
