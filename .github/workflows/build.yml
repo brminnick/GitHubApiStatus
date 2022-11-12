@@ -13,12 +13,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET v7.0
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "7.0.x"
 
       - name: Install .NET MAUI Workload
         run: |
@@ -32,18 +32,18 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net6.0-android -c Release
+          dotnet build $MobileProjectDirectory -f:net7.0-android -c Release
 
   iOS:
     runs-on: macos-12
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET v7.0
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "7.0.x"
 
       - name: Install .NET MAUI Workload
         run: |
@@ -62,18 +62,18 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net6.0-ios -c Release
+          dotnet build $MobileProjectDirectory -f:net7.0-ios -c Release
           
   MacCatalyst:
     runs-on: macos-12
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET v7.0
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "7.0.x"
 
       - name: Install .NET MAUI Workload
         run: |
@@ -92,23 +92,23 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net6.0-maccatalyst -c Release
+          dotnet build $MobileProjectDirectory -f:net7.0-maccatalyst -c Release
 
   Windows:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-java@v2
         with:
           distribution: 'microsoft'
           java-version: '11'
 
-      - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET v7.0
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "7.0.x"
 
       - name: Install .NET MAUI Workload
         run: |
@@ -122,12 +122,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
-    - name: Setup .NET v6.0
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET v7.0
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build API App
       run: |
@@ -143,12 +143,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
-    - name: Setup .NET v6.0
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET v7.0
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Console App
       run: |        
@@ -164,12 +164,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
-    - name: Setup .NET v6.0
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET v7.0
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Web App
       run: |                   
@@ -185,12 +185,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
-    - name: Setup .NET v6.0
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET v7.0
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Web App
       run: |                  
