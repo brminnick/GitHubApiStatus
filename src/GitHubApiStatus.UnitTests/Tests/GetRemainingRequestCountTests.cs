@@ -3,358 +3,51 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using NUnit.Framework;
 
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(netcoreapp2.1)'
-Before:
-namespace GitHubApiStatus.UnitTests
-{
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
 namespace GitHubApiStatus.UnitTests;
 
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(netcoreapp3.1)'
-Before:
-namespace GitHubApiStatus.UnitTests
+class GetRemainingRequestCountTests : BaseTest
 {
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
-namespace GitHubApiStatus.UnitTests;
-
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(net5.0)'
-Before:
-namespace GitHubApiStatus.UnitTests
-{
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
-namespace GitHubApiStatus.UnitTests;
-
-    class GetRemainingRequestCountTests : BaseTest
-    {
-        [Test]
-        public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-        {
-            //Act
-            const int rateLimit = 5000;
-            const int remainingRequestCount_Expected = 100;
-
-            int remainingRequestCount_Actual;
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
-
-            //Act
-            remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-
-            //Assert
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-        }
-
-        [Test]
-        public void GetRemainingRequestCount_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-namespace GitHubApiStatus.UnitTests
-{
-	class GetRemainingRequestCountTests : BaseTest
+	[Test]
+	public void GetRemainingRequestCount_ValidHttpResponseHeaders()
 	{
-		[Test]
-		public void GetRemainingRequestCount_ValidHttpResponseHeaders()
-		{
-			//Act
-			const int rateLimit = 5000;
-			const int remainingRequestCount_Expected = 100;
+		//Act
+		const int rateLimit = 5000;
+		const int remainingRequestCount_Expected = 100;
 
-			int remainingRequestCount_Actual;
+		int remainingRequestCount_Actual;
 
-			var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
+		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, remainingRequestCount_Expected);
 
-			//Act
-			remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
+		//Act
+		remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
 
-			//Assert
-			Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
-		}
+		//Assert
+		Assert.AreEqual(remainingRequestCount_Expected, remainingRequestCount_Actual);
+	}
 
-		[Test]
-		public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
-		{
-			//Arrange
-			var invalidHttpResponseMessage = new HttpResponseMessage();
+	[Test]
+	public void GetRemainingRequestCount_InvalidHttpResponseHeaders()
+	{
+		//Arrange
+		var invalidHttpResponseMessage = new HttpResponseMessage();
 
-			//Act
+		//Act
 
-			//Assert
-			Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
-		}
+		//Assert
+		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(invalidHttpResponseMessage.Headers));
+	}
 
-		[Test]
-		public void GetRemainingRequestCount_NullHttpResponseHeaders()
-		{
-			//Arrange
-			HttpResponseHeaders? nullHttpResponseHeaders = null;
+	[Test]
+	public void GetRemainingRequestCount_NullHttpResponseHeaders()
+	{
+		//Arrange
+		HttpResponseHeaders? nullHttpResponseHeaders = null;
 
-			//Act
+		//Act
 
-			//Assert
+		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-			Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
+		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRemainingRequestCount(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
-		}
 	}
 }

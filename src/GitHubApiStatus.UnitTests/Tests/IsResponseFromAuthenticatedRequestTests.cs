@@ -3,519 +3,74 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using NUnit.Framework;
 
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(netcoreapp2.1)'
-Before:
-namespace GitHubApiStatus.UnitTests
-{
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
 namespace GitHubApiStatus.UnitTests;
 
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(netcoreapp3.1)'
-Before:
-namespace GitHubApiStatus.UnitTests
+class IsAuthenticatedTests : BaseTest
 {
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
-namespace GitHubApiStatus.UnitTests;
-
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-
-/* Unmerged change from project 'GitHubApiStatus.UnitTests(net5.0)'
-Before:
-namespace GitHubApiStatus.UnitTests
-{
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-}
-After:
-namespace GitHubApiStatus.UnitTests;
-
-    class IsAuthenticatedTests : BaseTest
-    {
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 0;
-            const bool isUserAuthenticated_Expected = true;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-        {
-            //Act
-            bool isUserAuthenticated_Actual;
-
-            const int rateLimit = 5000;
-            const int rateLimitRemaining = 10;
-            const bool isUserAuthenticated_Expected = false;
-
-
-            var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
-
-            //Act
-            isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
-
-            //Assert
-            Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-        {
-            //Arrange
-            var invalidHttpResponseMessage = new HttpResponseMessage();
-
-            //Act
-            var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
-
-            //Assert
-            Assert.IsFalse(isUserAuthenticated);
-        }
-
-        [Test]
-        public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-        {
-            //Arrange
-            HttpResponseHeaders? nullHttpResponseHeaders = null;
-
-            //Act
-
-            //Assert
-#pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
-#pragma warning restore CS8604 // Possible null reference argument.
-        }
-    }
-*/
-namespace GitHubApiStatus.UnitTests
-{
-	class IsAuthenticatedTests : BaseTest
+	[Test]
+	public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
 	{
-		[Test]
-		public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_True()
-		{
-			//Act
-			bool isUserAuthenticated_Actual;
+		//Act
+		bool isUserAuthenticated_Actual;
 
-			const int rateLimit = 5000;
-			const int rateLimitRemaining = 0;
-			const bool isUserAuthenticated_Expected = true;
+		const int rateLimit = 5000;
+		const int rateLimitRemaining = 0;
+		const bool isUserAuthenticated_Expected = true;
 
 
-			var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
+		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
-			//Act
-			isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
+		//Act
+		isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
 
-			//Assert
-			Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-		}
+		//Assert
+		Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
+	}
 
-		[Test]
-		public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
-		{
-			//Act
-			bool isUserAuthenticated_Actual;
+	[Test]
+	public void IsResponseFromAuthenticatedRequest_ValidHttpResponseHeaders_False()
+	{
+		//Act
+		bool isUserAuthenticated_Actual;
 
-			const int rateLimit = 5000;
-			const int rateLimitRemaining = 10;
-			const bool isUserAuthenticated_Expected = false;
+		const int rateLimit = 5000;
+		const int rateLimitRemaining = 10;
+		const bool isUserAuthenticated_Expected = false;
 
 
-			var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
+		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
-			//Act
-			isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
+		//Act
+		isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
 
-			//Assert
-			Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
-		}
+		//Assert
+		Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
+	}
 
-		[Test]
-		public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
-		{
-			//Arrange
-			var invalidHttpResponseMessage = new HttpResponseMessage();
+	[Test]
+	public void IsResponseFromAuthenticatedRequest_InvalidHttpResponseHeaders()
+	{
+		//Arrange
+		var invalidHttpResponseMessage = new HttpResponseMessage();
 
-			//Act
-			var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
+		//Act
+		var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
 
-			//Assert
-			Assert.IsFalse(isUserAuthenticated);
-		}
+		//Assert
+		Assert.IsFalse(isUserAuthenticated);
+	}
 
-		[Test]
-		public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
-		{
-			//Arrange
-			HttpResponseHeaders? nullHttpResponseHeaders = null;
+	[Test]
+	public void IsResponseFromAuthenticatedRequest_NullHttpResponseHeaders()
+	{
+		//Arrange
+		HttpResponseHeaders? nullHttpResponseHeaders = null;
 
-			//Act
+		//Act
 
-			//Assert
+		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-			Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
+		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
-		}
 	}
 }
