@@ -127,7 +127,7 @@ jobs:
     - name: Setup .NET v7.0
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build API App
       run: |
@@ -148,7 +148,7 @@ jobs:
     - name: Setup .NET v7.0
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Console App
       run: |        
@@ -169,7 +169,7 @@ jobs:
     - name: Setup .NET v7.0
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Web App
       run: |                   
@@ -190,7 +190,7 @@ jobs:
     - name: Setup .NET v7.0
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Build Web App
       run: |                  
