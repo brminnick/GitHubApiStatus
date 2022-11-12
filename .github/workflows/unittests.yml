@@ -16,27 +16,16 @@ jobs:
         GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
 
       steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Setup .NET v6.0
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
-
-      - name: Setup .NET v5.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-          
-      - name: Setup .NET Core v3.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.x'
-
-      - name: Setup .NET Core v2.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '2.1.x'   
+          dotnet-version: |
+            7.0.x
+            6.0.x
+            3.1.x
+            2.1.x
 
       - name: Inject GitHub Personal Access Token
         run: |

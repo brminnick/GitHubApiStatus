@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using System.Text.Json;
 #endif
 
-#if NETSTANDARD2_1 || NET
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
 
