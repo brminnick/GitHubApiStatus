@@ -92,6 +92,6 @@ New In This Release:
 		<Folder Include="Interfaces\" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard2')) ">
-		<PackageReference Include="System.Text.Json" Version="4.6.0" />
+		<PackageReference Include="System.Text.Json" Version="7.0.0" />
 	</ItemGroup>
 </Project>
