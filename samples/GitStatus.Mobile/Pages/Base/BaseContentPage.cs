@@ -16,7 +16,7 @@ abstract class BaseContentPage : ContentPage
 
 abstract class BaseContentPage<T> : BaseContentPage where T : BaseViewModel
 {
-	protected BaseContentPage(in T viewModel, in string title = "", bool shouldUseSafeArea = false)
+	protected BaseContentPage(in T viewModel, in string title, bool shouldUseSafeArea = false)
 		: base(title, shouldUseSafeArea)
 	{
 		base.BindingContext = viewModel;
