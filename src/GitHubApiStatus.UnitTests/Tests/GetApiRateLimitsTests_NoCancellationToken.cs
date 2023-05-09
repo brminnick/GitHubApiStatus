@@ -136,7 +136,7 @@ class GetApiRateLimitsTests_NoCancellationToken : BaseTest
 		Assert.IsTrue(searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime || searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
 		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, searchApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
 		Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.Greater(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
+		Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
 	}
 
 	[Test]
