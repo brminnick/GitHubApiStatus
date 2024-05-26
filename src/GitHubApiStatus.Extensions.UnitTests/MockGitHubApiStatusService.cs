@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace GitHubApiStatus.Extensions;
@@ -33,12 +32,7 @@ public class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatu
 
 	}
 
-	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders,
-#if NETSTANDARD2_1 || NET
-		[NotNullWhen(true)] out TimeSpan? delta)
-#else
-		out TimeSpan? delta)
-#endif
+	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, [NotNullWhen(true)] out TimeSpan? delta)
 	{
 		delta = null;
 		return false;
