@@ -16,10 +16,10 @@ jobs:
         GitHubPersonalAccessToken: ${{ secrets.GitHubPersonalAccessToken }}
 
       steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             8.0.x
@@ -46,7 +46,7 @@ jobs:
           GitHubApiStatusUnitTestDirectory=`dirname $GitHubApiStatusUnitTestProject`
           echo $GitHubApiStatusUnitTestDirectory
           
-          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release' -a x86_64
+          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release'
 
       - name: Run GitHubApiStatus.Extensions.UnitTests
         run: |
