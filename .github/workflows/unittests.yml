@@ -46,7 +46,7 @@ jobs:
           GitHubApiStatusUnitTestDirectory=`dirname $GitHubApiStatusUnitTestProject`
           echo $GitHubApiStatusUnitTestDirectory
           
-          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release' -a x64
+          dotnet test $GitHubApiStatusUnitTestDirectory -c 'Release' -a x86_64
 
       - name: Run GitHubApiStatus.Extensions.UnitTests
         run: |
