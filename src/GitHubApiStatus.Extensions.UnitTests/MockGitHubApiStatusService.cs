@@ -38,7 +38,7 @@ public class MockGitHubApiStatusService : IGitHubApiStatusService
 
 	}
 
-	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, 
+	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders,
 #if NETSTANDARD2_1 || NET
 		[NotNullWhen(true)] out TimeSpan? delta)
 #else
