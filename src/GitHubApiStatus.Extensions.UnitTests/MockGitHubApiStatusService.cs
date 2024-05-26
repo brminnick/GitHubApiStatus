@@ -4,13 +4,8 @@ using System.Net.Http.Headers;
 
 namespace GitHubApiStatus.Extensions;
 
-public class MockGitHubApiStatusService : IGitHubApiStatusService
+public class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatusService
 {
-	public MockGitHubApiStatusService(HttpClient httpClient)
-	{
-
-	}
-
 	public bool IsProductHeaderValueValid => true;
 	public bool IsAuthenticationHeaderValueSet => true;
 
