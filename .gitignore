@@ -26,6 +26,7 @@ obj/
 
 ### VisualStudioCode ###
 .vscode/*
+**/.meteor/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

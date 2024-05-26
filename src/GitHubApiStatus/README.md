@@ -39,10 +39,10 @@ public int GetRemainingRequestCount(HttpResponseHeaders httpResponseHeaders)
 - Get the number of GitHub API Requests remaining
 - Parses the `X-RateLimit-Remaining` header and return its `int` value
   
-### HasReachedMaximimApiCallLimit
+### HasReachedMaximumApiCallLimit
   
 ```csharp
-public bool HasReachedMaximimApiCallLimit(HttpResponseHeaders httpResponseHeaders)
+public bool HasReachedMaximumApiCallLimit(HttpResponseHeaders httpResponseHeaders)
 ```
 - Determines whether the maximum number of requests 
 - Parses the `X-RateLimit-Remaining` header and returns wether or not it is greater than 0
@@ -188,7 +188,7 @@ static async Task Main(string[] args)
 
     bool isAuthenticated = gitHubApiStatusService.IsResponseFromAuthenticatedRequest(restApiResponse.Headers);
 
-    bool hasReachedMaximumApiLimit = gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
+    bool hasReachedMaximumApiLimit = gitHubApiStatusService.HasReachedMaximumApiCallLimit(restApiResponse.Headers);
 
     Console.WriteLine($"What is the GitHub REST API Rate Limit? {rateLimit}"); // What is the GitHub REST API Rate Limit? 60
 

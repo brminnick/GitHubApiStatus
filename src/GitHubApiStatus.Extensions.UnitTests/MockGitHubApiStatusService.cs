@@ -1,18 +1,10 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GitHubApiStatus.Extensions;
 
-public class MockGitHubApiStatusService : IGitHubApiStatusService
+public class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatusService
 {
-	public MockGitHubApiStatusService(HttpClient httpClient)
-	{
-
-	}
-
 	public bool IsProductHeaderValueValid => true;
 	public bool IsAuthenticationHeaderValueSet => true;
 
@@ -24,7 +16,7 @@ public class MockGitHubApiStatusService : IGitHubApiStatusService
 
 	public int GetRateLimit(in HttpResponseHeaders httpResponseHeaders) => 5000;
 	public int GetRemainingRequestCount(in HttpResponseHeaders httpResponseHeaders) => 5000;
-	public bool HasReachedMaximimApiCallLimit(in HttpResponseHeaders httpResponseHeaders) => false;
+	public bool HasReachedMaximumApiCallLimit(in HttpResponseHeaders httpResponseHeaders) => false;
 	public bool IsResponseFromAuthenticatedRequest(in HttpResponseHeaders httpResponseHeaders) => true;
 	public TimeSpan GetRateLimitTimeRemaining(in HttpResponseHeaders httpResponseHeaders) => new(1, 0, 0);
 	public DateTimeOffset GetRateLimitResetDateTime(in HttpResponseHeaders httpResponseHeaders) => DateTimeOffset.UtcNow;
@@ -40,7 +32,7 @@ public class MockGitHubApiStatusService : IGitHubApiStatusService
 
 	}
 
-	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta)
+	public bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, [NotNullWhen(true)] out TimeSpan? delta)
 	{
 		delta = null;
 		return false;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
 using GitHubApiStatus;
 using GitStatus.Shared;
 
@@ -87,7 +84,7 @@ class Program
 
 		bool isResponseFromAuthenticatedRequest = _gitHubApiStatusService.IsResponseFromAuthenticatedRequest(restApiResponse.Headers);
 
-		bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
+		bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximumApiCallLimit(restApiResponse.Headers);
 
 		return (rateLimitTimeRemaining, rateLimit, remainingRequestCount, isResponseFromAuthenticatedRequest, hasReachedMaximumApiLimit);
 	}

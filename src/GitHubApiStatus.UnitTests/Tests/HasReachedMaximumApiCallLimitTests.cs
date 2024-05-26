@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using NUnit.Framework;
 
@@ -20,7 +19,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining);
 
 		//Act
-		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
+		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximumApiCallLimit(validHttpResponseHeaders);
 
 		//Assert
 		Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
@@ -39,7 +38,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining);
 
 		//Act
-		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximimApiCallLimit(validHttpResponseHeaders);
+		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximumApiCallLimit(validHttpResponseHeaders);
 
 		//Assert
 		Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
@@ -54,7 +53,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(invalidHttpResponseMessage.Headers));
+		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(invalidHttpResponseMessage.Headers));
 	}
 
 	[Test]
@@ -67,7 +66,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximimApiCallLimit(nullHttpResponseHeaders));
+		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(nullHttpResponseHeaders));
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net.Http;
+﻿using System.Net.Http.Headers;
 
 #if NETSTANDARD1_3
 using System.IO;
@@ -230,7 +225,7 @@ public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
 	/// </summary>
 	/// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
 	/// <returns>Whether GitHub's Maximum API Limit Has Been Reached</returns>
-	public bool HasReachedMaximimApiCallLimit(in HttpResponseHeaders httpResponseHeaders)
+	public bool HasReachedMaximumApiCallLimit(in HttpResponseHeaders httpResponseHeaders)
 	{
 		var remainingApiRequests = GetRemainingRequestCount(httpResponseHeaders);
 		return remainingApiRequests <= 0;

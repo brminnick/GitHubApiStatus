@@ -1,7 +1,4 @@
-using System;
 using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
 using GitStatus.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

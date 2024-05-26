@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GitHubApiStatus;
+﻿namespace GitHubApiStatus;
 
 /// <summary>
 /// Exception thrown by GitHubApiStatus

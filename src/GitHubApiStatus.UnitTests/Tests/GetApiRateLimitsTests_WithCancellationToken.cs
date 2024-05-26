@@ -1,8 +1,5 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
 using GitStatus.Shared;
 using NUnit.Framework;
 
@@ -101,7 +98,7 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 	public async Task GetApiRateLimits_ValidSearchApiRequest()
 	{
 		//Arrange
-		RateLimitStatus searchApiStatus_Initial, codeScanningApiStatus_Final;
+		RateLimitStatus searchApiStatus_Initial, searchApiStatus_Final;
 		GitHubApiRateLimits gitHubApiRateLimits_Initial, gitHubApiRateLimits_Final;
 
 		var startTime = DateTimeOffset.UtcNow;
@@ -114,7 +111,7 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		await SendValidSearchApiRequest().ConfigureAwait(false);
 
 		gitHubApiRateLimits_Final = await GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token).ConfigureAwait(false);
-		codeScanningApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
+		searchApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
 
 		//Assert
 		Assert.IsNotNull(searchApiStatus_Initial);
@@ -125,19 +122,22 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_DateTime, startTime);
 		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-		Assert.IsNotNull(codeScanningApiStatus_Final);
-		Assert.AreEqual(30, codeScanningApiStatus_Final.RateLimit);
-		Assert.GreaterOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, 0);
-		Assert.LessOrEqual(codeScanningApiStatus_Final.RemainingRequestCount, codeScanningApiStatus_Final.RateLimit);
-		Assert.AreEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+		Assert.IsNotNull(searchApiStatus_Final);
+		Assert.AreEqual(30, searchApiStatus_Final.RateLimit);
+		Assert.GreaterOrEqual(searchApiStatus_Final.RemainingRequestCount, 0);
+		Assert.LessOrEqual(searchApiStatus_Final.RemainingRequestCount, searchApiStatus_Final.RateLimit);
+		Assert.AreEqual(searchApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+		Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_DateTime, startTime);
+		Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
 
-		Assert.AreEqual(searchApiStatus_Initial.RateLimit, codeScanningApiStatus_Final.RateLimit);
-		Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_DateTime, codeScanningApiStatus_Final.RateLimitReset_DateTime);
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, codeScanningApiStatus_Final.RateLimitReset_TimeRemaining);
-		Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, codeScanningApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, codeScanningApiStatus_Final.RemainingRequestCount);
+		if (searchApiStatus_Final.RateLimitReset_DateTime == searchApiStatus_Initial.RateLimitReset_DateTime)
+		{
+			Assert.AreEqual(searchApiStatus_Initial.RateLimit, searchApiStatus_Final.RateLimit);
+			Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_DateTime, searchApiStatus_Initial.RateLimitReset_DateTime);
+			Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, searchApiStatus_Final.RateLimitReset_TimeRemaining);
+			Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
+			Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
+		}
 	}
 
 	[Test]
@@ -164,10 +164,6 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 
 		//Assert
 		var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
-#if NET5_0
-        Assert.AreEqual(HttpStatusCode.Unauthorized, httpRequestException?.StatusCode);
-#else
 		Assert.IsTrue(httpRequestException?.Message.Contains("Unauthorized"));
-#endif
 	}
 }

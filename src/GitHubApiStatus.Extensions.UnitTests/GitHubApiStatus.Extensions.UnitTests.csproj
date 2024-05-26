@@ -1,10 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp2.1;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -12,11 +9,9 @@
     <PackageReference Include="nunit" Version="3.14.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" Condition="'$(TargetFramework)' == 'net8.0'" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" Condition="'$(TargetFramework)' == 'net7.0'" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.30" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" Condition="'$(TargetFramework)' == 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" Condition="'$(TargetFramework)' == 'net461'" />
   </ItemGroup>
 
   <ItemGroup>
