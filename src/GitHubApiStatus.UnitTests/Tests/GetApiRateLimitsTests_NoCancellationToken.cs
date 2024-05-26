@@ -132,9 +132,8 @@ class GetApiRateLimitsTests_NoCancellationToken : BaseTest
 
 		Assert.AreEqual(searchApiStatus_Initial.RateLimit, searchApiStatus_Final.RateLimit);
 		Assert.IsTrue(searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime || searchApiStatus_Initial.RateLimitReset_DateTime == searchApiStatus_Final.RateLimitReset_DateTime.Subtract(TimeSpan.FromSeconds(1)));
-#if NET8_0_OR_GREATER
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, searchApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
-#endif
+		if (searchApiStatus_Final.RateLimitReset_DateTime == searchApiStatus_Initial.RateLimitReset_DateTime)
+			Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining.TotalMilliseconds, searchApiStatus_Final.RateLimitReset_TimeRemaining.TotalMilliseconds);
 		Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
 		Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
 	}
@@ -150,10 +149,6 @@ class GetApiRateLimitsTests_NoCancellationToken : BaseTest
 
 		//Assert
 		var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => gitHubApiStatusService.GetApiRateLimits());
-#if NET5_0
-        Assert.AreEqual(HttpStatusCode.Unauthorized, httpRequestException?.StatusCode);
-#else
 		Assert.IsTrue(httpRequestException?.Message.Contains("Unauthorized"));
-#endif
 	}
 }
