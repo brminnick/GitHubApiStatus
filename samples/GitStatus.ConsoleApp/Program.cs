@@ -87,7 +87,7 @@ class Program
 
 		bool isResponseFromAuthenticatedRequest = _gitHubApiStatusService.IsResponseFromAuthenticatedRequest(restApiResponse.Headers);
 
-		bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximimApiCallLimit(restApiResponse.Headers);
+		bool hasReachedMaximumApiLimit = _gitHubApiStatusService.HasReachedMaximumApiCallLimit(restApiResponse.Headers);
 
 		return (rateLimitTimeRemaining, rateLimit, remainingRequestCount, isResponseFromAuthenticatedRequest, hasReachedMaximumApiLimit);
 	}

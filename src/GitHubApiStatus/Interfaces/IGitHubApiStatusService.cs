@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,14 +60,19 @@ public interface IGitHubApiStatusService
 	/// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
 	/// <param name="delta">Time Remaining in Retry-After Header</param>
 	/// <returns></returns>
-	bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders, out TimeSpan? delta);
+	bool IsAbuseRateLimit(in HttpResponseHeaders httpResponseHeaders,
+#if NETSTANDARD2_1 || NET
+		[NotNullWhen(true)] out TimeSpan? delta);
+#else
+out TimeSpan? delta);
+#endif
 
 	/// <summary>
 	/// Determines Whether GitHub's Maximum API Limit Has Been Reached
 	/// </summary>
 	/// <param name="httpResponseHeaders">HttpResponseHeaders from GitHub API Response</param>
 	/// <returns>Whether GitHub's Maximum API Limit Has Been Reached</returns>
-	bool HasReachedMaximimApiCallLimit(in HttpResponseHeaders httpResponseHeaders);
+	bool HasReachedMaximumApiCallLimit(in HttpResponseHeaders httpResponseHeaders);
 
 	/// <summary>
 	/// Get Time Remaining Until GitHub API Rate Limit Resets
