@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
 using GitHubApiStatus.Extensions;
 using GitStatus.Shared;
 using Microsoft.Extensions.Configuration;

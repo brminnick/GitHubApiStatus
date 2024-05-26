@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GitHubApiStatus;
+﻿namespace GitHubApiStatus;
 
 /// <summary>
 /// GitHub API Rate Limit Status

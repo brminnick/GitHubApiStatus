@@ -1,11 +1,7 @@
-using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using GitHubApiStatus.Extensions;
 using GitStatus.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace GitStatus.Web;
 

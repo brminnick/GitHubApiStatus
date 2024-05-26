@@ -1,6 +1,4 @@
 using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using GitHubApiStatus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;

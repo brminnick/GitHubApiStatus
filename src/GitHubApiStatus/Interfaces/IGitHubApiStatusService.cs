@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GitHubApiStatus;
 

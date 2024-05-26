@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GitHubApiStatus;
+﻿namespace GitHubApiStatus;
 
 /// <summary>
 /// Interface for GitHub API Raite Limit Status
