@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
 using GitStatus.Shared;
 using NUnit.Framework;
 
@@ -33,7 +31,11 @@ class AddProductHeaderValueTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#if NET8_0_OR_GREATER
 		Assert.Throws<ArgumentNullException>(() => gitHubApiStatusService.AddProductHeaderValue(new ProductHeaderValue(null)));
+#else
+		Assert.Throws<ArgumentException>(() => gitHubApiStatusService.AddProductHeaderValue(new ProductHeaderValue(null)));
+#endif
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 		Assert.IsFalse(gitHubApiStatusService.IsProductHeaderValueValid);
 	}
