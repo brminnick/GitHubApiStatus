@@ -5,7 +5,7 @@
 
 | GitHubApiStatus | GitHubApiStatus.Extensions |
 | --------------- | -------------------------- |
-| [![NuGet](https://buildstats.info/nuget/GitHubApiStatus?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus/) | [![NuGet](https://buildstats.info/nuget/GitHubApiStatus.Extensions?includePreReleases=true)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/) |
+| [![NuGet Version](https://img.shields.io/nuget/vpre/GitHubApiStatus)](https://www.nuget.org/packages/GitHubApiStatus/) [![NuGet Downloads](https://img.shields.io/nuget/dt/GitHubApiStatus)](https://www.nuget.org/packages/GitHubApiStatus/) | [![NuGet](https://img.shields.io/nuget/vpre/GitHubApiStatus.Extensions)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/) [![NuGet](https://img.shields.io/nuget/dt/GitHubApiStatus.Extensions)](https://www.nuget.org/packages/GitHubApiStatus.Extensions/) |
 
 GitHubApiStatus makes it easy to understand GitHub's API Rate Limit!
 
