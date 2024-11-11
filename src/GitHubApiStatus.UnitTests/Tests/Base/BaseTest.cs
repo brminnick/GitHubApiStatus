@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using GitStatus.Shared;
+using GitStatus.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

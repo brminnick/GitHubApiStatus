@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using GitStatus.Shared;
+using GitStatus.Common;
 using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests;

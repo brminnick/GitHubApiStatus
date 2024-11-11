@@ -1,5 +1,5 @@
 using System.Net.Http.Headers;
-using GitStatus.Shared;
+using GitStatus.Common;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -17,7 +17,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
 		Assert.Throws<ArgumentNullException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
 #pragma warning restore CS8604 // Possible null reference argument.
@@ -30,7 +30,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 		Assert.Throws<ArgumentException>(() => new ProductHeaderValue(""));
 	}
 
@@ -40,7 +40,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 		Assert.Throws<ArgumentException>(() => new ProductHeaderValue(" "));
 	}
 
@@ -54,7 +54,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
 		Assert.Throws<ArgumentNullException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
 #pragma warning restore CS8604 // Possible null reference argument.
@@ -72,7 +72,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 		Assert.Throws<ArgumentException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
 	}
 
@@ -88,7 +88,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Act
 
-		//Assett
+		//Assert
 		Assert.Throws<ArgumentException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
 	}
 
