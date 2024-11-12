@@ -16,15 +16,17 @@ class GetRateLimitTimeRemainingTests : BaseTest
 		var rateLimitTimeRemaining_Expected = TimeSpan.FromMinutes(45);
 		var rateLimitResetDateTime = DateTimeOffset.UtcNow.Add(rateLimitTimeRemaining_Expected);
 
-
 		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, rateLimitResetDateTime, rateLimit - 5);
 
 		//Act
 		rateLimitTimeRemaining_Actual = GitHubApiStatusService.GetRateLimitTimeRemaining(validHttpResponseHeaders);
 
 		//Assert
-		Assert.Greater(rateLimitTimeRemaining_Expected, rateLimitTimeRemaining_Actual);
-		Assert.Less(rateLimitTimeRemaining_Expected.Subtract(TimeSpan.FromSeconds(2)), rateLimitTimeRemaining_Actual);
+		Assert.Multiple(() =>
+		{
+			Assert.That(rateLimitTimeRemaining_Expected, Is.GreaterThan(rateLimitTimeRemaining_Actual));
+			Assert.That(rateLimitTimeRemaining_Expected.Subtract(TimeSpan.FromSeconds(2)), Is.LessThan(rateLimitTimeRemaining_Actual));
+		});
 	}
 
 	[Test]
@@ -36,7 +38,7 @@ class GetRateLimitTimeRemainingTests : BaseTest
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitTimeRemaining(invalidHttpResponseMessage.Headers));
+		Assert.That(() => GitHubApiStatusService.GetRateLimitTimeRemaining(invalidHttpResponseMessage.Headers), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -49,7 +51,9 @@ class GetRateLimitTimeRemainingTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitTimeRemaining(nullHttpResponseHeaders));
+		Assert.That(() => GitHubApiStatusService.GetRateLimitTimeRemaining(nullHttpResponseHeaders), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }
+
+

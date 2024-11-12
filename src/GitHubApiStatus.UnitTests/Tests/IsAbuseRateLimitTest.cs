@@ -14,8 +14,11 @@ class IsAbuseRateLimitTest : BaseTest
 		var isAbuseRateLimit = GitHubApiStatusService.IsAbuseRateLimit(httpResponseHeaders, out var delta);
 
 		//Assert
-		Assert.IsTrue(isAbuseRateLimit);
-		Assert.IsNotNull(delta);
+		Assert.Multiple(() =>
+		{
+			Assert.That(isAbuseRateLimit, Is.True);
+			Assert.That(delta, Is.Not.Null);
+		});
 	}
 
 	[Test]
@@ -28,8 +31,11 @@ class IsAbuseRateLimitTest : BaseTest
 		var isAbuseRateLimit = GitHubApiStatusService.IsAbuseRateLimit(httpResponseHeaders, out TimeSpan? delta);
 
 		//Assert
-		Assert.IsFalse(isAbuseRateLimit);
-		Assert.IsNull(delta);
+		Assert.Multiple(() =>
+		{
+			Assert.That(isAbuseRateLimit, Is.False);
+			Assert.That(delta, Is.Null);
+		});
 	}
 
 	[Test]
@@ -41,7 +47,11 @@ class IsAbuseRateLimitTest : BaseTest
 
 		//Assert
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsAbuseRateLimit(null, out _));
+		Assert.That(() => GitHubApiStatusService.IsAbuseRateLimit(null, out _), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 	}
 }
+
+
+
+

@@ -19,7 +19,7 @@ class GetRateLimitTests : BaseTest
 		rateLimit_Actual = GitHubApiStatusService.GetRateLimit(validHttpResponseHeaders);
 
 		//Assert
-		Assert.AreEqual(rateLimit_Expected, rateLimit_Actual);
+		Assert.That(rateLimit_Actual, Is.EqualTo(rateLimit_Expected));
 	}
 
 	[Test]
@@ -31,7 +31,7 @@ class GetRateLimitTests : BaseTest
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimit(invalidHttpResponseMessage.Headers));
+		Assert.That(() => GitHubApiStatusService.GetRateLimit(invalidHttpResponseMessage.Headers), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -44,7 +44,8 @@ class GetRateLimitTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimit(nullHttpResponseHeaders));
+		Assert.That(() => GitHubApiStatusService.GetRateLimit(nullHttpResponseHeaders), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }
+

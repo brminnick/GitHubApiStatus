@@ -16,14 +16,13 @@ class IsAuthenticatedTests : BaseTest
 		const int rateLimitRemaining = 0;
 		const bool isUserAuthenticated_Expected = true;
 
-
 		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
 		//Act
 		isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
 
 		//Assert
-		Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
+		Assert.That(isUserAuthenticated_Actual, Is.EqualTo(isUserAuthenticated_Expected));
 	}
 
 	[Test]
@@ -36,14 +35,13 @@ class IsAuthenticatedTests : BaseTest
 		const int rateLimitRemaining = 10;
 		const bool isUserAuthenticated_Expected = false;
 
-
 		var validHttpResponseHeaders = CreateHttpResponseHeaders(rateLimit, DateTimeOffset.UtcNow, rateLimitRemaining, isAuthenticated: isUserAuthenticated_Expected);
 
 		//Act
 		isUserAuthenticated_Actual = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(validHttpResponseHeaders);
 
 		//Assert
-		Assert.AreEqual(isUserAuthenticated_Expected, isUserAuthenticated_Actual);
+		Assert.That(isUserAuthenticated_Actual, Is.EqualTo(isUserAuthenticated_Expected));
 	}
 
 	[Test]
@@ -56,7 +54,7 @@ class IsAuthenticatedTests : BaseTest
 		var isUserAuthenticated = GitHubApiStatusService.IsResponseFromAuthenticatedRequest(invalidHttpResponseMessage.Headers);
 
 		//Assert
-		Assert.IsFalse(isUserAuthenticated);
+		Assert.That(isUserAuthenticated, Is.False);
 	}
 
 	[Test]
@@ -69,7 +67,11 @@ class IsAuthenticatedTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders));
+		Assert.That(() => GitHubApiStatusService.IsResponseFromAuthenticatedRequest(nullHttpResponseHeaders), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }
+
+
+
+

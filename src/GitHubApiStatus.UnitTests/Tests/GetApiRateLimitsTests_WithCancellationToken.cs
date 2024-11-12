@@ -27,28 +27,30 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		restApiStatus_Final = gitHubApiRateLimits_Final.RestApi;
 
 		//Assert
-		Assert.IsNotNull(restApiStatus_Initial);
-		Assert.AreEqual(5000, restApiStatus_Initial.RateLimit);
-		Assert.GreaterOrEqual(restApiStatus_Initial.RemainingRequestCount, 0);
-		Assert.LessOrEqual(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Initial.RateLimit);
-		Assert.AreEqual(restApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), restApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+		Assert.Multiple(() =>
+		{
+			Assert.That(restApiStatus_Initial, Is.Not.Null);
+			Assert.That(restApiStatus_Initial.RateLimit, Is.EqualTo(5000));
+			Assert.That(restApiStatus_Initial.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(restApiStatus_Initial.RemainingRequestCount, Is.LessThanOrEqualTo(restApiStatus_Initial.RateLimit));
+			Assert.That(restApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds));
+			Assert.That(restApiStatus_Initial.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
 
-		Assert.IsNotNull(restApiStatus_Final);
-		Assert.AreEqual(5000, restApiStatus_Final.RateLimit);
-		Assert.GreaterOrEqual(restApiStatus_Final.RemainingRequestCount, 0);
-		Assert.LessOrEqual(restApiStatus_Final.RemainingRequestCount, restApiStatus_Final.RateLimit);
-		Assert.AreEqual(restApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(restApiStatus_Final.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(restApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+			Assert.That(restApiStatus_Final, Is.Not.Null);
+			Assert.That(restApiStatus_Final.RateLimit, Is.EqualTo(5000));
+			Assert.That(restApiStatus_Final.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(restApiStatus_Final.RemainingRequestCount, Is.LessThanOrEqualTo(restApiStatus_Final.RateLimit));
+			Assert.That(restApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(restApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+			Assert.That(restApiStatus_Final.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(restApiStatus_Final.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
 
-		Assert.AreEqual(restApiStatus_Initial.RateLimit, restApiStatus_Final.RateLimit);
-		Assert.AreEqual(restApiStatus_Initial.RateLimitReset_DateTime, restApiStatus_Final.RateLimitReset_DateTime);
-		Assert.GreaterOrEqual(restApiStatus_Initial.RateLimitReset_TimeRemaining, restApiStatus_Final.RateLimitReset_TimeRemaining);
-		Assert.AreEqual(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, restApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.Greater(restApiStatus_Initial.RemainingRequestCount, restApiStatus_Final.RemainingRequestCount);
-
+			Assert.That(restApiStatus_Initial.RateLimit, Is.EqualTo(restApiStatus_Final.RateLimit));
+			Assert.That(restApiStatus_Initial.RateLimitReset_DateTime, Is.EqualTo(restApiStatus_Final.RateLimitReset_DateTime));
+			Assert.That(restApiStatus_Initial.RateLimitReset_TimeRemaining, Is.GreaterThanOrEqualTo(restApiStatus_Final.RateLimitReset_TimeRemaining));
+			Assert.That(restApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.EqualTo(restApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+			Assert.That(restApiStatus_Initial.RemainingRequestCount, Is.GreaterThan(restApiStatus_Final.RemainingRequestCount));
+		});
 	}
 
 	[Test]
@@ -71,27 +73,30 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		graphQLApiStatus_Final = gitHubApiRateLimits_Final.GraphQLApi;
 
 		//Assert
-		Assert.IsNotNull(graphQLApiStatus_Initial);
-		Assert.AreEqual(5000, graphQLApiStatus_Initial.RateLimit);
-		Assert.GreaterOrEqual(graphQLApiStatus_Initial.RemainingRequestCount, 0);
-		Assert.LessOrEqual(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Initial.RateLimit);
-		Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+		Assert.Multiple(() =>
+		{
+			Assert.That(graphQLApiStatus_Initial, Is.Not.Null);
+			Assert.That(graphQLApiStatus_Initial.RateLimit, Is.EqualTo(5000));
+			Assert.That(graphQLApiStatus_Initial.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(graphQLApiStatus_Initial.RemainingRequestCount, Is.LessThanOrEqualTo(graphQLApiStatus_Initial.RateLimit));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
 
-		Assert.IsNotNull(graphQLApiStatus_Final);
-		Assert.AreEqual(5000, graphQLApiStatus_Final.RateLimit);
-		Assert.GreaterOrEqual(graphQLApiStatus_Final.RemainingRequestCount, 0);
-		Assert.LessOrEqual(graphQLApiStatus_Final.RemainingRequestCount, graphQLApiStatus_Final.RateLimit);
-		Assert.AreEqual(graphQLApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(graphQLApiStatus_Final.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
+			Assert.That(graphQLApiStatus_Final, Is.Not.Null);
+			Assert.That(graphQLApiStatus_Final.RateLimit, Is.EqualTo(5000));
+			Assert.That(graphQLApiStatus_Final.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(graphQLApiStatus_Final.RemainingRequestCount, Is.LessThanOrEqualTo(graphQLApiStatus_Final.RateLimit));
+			Assert.That(graphQLApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+			Assert.That(graphQLApiStatus_Final.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
 
-		Assert.AreEqual(graphQLApiStatus_Initial.RateLimit, graphQLApiStatus_Final.RateLimit);
-		Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_DateTime, graphQLApiStatus_Final.RateLimitReset_DateTime);
-		Assert.GreaterOrEqual(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, graphQLApiStatus_Final.RateLimitReset_TimeRemaining);
-		Assert.AreEqual(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.Greater(graphQLApiStatus_Initial.RemainingRequestCount, graphQLApiStatus_Final.RemainingRequestCount);
+			Assert.That(graphQLApiStatus_Initial.RateLimit, Is.EqualTo(graphQLApiStatus_Final.RateLimit));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_DateTime, Is.EqualTo(graphQLApiStatus_Final.RateLimitReset_DateTime));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_TimeRemaining, Is.GreaterThanOrEqualTo(graphQLApiStatus_Final.RateLimitReset_TimeRemaining));
+			Assert.That(graphQLApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.EqualTo(graphQLApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+			Assert.That(graphQLApiStatus_Initial.RemainingRequestCount, Is.GreaterThan(graphQLApiStatus_Final.RemainingRequestCount));
+		});
 	}
 
 	[Test]
@@ -114,30 +119,33 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		searchApiStatus_Final = gitHubApiRateLimits_Final.SearchApi;
 
 		//Assert
-		Assert.IsNotNull(searchApiStatus_Initial);
-		Assert.AreEqual(30, searchApiStatus_Initial.RateLimit);
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, 0);
-		Assert.LessOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Initial.RateLimit);
-		Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
-
-		Assert.IsNotNull(searchApiStatus_Final);
-		Assert.AreEqual(30, searchApiStatus_Final.RateLimit);
-		Assert.GreaterOrEqual(searchApiStatus_Final.RemainingRequestCount, 0);
-		Assert.LessOrEqual(searchApiStatus_Final.RemainingRequestCount, searchApiStatus_Final.RateLimit);
-		Assert.AreEqual(searchApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-		Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_DateTime, startTime);
-		Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds, startTime.ToUnixTimeSeconds());
-
-		if (searchApiStatus_Final.RateLimitReset_DateTime == searchApiStatus_Initial.RateLimitReset_DateTime)
+		Assert.Multiple(() =>
 		{
-			Assert.AreEqual(searchApiStatus_Initial.RateLimit, searchApiStatus_Final.RateLimit);
-			Assert.GreaterOrEqual(searchApiStatus_Final.RateLimitReset_DateTime, searchApiStatus_Initial.RateLimitReset_DateTime);
-			Assert.GreaterOrEqual(searchApiStatus_Initial.RateLimitReset_TimeRemaining, searchApiStatus_Final.RateLimitReset_TimeRemaining);
-			Assert.AreEqual(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, searchApiStatus_Final.RateLimitReset_UnixEpochSeconds);
-			Assert.GreaterOrEqual(searchApiStatus_Initial.RemainingRequestCount, searchApiStatus_Final.RemainingRequestCount);
-		}
+			Assert.That(searchApiStatus_Initial, Is.Not.Null);
+			Assert.That(searchApiStatus_Initial.RateLimit, Is.EqualTo(30));
+			Assert.That(searchApiStatus_Initial.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(searchApiStatus_Initial.RemainingRequestCount, Is.LessThanOrEqualTo(searchApiStatus_Initial.RateLimit));
+			Assert.That(searchApiStatus_Initial.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds));
+			Assert.That(searchApiStatus_Initial.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
+
+			Assert.That(searchApiStatus_Final, Is.Not.Null);
+			Assert.That(searchApiStatus_Final.RateLimit, Is.EqualTo(30));
+			Assert.That(searchApiStatus_Final.RemainingRequestCount, Is.GreaterThanOrEqualTo(0));
+			Assert.That(searchApiStatus_Final.RemainingRequestCount, Is.LessThanOrEqualTo(searchApiStatus_Final.RateLimit));
+			Assert.That(searchApiStatus_Final.RateLimitReset_DateTime.ToUnixTimeSeconds(), Is.EqualTo(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+			Assert.That(searchApiStatus_Final.RateLimitReset_DateTime, Is.GreaterThanOrEqualTo(startTime));
+			Assert.That(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds, Is.GreaterThanOrEqualTo(startTime.ToUnixTimeSeconds()));
+
+			if (searchApiStatus_Final.RateLimitReset_DateTime == searchApiStatus_Initial.RateLimitReset_DateTime)
+			{
+				Assert.That(searchApiStatus_Initial.RateLimit, Is.EqualTo(searchApiStatus_Final.RateLimit));
+				Assert.That(searchApiStatus_Initial.RateLimitReset_DateTime, Is.EqualTo(searchApiStatus_Final.RateLimitReset_DateTime));
+				Assert.That(searchApiStatus_Initial.RateLimitReset_TimeRemaining, Is.GreaterThanOrEqualTo(searchApiStatus_Final.RateLimitReset_TimeRemaining));
+				Assert.That(searchApiStatus_Initial.RateLimitReset_UnixEpochSeconds, Is.EqualTo(searchApiStatus_Final.RateLimitReset_UnixEpochSeconds));
+				Assert.That(searchApiStatus_Initial.RemainingRequestCount, Is.GreaterThanOrEqualTo(searchApiStatus_Final.RemainingRequestCount));
+			}
+		});
 	}
 
 	[Test]
@@ -150,7 +158,7 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 		//Act
 
 		//Assert
-		Assert.ThrowsAsync<TaskCanceledException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
+		Assert.That(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token), Throws.TypeOf<TaskCanceledException>());
 	}
 
 	[Test]
@@ -164,6 +172,6 @@ class GetApiRateLimitsTests_WithCancellationToken : BaseTest
 
 		//Assert
 		var httpRequestException = Assert.ThrowsAsync<HttpRequestException>(() => GitHubApiStatusService.GetApiRateLimits(cancellationTokenSource.Token));
-		Assert.IsTrue(httpRequestException?.Message.Contains("Unauthorized"));
+		Assert.That(httpRequestException?.Message, Does.Contain("Unauthorized"));
 	}
 }

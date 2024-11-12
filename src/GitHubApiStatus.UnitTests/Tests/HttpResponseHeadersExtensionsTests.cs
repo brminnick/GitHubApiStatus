@@ -19,8 +19,11 @@ class HttpResponseHeadersExtensionsTests : BaseTest
 		doesContainGitHubRateLimitHeader_false = invalidHttpResponseHeaders.DoesContainGitHubRateLimitHeader();
 
 		//Assert
-		Assert.IsTrue(doesContainGitHubRateLimitHeader_true);
-		Assert.IsFalse(doesContainGitHubRateLimitHeader_false);
+		Assert.Multiple(() =>
+		{
+			Assert.That(doesContainGitHubRateLimitHeader_true, Is.True);
+			Assert.That(doesContainGitHubRateLimitHeader_false, Is.False);
+		});
 	}
 
 	[Test]
@@ -37,8 +40,11 @@ class HttpResponseHeadersExtensionsTests : BaseTest
 		doesContainGitHubRateLimitResetHeader_false = invalidHttpResponseHeaders.DoesContainGitHubRateLimitResetHeader();
 
 		//Assert
-		Assert.IsTrue(doesContainGitHubRateLimitResetHeader_true);
-		Assert.IsFalse(doesContainGitHubRateLimitResetHeader_false);
+		Assert.Multiple(() =>
+		{
+			Assert.That(doesContainGitHubRateLimitResetHeader_true, Is.True);
+			Assert.That(doesContainGitHubRateLimitResetHeader_false, Is.False);
+		});
 	}
 
 	[Test]
@@ -55,7 +61,13 @@ class HttpResponseHeadersExtensionsTests : BaseTest
 		doesContainGitHubRateLimitRemainingHeader_false = invalidHttpResponseHeaders.DoesContainGitHubRateLimitRemainingHeader();
 
 		//Assert
-		Assert.IsTrue(doesContainGitHubRateLimitRemainingHeader_true);
-		Assert.IsFalse(doesContainGitHubRateLimitRemainingHeader_false);
+		Assert.Multiple(() =>
+		{
+			Assert.That(doesContainGitHubRateLimitRemainingHeader_true, Is.True);
+			Assert.That(doesContainGitHubRateLimitRemainingHeader_false, Is.False);
+		});
 	}
 }
+
+
+

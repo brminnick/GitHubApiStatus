@@ -22,7 +22,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximumApiCallLimit(validHttpResponseHeaders);
 
 		//Assert
-		Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
+		Assert.That(hasReachedMaximumApiCallLimit_Actual, Is.EqualTo(hasReachedMaximumApiCallLimit_Expected));
 	}
 
 	[Test]
@@ -41,7 +41,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		hasReachedMaximumApiCallLimit_Actual = GitHubApiStatusService.HasReachedMaximumApiCallLimit(validHttpResponseHeaders);
 
 		//Assert
-		Assert.AreEqual(hasReachedMaximumApiCallLimit_Expected, hasReachedMaximumApiCallLimit_Actual);
+		Assert.That(hasReachedMaximumApiCallLimit_Actual, Is.EqualTo(hasReachedMaximumApiCallLimit_Expected));
 	}
 
 	[Test]
@@ -53,7 +53,7 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(invalidHttpResponseMessage.Headers));
+		Assert.That(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(invalidHttpResponseMessage.Headers), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -66,7 +66,10 @@ class HasReachedMaximumApiCallLimitTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(nullHttpResponseHeaders));
+		Assert.That(() => GitHubApiStatusService.HasReachedMaximumApiCallLimit(nullHttpResponseHeaders), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }
+
+
+

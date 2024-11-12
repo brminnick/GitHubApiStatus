@@ -18,7 +18,7 @@ class SetAuthenticationHeaderValueTests
 		Assert.Multiple(() =>
 		{
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-			Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(null));
+			Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(null), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 			Assert.That(gitHubApiStatusService.IsAuthenticationHeaderValueSet, Is.False);
 		});
@@ -36,13 +36,13 @@ class SetAuthenticationHeaderValueTests
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue));
+		Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[TestCase(null)]
 	[TestCase("")]
 	[TestCase(" ")]
-	public void InvalidParameterAuthenticationHeaderValue(string parameter)
+	public void InvalidParameterAuthenticationHeaderValue(string? parameter)
 	{
 		//Arrange
 		var gitHubApiStatusService = new GitHubApiStatusService();
@@ -51,7 +51,7 @@ class SetAuthenticationHeaderValueTests
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue));
+		Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -82,3 +82,8 @@ class SetAuthenticationHeaderValueTests
 		});
 	}
 }
+
+
+
+
+

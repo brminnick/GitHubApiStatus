@@ -19,7 +19,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<ArgumentNullException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
+		Assert.That(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue), Throws.TypeOf<ArgumentNullException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 
@@ -31,9 +31,10 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
-		Assert.Throws<ArgumentException>(() => new ProductHeaderValue(""));
+		Assert.That(() => new ProductHeaderValue(""), Throws.TypeOf<ArgumentException>());
 	}
 
+	[Test]
 	public void WhiteSpaceProductHeaderValue()
 	{
 		//Arrange
@@ -41,7 +42,7 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
-		Assert.Throws<ArgumentException>(() => new ProductHeaderValue(" "));
+		Assert.That(() => new ProductHeaderValue(" "), Throws.TypeOf<ArgumentException>());
 	}
 
 	[Test]
@@ -56,7 +57,7 @@ class GitHubApiStatusServiceExtensionsTests
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<ArgumentNullException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
+		Assert.That(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue), Throws.TypeOf<ArgumentNullException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 
@@ -73,7 +74,7 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
-		Assert.Throws<ArgumentException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
+		Assert.That(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue), Throws.TypeOf<ArgumentException>());
 	}
 
 	[TestCase(null)]
@@ -89,7 +90,7 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
-		Assert.Throws<ArgumentException>(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue));
+		Assert.That(() => services.AddGitHubApiStatusService(authenticationHeaderValue, productHeaderValue), Throws.TypeOf<ArgumentException>());
 	}
 
 	[Test]
@@ -110,14 +111,17 @@ class GitHubApiStatusServiceExtensionsTests
 		var apiRateLimits = await gitHubApiStatusServce.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
 
 		//Assert
-		Assert.IsNotNull(gitHubApiStatusServce);
-		Assert.IsNotNull(apiRateLimits);
-		Assert.IsNotNull(apiRateLimits.AppManifestConfiguration);
-		Assert.IsNotNull(apiRateLimits.CodeScanningUpload);
-		Assert.IsNotNull(apiRateLimits.GraphQLApi);
-		Assert.IsNotNull(apiRateLimits.RestApi);
-		Assert.IsNotNull(apiRateLimits.SearchApi);
-		Assert.IsNotNull(apiRateLimits.SourceImport);
+		Assert.Multiple(() =>
+		{
+			Assert.That(gitHubApiStatusServce, Is.Not.Null);
+			Assert.That(apiRateLimits, Is.Not.Null);
+			Assert.That(apiRateLimits.AppManifestConfiguration, Is.Not.Null);
+			Assert.That(apiRateLimits.CodeScanningUpload, Is.Not.Null);
+			Assert.That(apiRateLimits.GraphQLApi, Is.Not.Null);
+			Assert.That(apiRateLimits.RestApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SearchApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SourceImport, Is.Not.Null);
+		});
 	}
 
 	[Test]
@@ -138,14 +142,17 @@ class GitHubApiStatusServiceExtensionsTests
 		var apiRateLimits = await gitHubApiStatusServce.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
 
 		//Assert
-		Assert.IsNotNull(gitHubApiStatusServce);
-		Assert.IsNotNull(apiRateLimits);
-		Assert.IsNotNull(apiRateLimits.AppManifestConfiguration);
-		Assert.IsNotNull(apiRateLimits.CodeScanningUpload);
-		Assert.IsNotNull(apiRateLimits.GraphQLApi);
-		Assert.IsNotNull(apiRateLimits.RestApi);
-		Assert.IsNotNull(apiRateLimits.SearchApi);
-		Assert.IsNotNull(apiRateLimits.SourceImport);
+		Assert.Multiple(() =>
+		{
+			Assert.That(gitHubApiStatusServce, Is.Not.Null);
+			Assert.That(apiRateLimits, Is.Not.Null);
+			Assert.That(apiRateLimits.AppManifestConfiguration, Is.Not.Null);
+			Assert.That(apiRateLimits.CodeScanningUpload, Is.Not.Null);
+			Assert.That(apiRateLimits.GraphQLApi, Is.Not.Null);
+			Assert.That(apiRateLimits.RestApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SearchApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SourceImport, Is.Not.Null);
+		});
 	}
 
 	static AuthenticationHeaderValue GetAuthenticationHeaderValue() => new(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken);
