@@ -42,7 +42,7 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
-		Assert.That(() => new ProductHeaderValue(" "), Throws.TypeOf<ArgumentException>());
+		Assert.That(() => new ProductHeaderValue(" "), Throws.TypeOf<FormatException>());
 	}
 
 	[Test]
@@ -80,7 +80,7 @@ class GitHubApiStatusServiceExtensionsTests
 	[TestCase(null)]
 	[TestCase("")]
 	[TestCase(" ")]
-	public void InvalidParameterAuthenticationHeaderValue(string parameter)
+	public void InvalidParameterAuthenticationHeaderValue(string? parameter)
 	{
 		//Arrange
 		var services = new ServiceCollection();
@@ -106,14 +106,14 @@ class GitHubApiStatusServiceExtensionsTests
 		var container = services.BuildServiceProvider();
 
 		//Act
-		var gitHubApiStatusServce = container.GetRequiredService<IGitHubApiStatusService>();
+		var gitHubApiStatusService = container.GetRequiredService<IGitHubApiStatusService>();
 
-		var apiRateLimits = await gitHubApiStatusServce.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
+		var apiRateLimits = await gitHubApiStatusService.GetApiRateLimits(CancellationToken.None).ConfigureAwait(false);
 
 		//Assert
 		Assert.Multiple(() =>
 		{
-			Assert.That(gitHubApiStatusServce, Is.Not.Null);
+			Assert.That(gitHubApiStatusService, Is.Not.Null);
 			Assert.That(apiRateLimits, Is.Not.Null);
 			Assert.That(apiRateLimits.AppManifestConfiguration, Is.Not.Null);
 			Assert.That(apiRateLimits.CodeScanningUpload, Is.Not.Null);
