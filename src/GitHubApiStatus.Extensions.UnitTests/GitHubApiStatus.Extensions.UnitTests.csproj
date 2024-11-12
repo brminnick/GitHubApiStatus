@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GitStatus.Common\GitStatus.Common.csproj" />
     <ProjectReference Include="..\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj" />
   </ItemGroup>
 

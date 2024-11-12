@@ -1,6 +1,6 @@
 ﻿namespace GitStatus.Common;
 
-static class GitHubConstants
+public static class GitHubConstants
 {
 	public const string AuthScheme = "bearer";
 	public const string PersonalAccessToken = "";

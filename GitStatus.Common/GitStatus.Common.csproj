@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>$(LatestSupportedTFM)</TargetFramework>
+    <TargetFrameworks>net8.0;$(LatestSupportedTFM)</TargetFrameworks>
   </PropertyGroup>
 
 </Project>
