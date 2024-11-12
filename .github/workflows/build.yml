@@ -33,7 +33,7 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-android -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-android -c Release
 
   iOS:
     runs-on: macos-13
@@ -64,7 +64,7 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-ios -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-ios -c Release
           
   MacCatalyst:
     runs-on: macos-13
@@ -95,7 +95,7 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-maccatalyst -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-maccatalyst -c Release
 
   Windows:
     runs-on: windows-latest
@@ -120,7 +120,7 @@ jobs:
 
       - name: Build Windows App
         run: |
-          dotnet build ./samples/GitStatus.Mobile/ -c Release -f net8.0-windows10.0.19041.0
+          dotnet build ./samples/GitStatus.Mobile/ -c Release -f net9.0-windows10.0.19041.0
 
   API:
     runs-on: macos-latest
