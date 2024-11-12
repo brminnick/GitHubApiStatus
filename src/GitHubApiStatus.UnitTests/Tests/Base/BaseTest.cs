@@ -25,6 +25,14 @@ abstract class BaseTest
 		return Task.CompletedTask;
 	}
 
+	[OneTimeTearDown]
+	protected virtual Task AfterAllTests()
+	{
+		_client.Dispose();
+		GitHubApiStatusService.Dispose();
+		return Task.CompletedTask;
+	}
+
 	protected static HttpResponseHeaders CreateHttpResponseHeaders(in int rateLimit, in DateTimeOffset rateLimitResetTime, in int remainingRequestCount, in HttpStatusCode httpStatusCode = HttpStatusCode.OK, in bool isAuthenticated = true, in bool isAbuseRateLimit = false)
 	{
 		if (remainingRequestCount > rateLimit)
