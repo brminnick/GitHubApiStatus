@@ -21,7 +21,7 @@ class GetRemainingRequestCountTests : BaseTest
 		remainingRequestCount_Actual = GitHubApiStatusService.GetRemainingRequestCount(validHttpResponseHeaders);
 
 		//Assert
-		Assert.That(remainingRequestCount_Expected, Is.EqualTo(remainingRequestCount_Actual));
+		Assert.That(remainingRequestCount_Actual, Is.EqualTo(remainingRequestCount_Expected));
 	}
 
 	[Test]
