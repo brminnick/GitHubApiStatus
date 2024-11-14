@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-          dotnet-quality: 'preview'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -45,7 +44,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-          dotnet-quality: 'preview'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -76,7 +74,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-          dotnet-quality: 'preview'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -112,7 +109,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-          dotnet-quality: 'preview'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -132,7 +128,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
-        dotnet-quality: 'preview'
 
     - name: Build API App
       run: |
@@ -154,7 +149,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
-        dotnet-quality: 'preview'
 
     - name: Build Console App
       run: |        
@@ -176,7 +170,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
-        dotnet-quality: 'preview'
 
     - name: Build Web App
       run: |                   
@@ -198,7 +191,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
-        dotnet-quality: 'preview'
         
 
     - name: Build Web App
