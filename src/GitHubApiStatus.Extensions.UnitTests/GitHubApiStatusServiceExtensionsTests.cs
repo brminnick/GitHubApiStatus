@@ -42,7 +42,11 @@ class GitHubApiStatusServiceExtensionsTests
 		//Act
 
 		//Assert
+		#if NET9_0_OR_GREATER
 		Assert.That(() => new ProductHeaderValue(" "), Throws.TypeOf<FormatException>());
+		#else
+		Assert.That(() => new ProductHeaderValue(" "), Throws.TypeOf<ArgumentException>());
+		#endif
 	}
 
 	[Test]
