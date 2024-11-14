@@ -5,11 +5,16 @@ namespace GitStatus;
 
 abstract partial class BaseStatusViewModel : BaseViewModel
 {
-	[ObservableProperty]
-	string _statusLabelText = string.Empty;
+	protected BaseStatusViewModel()
+	{
+		StatusLabelText = string.Empty;
+	}
 
-	[ObservableProperty, NotifyCanExecuteChangedFor(nameof(GetStatusCommand))]
-	bool _isBusy;
+	[ObservableProperty]
+	public partial string StatusLabelText { get; protected set; }
+
+	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsNotBusy)), NotifyCanExecuteChangedFor(nameof(GetStatusCommand))]
+	public partial bool IsBusy { get; protected set; }
 
 	public bool IsNotBusy => !IsBusy;
 

@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using GitStatus.Shared;
+using GitStatus.Common;
 using NUnit.Framework;
 
 namespace GitHubApiStatus.UnitTests;
@@ -15,10 +15,13 @@ class SetAuthenticationHeaderValueTests
 		//Act
 
 		//Assert
+		Assert.Multiple(() =>
+		{
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-		Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(null));
+			Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(null), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-		Assert.IsFalse(gitHubApiStatusService.IsAuthenticationHeaderValueSet);
+			Assert.That(gitHubApiStatusService.IsAuthenticationHeaderValueSet, Is.False);
+		});
 	}
 
 	[TestCase("Basic")]
@@ -33,13 +36,13 @@ class SetAuthenticationHeaderValueTests
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue));
+		Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[TestCase(null)]
 	[TestCase("")]
 	[TestCase(" ")]
-	public void InvalidParameterAuthenticationHeaderValue(string parameter)
+	public void InvalidParameterAuthenticationHeaderValue(string? parameter)
 	{
 		//Arrange
 		var gitHubApiStatusService = new GitHubApiStatusService();
@@ -48,7 +51,7 @@ class SetAuthenticationHeaderValueTests
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue));
+		Assert.That(() => gitHubApiStatusService.SetAuthenticationHeaderValue(authenticationHeaderValue), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -66,13 +69,21 @@ class SetAuthenticationHeaderValueTests
 		var apiRateLimits = await gitHubApiStatusService.GetApiRateLimits().ConfigureAwait(false);
 
 		//Assert
-		Assert.IsNotNull(gitHubApiStatusService);
-		Assert.IsNotNull(apiRateLimits);
-		Assert.IsNotNull(apiRateLimits.AppManifestConfiguration);
-		Assert.IsNotNull(apiRateLimits.CodeScanningUpload);
-		Assert.IsNotNull(apiRateLimits.GraphQLApi);
-		Assert.IsNotNull(apiRateLimits.RestApi);
-		Assert.IsNotNull(apiRateLimits.SearchApi);
-		Assert.IsNotNull(apiRateLimits.SourceImport);
+		Assert.Multiple(() =>
+		{
+			Assert.That(gitHubApiStatusService, Is.Not.Null);
+			Assert.That(apiRateLimits, Is.Not.Null);
+			Assert.That(apiRateLimits.AppManifestConfiguration, Is.Not.Null);
+			Assert.That(apiRateLimits.CodeScanningUpload, Is.Not.Null);
+			Assert.That(apiRateLimits.GraphQLApi, Is.Not.Null);
+			Assert.That(apiRateLimits.RestApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SearchApi, Is.Not.Null);
+			Assert.That(apiRateLimits.SourceImport, Is.Not.Null);
+		});
 	}
 }
+
+
+
+
+

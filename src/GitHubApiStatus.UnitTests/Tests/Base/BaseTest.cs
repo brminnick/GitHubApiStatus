@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using GitStatus.Shared;
+using GitStatus.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -11,17 +11,32 @@ abstract class BaseTest
 {
 	const string _authorizationHeaderKey = "Authorization";
 
-	static readonly HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
+	HttpClient _client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
 
-	protected IGitHubApiStatusService GitHubApiStatusService { get; } = new GitHubApiStatusService(_client);
+	protected IGitHubApiStatusService GitHubApiStatusService { get; private set; } = new GitHubApiStatusService();
 
 	[SetUp]
-	protected virtual Task BeforeEachTest() => Task.CompletedTask;
+	protected virtual Task BeforeEachTest()
+	{
+		_client = CreateGitHubHttpClient(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken), new ProductHeaderValue(nameof(GitHubApiStatus)));
+		GitHubApiStatusService = new GitHubApiStatusService(_client);
+		return Task.CompletedTask;
+	}
 
 	[TearDown]
 	protected virtual Task AfterEachTest()
 	{
 		GitHubApiStatusService.SetAuthenticationHeaderValue(new AuthenticationHeaderValue(GitHubConstants.AuthScheme, GitHubConstants.PersonalAccessToken));
+		_client.Dispose();
+		GitHubApiStatusService.Dispose();
+		return Task.CompletedTask;
+	}
+
+	[OneTimeTearDown]
+	protected virtual Task AfterAllTests()
+	{
+		_client.Dispose();
+		GitHubApiStatusService.Dispose();
 		return Task.CompletedTask;
 	}
 
@@ -58,13 +73,13 @@ abstract class BaseTest
 		return client;
 	}
 
-	protected static Task<HttpResponseMessage> SendValidRestApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
+	protected Task<HttpResponseMessage> SendValidRestApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus");
 
-	protected static Task<HttpResponseMessage> SendValidSearchApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/search/code");
+	protected Task<HttpResponseMessage> SendValidSearchApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/search/code");
 
-	protected static Task<HttpResponseMessage> SendValidCodeScanningApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus/code-scanning/alerts");
+	protected Task<HttpResponseMessage> SendValidCodeScanningApiRequest() => _client.GetAsync($"{GitHubConstants.GitHubRestApiUrl}/repos/brminnick/GitHubApiStatus/code-scanning/alerts");
 
-	protected static Task SendValidGraphQLApiRequest()
+	protected Task SendValidGraphQLApiRequest()
 	{
 		var graphQLRequest = new GraphQLRequest("query { user(login: \"brminnick\"){ name, company, createdAt}}");
 		var serializedGraphQLRequest = JsonConvert.SerializeObject(graphQLRequest);

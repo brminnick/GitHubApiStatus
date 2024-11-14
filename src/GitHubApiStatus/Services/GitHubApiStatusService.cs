@@ -16,7 +16,7 @@ namespace GitHubApiStatus;
 /// <summary>
 /// GitHub API Status Service
 /// </summary>
-public class GitHubApiStatusService : IGitHubApiStatusService, IDisposable
+public class GitHubApiStatusService : IGitHubApiStatusService
 {
 	/// <summary>
 	/// GitHub Http Response Rate Limit Header Key

@@ -2,11 +2,9 @@
 
 namespace GitStatus;
 
-class RestApiStatusViewModel : BaseStatusViewModel
+partial class RestApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) : BaseStatusViewModel
 {
-	readonly IGitHubApiStatusService _gitHubApiStatusService;
-
-	public RestApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) => _gitHubApiStatusService = gitHubApiStatusService;
+	readonly IGitHubApiStatusService _gitHubApiStatusService = gitHubApiStatusService;
 
 	protected override async Task GetStatus()
 	{

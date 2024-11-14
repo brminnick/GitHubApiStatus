@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 using GitHubApiStatus.Extensions;
-using GitStatus.Shared;
+using GitStatus.Common;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace GitStatus.Web;

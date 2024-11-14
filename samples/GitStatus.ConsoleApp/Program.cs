@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using GitHubApiStatus;
-using GitStatus.Shared;
+using GitStatus.Common;
 
 namespace GitStatus.ConsoleApp;
 

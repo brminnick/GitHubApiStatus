@@ -2,7 +2,7 @@
 
 namespace GitStatus;
 
-abstract class BaseStatusPage<T> : BaseContentPage<T> where T : BaseStatusViewModel
+abstract partial class BaseStatusPage<T> : BaseContentPage<T> where T : BaseStatusViewModel
 {
 	protected BaseStatusPage(T statusViewModel, string title) : base(statusViewModel, title)
 	{
@@ -21,7 +21,7 @@ abstract class BaseStatusPage<T> : BaseContentPage<T> where T : BaseStatusViewMo
 					.Bind(Button.CommandProperty, static (BaseStatusViewModel vm) => vm.GetStatusCommand, mode: BindingMode.OneTime),
 
 				new ActivityIndicator { Color = Colors.Black }.Center()
-					.Bind(IsVisibleProperty, nameof(BaseStatusViewModel.IsBusy))
+					.Bind(IsVisibleProperty, static (BaseStatusViewModel vm) => vm.IsBusy)
 					.Bind(ActivityIndicator.IsRunningProperty, static (BaseStatusViewModel vm) => vm.IsBusy)
 			}
 		}.Center();

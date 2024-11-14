@@ -6,7 +6,7 @@ namespace GitHubApiStatus;
 /// <summary>
 /// Interface for GitHubApiStatusService
 /// </summary>
-public interface IGitHubApiStatusService
+public interface IGitHubApiStatusService : IDisposable
 {
 	/// <summary>
 	/// Determines if GitHubApiClient.DefaultRequestHeaders.UserAgent is Valid

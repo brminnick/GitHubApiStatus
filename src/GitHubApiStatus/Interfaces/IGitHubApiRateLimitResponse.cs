@@ -2,5 +2,5 @@
 
 interface IGitHubApiRateLimitResponse
 {
-	public IGitHubApiRateLimits Results { get; }
+	IGitHubApiRateLimits Results { get; }
 }

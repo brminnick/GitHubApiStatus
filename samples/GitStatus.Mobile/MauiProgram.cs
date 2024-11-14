@@ -2,7 +2,7 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
 using GitHubApiStatus.Extensions;
-using GitStatus.Shared;
+using GitStatus.Common;
 
 namespace GitStatus;
 

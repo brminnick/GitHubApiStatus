@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 
 namespace GitHubApiStatus.Extensions;
 
-public class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatusService
+public sealed class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatusService
 {
 	public bool IsProductHeaderValueValid => true;
 	public bool IsAuthenticationHeaderValueSet => true;
@@ -36,5 +36,10 @@ public class MockGitHubApiStatusService(HttpClient httpClient) : IGitHubApiStatu
 	{
 		delta = null;
 		return false;
+	}
+
+	public void Dispose()
+	{
+		httpClient.Dispose();
 	}
 }

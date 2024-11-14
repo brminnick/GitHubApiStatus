@@ -8,30 +8,30 @@ public interface IGitHubApiRateLimits
 	/// <summary>
 	/// REST API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus RestApi { get; }
+	IRateLimitStatus RestApi { get; }
 
 	/// <summary>
 	/// Search API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus SearchApi { get; }
+	IRateLimitStatus SearchApi { get; }
 
 	/// <summary>
 	/// GraphQL API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus GraphQLApi { get; }
+	IRateLimitStatus GraphQLApi { get; }
 
 	/// <summary>
 	/// Source Import API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus SourceImport { get; }
+	IRateLimitStatus SourceImport { get; }
 
 	/// <summary>
 	/// Code Scanning API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus CodeScanningUpload { get; }
+	IRateLimitStatus CodeScanningUpload { get; }
 
 	/// <summary>
 	/// App Manifest Configuration API Rate Limit Status
 	/// </summary>
-	public IRateLimitStatus AppManifestConfiguration { get; }
+	IRateLimitStatus AppManifestConfiguration { get; }
 }

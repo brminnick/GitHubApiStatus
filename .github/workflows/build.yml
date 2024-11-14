@@ -13,12 +13,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET v8.0
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET v9.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: '9.0.x'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -32,18 +32,18 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-android -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-android -c Release
 
   iOS:
-    runs-on: macos-13
+    runs-on: macos-15
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET v8.0
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET v9.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: '9.0.x'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -62,18 +62,18 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-ios -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-ios -c Release
           
   MacCatalyst:
-    runs-on: macos-13
+    runs-on: macos-15
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET v8.0
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET v9.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: '9.0.x'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -92,23 +92,23 @@ jobs:
           MobileProjectDirectory=`dirname $MobileProject`
           echo $MobileProjectDirectory
 
-          dotnet build $MobileProjectDirectory -f:net8.0-maccatalyst -c Release
+          dotnet build $MobileProjectDirectory -f:net9.0-maccatalyst -c Release
 
   Windows:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: 'microsoft'
-          java-version: '11'
+          java-version: '17'
 
-      - name: Setup .NET v8.0
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET v9.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: '9.0.x'
 
       - name: Install .NET MAUI Workload
         run: |
@@ -116,18 +116,18 @@ jobs:
 
       - name: Build Windows App
         run: |
-          dotnet build ./samples/GitStatus.Mobile/ -c Release -f net8.0-windows10.0.19041.0
+          dotnet build ./samples/GitStatus.Mobile/ -c Release -f net9.0-windows10.0.19041.0
 
   API:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup .NET v8.0
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET v9.0
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Build API App
       run: |
@@ -143,12 +143,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup .NET v8.0
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET v9.0
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Build Console App
       run: |        
@@ -164,12 +164,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup .NET v8.0
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET v9.0
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Build Web App
       run: |                   
@@ -185,12 +185,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup .NET v8.0
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET v9.0
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '9.0.x'
+        
 
     - name: Build Web App
       run: |                  

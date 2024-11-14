@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.3.0" PrivateAssets="all" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
-    <PackageReference Include="NUnit" Version="3.14.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GitStatus.Common\GitStatus.Common.csproj" />
     <ProjectReference Include="..\GitHubApiStatus\GitHubApiStatus.csproj" />
   </ItemGroup>
-
-  <Import Project="..\..\samples\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\..\samples\GitStatus.Shared\GitStatus.Shared.projitems')" />
 </Project>

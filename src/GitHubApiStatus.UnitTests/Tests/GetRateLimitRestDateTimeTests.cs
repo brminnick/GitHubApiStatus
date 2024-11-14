@@ -20,12 +20,15 @@ class GetRateLimitRestDateTimeTests : BaseTest
 		//Act
 		rateLimitResetDateTime_Actual = GitHubApiStatusService.GetRateLimitResetDateTime(validHttpResponseHeaders);
 
-		//Assert Test all values except Milliseconds, because GitHub API 
-		Assert.AreEqual(rateLimitResetDateTime_Expected.Second, rateLimitResetDateTime_Actual.Second);
-		Assert.AreEqual(rateLimitResetDateTime_Expected.Minute, rateLimitResetDateTime_Actual.Minute);
-		Assert.AreEqual(rateLimitResetDateTime_Expected.Hour, rateLimitResetDateTime_Actual.Hour);
-		Assert.AreEqual(rateLimitResetDateTime_Expected.DayOfYear, rateLimitResetDateTime_Actual.DayOfYear);
-		Assert.AreEqual(rateLimitResetDateTime_Expected.Year, rateLimitResetDateTime_Actual.Year);
+		//Assert
+		Assert.Multiple(() =>
+		{
+			Assert.That(rateLimitResetDateTime_Expected.Second, Is.EqualTo(rateLimitResetDateTime_Actual.Second));
+			Assert.That(rateLimitResetDateTime_Expected.Minute, Is.EqualTo(rateLimitResetDateTime_Actual.Minute));
+			Assert.That(rateLimitResetDateTime_Expected.Hour, Is.EqualTo(rateLimitResetDateTime_Actual.Hour));
+			Assert.That(rateLimitResetDateTime_Expected.DayOfYear, Is.EqualTo(rateLimitResetDateTime_Actual.DayOfYear));
+			Assert.That(rateLimitResetDateTime_Expected.Year, Is.EqualTo(rateLimitResetDateTime_Actual.Year));
+		});
 	}
 
 	[Test]
@@ -37,7 +40,7 @@ class GetRateLimitRestDateTimeTests : BaseTest
 		//Act
 
 		//Assert
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers));
+		Assert.That(() => GitHubApiStatusService.GetRateLimitResetDateTime(invalidHttpResponseMessage.Headers), Throws.TypeOf<GitHubApiStatusException>());
 	}
 
 	[Test]
@@ -50,7 +53,8 @@ class GetRateLimitRestDateTimeTests : BaseTest
 
 		//Assert
 #pragma warning disable CS8604 // Possible null reference argument.
-		Assert.Throws<GitHubApiStatusException>(() => GitHubApiStatusService.GetRateLimitResetDateTime(nullHttpResponseHeaders));
+		Assert.That(() => GitHubApiStatusService.GetRateLimitResetDateTime(nullHttpResponseHeaders), Throws.TypeOf<GitHubApiStatusException>());
 #pragma warning restore CS8604 // Possible null reference argument.
 	}
 }
+

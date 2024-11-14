@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(LatestSupportedNetVersion)-android;$(LatestSupportedNetVersion)-ios;$(LatestSupportedNetVersion)-maccatalyst</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);$(LatestSupportedNetVersion)-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>$(LatestSupportedTFM)-android;$(LatestSupportedTFM)-ios;$(LatestSupportedTFM)-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);$(LatestSupportedTFM)-windows10.0.19041.0</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-    <!-- <TargetFrameworks>$(TargetFrameworks);$(LatestSupportedNetVersion)-tizen</TargetFrameworks> -->
+    <!-- <TargetFrameworks>$(TargetFrameworks);$(LatestSupportedTFM)-tizen</TargetFrameworks> -->
     <OutputType>Exe</OutputType>
     <RootNamespace>GitStatus</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -21,15 +21,20 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    
+    <!-- Remove once MAUI supports AOT on Windows-->
+    <NoWarn>CsWinRT1028</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(LatestSupportedNetVersion)-ios|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(LatestSupportedTFM)-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
@@ -48,16 +53,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40"/>
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40"/>
-    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0"/>
-    <PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0"/>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0-rc.2.24503.2"/>
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
+    <PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.2.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GitStatus.Common\GitStatus.Common.csproj" />
     <ProjectReference Include="..\..\src\GitHubApiStatus.Extensions\GitHubApiStatus.Extensions.csproj"/>
   </ItemGroup>
-
-  <Import Project="..\GitStatus.Shared\GitStatus.Shared.projitems" Label="Shared" Condition="Exists('..\GitStatus.Shared\GitStatus.Shared.projitems')"/>
 </Project>
