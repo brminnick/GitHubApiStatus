@@ -35,7 +35,7 @@ jobs:
           dotnet build $MobileProjectDirectory -f:net9.0-android -c Release
 
   iOS:
-    runs-on: macos-13
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +65,7 @@ jobs:
           dotnet build $MobileProjectDirectory -f:net9.0-ios -c Release
           
   MacCatalyst:
-    runs-on: macos-13
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v4
