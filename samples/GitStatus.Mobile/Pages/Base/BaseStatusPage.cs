@@ -2,7 +2,7 @@
 
 namespace GitStatus;
 
-abstract class BaseStatusPage<T> : BaseContentPage<T> where T : BaseStatusViewModel
+abstract partial class BaseStatusPage<T> : BaseContentPage<T> where T : BaseStatusViewModel
 {
 	protected BaseStatusPage(T statusViewModel, string title) : base(statusViewModel, title)
 	{

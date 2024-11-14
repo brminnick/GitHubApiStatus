@@ -3,7 +3,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace GitStatus;
 
-abstract class BaseContentPage : ContentPage
+abstract partial class BaseContentPage : ContentPage
 {
 	protected BaseContentPage(in string title = "", bool shouldUseSafeArea = true)
 	{

@@ -1,6 +1,6 @@
 ﻿namespace GitStatus;
 
-class AppShell : Shell
+partial class AppShell : Shell
 {
 	public AppShell(GraphQLApiStatusPage graphQLApiStatusPage, RestApiStatusPage restApiStatusPage)
 	{

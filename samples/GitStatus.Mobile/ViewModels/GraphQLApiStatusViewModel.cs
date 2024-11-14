@@ -2,7 +2,7 @@
 
 namespace GitStatus;
 
-class GraphQLApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) : BaseStatusViewModel
+partial class GraphQLApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) : BaseStatusViewModel
 {
 	readonly IGitHubApiStatusService _gitHubApiStatusService = gitHubApiStatusService;
 

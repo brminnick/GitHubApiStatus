@@ -2,7 +2,7 @@
 
 namespace GitStatus;
 
-class RestApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) : BaseStatusViewModel
+partial class RestApiStatusViewModel(IGitHubApiStatusService gitHubApiStatusService) : BaseStatusViewModel
 {
 	readonly IGitHubApiStatusService _gitHubApiStatusService = gitHubApiStatusService;
 

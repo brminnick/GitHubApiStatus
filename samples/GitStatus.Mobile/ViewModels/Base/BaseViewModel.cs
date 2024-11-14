@@ -2,6 +2,6 @@
 
 namespace GitStatus;
 
-abstract class BaseViewModel : ObservableObject
+abstract partial class BaseViewModel : ObservableObject
 {
 }
